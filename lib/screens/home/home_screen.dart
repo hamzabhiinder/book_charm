@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:book_charm/entities/user_model.dart';
 import 'package:book_charm/screens/authentication/view/signup_screen.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             CircleAvatar(
               backgroundColor: Colors.white,
-              backgroundImage: NetworkImage("${sp.imageUrl}"),
+              backgroundImage: CachedNetworkImageProvider(
+                  "${sp.imageUrl ?? ''}"), // NetworkImage("${sp.imageUrl}"),
               radius: 50,
             ),
             const SizedBox(
@@ -85,9 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ElevatedButton(
                 onPressed: () {
                   log("USer Model ${sp.userModel?.toJson()}");
-                  // sp.userSignOut().then((value) {
-                  //   nextScreenReplace(context, AuthenticationScreen());
-                  // });
+                  sp.userSignOut().then((value) {
+                    nextScreenReplace(context, AuthenticationScreen());
+                  });
                 },
                 child: const Text("SIGNOUT",
                     style: TextStyle(

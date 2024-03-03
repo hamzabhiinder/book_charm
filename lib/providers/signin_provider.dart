@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/authentication/services/auth1/auth_exception1.dart';
+import '../utils/show_snackBar.dart';
 
 class SignInProvider extends ChangeNotifier {
   // instance of firebaseauth, facebook and google
@@ -209,34 +210,29 @@ class SignInProvider extends ChangeNotifier {
     }
   }
 
-  Future signInWithEmailAndPassword(String email, String password) async {
+  Future signInWithEmailAndPassword(
+      BuildContext context, String email, String password) async {
     try {
       final result = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      final value = await getUserDataFromFirestore(result.user?.uid);
+      await getUserDataFromFirestore(result.user?.uid);
       // saving the values
-      log("Vavalue ${value}");
-      _name = result.user?.displayName ?? '';
-      _email = email;
-      _imageUrl = '';
-      _uid = result.user?.uid;
-      _hasError = false;
-      _provider = "SIMPLE";
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "user-not-found":
-          _errorCode = "User Not Found";
-          _hasError = true;
+          showSnackBar(context, "User Not Found");
           break;
 
         case "wrong-password":
-          _errorCode = "Wrong Credentials";
-          _hasError = true;
+          showSnackBar(context, "Wrong credentials");
+          break;
+
+        case "invalid-email":
+          showSnackBar(context, "Invalid Email");
           break;
 
         default:
-          _errorCode = "Authentication Error";
-          _hasError = true;
+          showSnackBar(context, "Authentication error");
           break;
       }
     }
@@ -255,6 +251,7 @@ class SignInProvider extends ChangeNotifier {
               _imageUrl = snapshot['image_url'],
               _provider = snapshot['provider'],
             });
+    log("Value ${name}");
   }
 
   Future saveDataToFirestore(

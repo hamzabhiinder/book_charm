@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:book_charm/firebase_options.dart';
+import 'package:book_charm/games/games.dart';
 import 'package:book_charm/providers/signin_provider.dart';
 import 'package:book_charm/screens/authentication/services/auth1/auth_sevices1.dart';
 import 'package:book_charm/screens/authentication/view/signup_screen.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: const AuthenticationScreen(),
+        // home: const GameScreen(),
       ),
     );
   }

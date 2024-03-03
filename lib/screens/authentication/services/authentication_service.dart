@@ -90,7 +90,7 @@ class AuthServices {
 
       if (userExists) {
         // User exists
-        await sp.getUserDataFromFirestore(sp.uid!).then(
+        sp.getUserDataFromFirestore(sp.uid!).then(
           (value) async {
             await sp.saveDataToSharedPreferences();
             await sp.setSignIn();
@@ -170,37 +170,17 @@ class AuthServices {
 
     try {
       // await AuthService.firebase().logIn(email: email, password: password);
-      await sp.signInWithEmailAndPassword(email, password);
+      await sp.signInWithEmailAndPassword(context, email, password);
       final userExists = await sp.checkUserExists();
-      await sp.saveDataToSharedPreferences();
-      await sp.setSignIn();
-
-      nextScreenReplace(context, const HomeScreen());
-      log("USER EXIST");
       if (userExists) {
         await sp.saveDataToSharedPreferences();
         await sp.setSignIn();
 
         nextScreenReplace(context, const HomeScreen());
         log("USER EXIST");
-      } else {
-        log("USER NOT EXIST");
       }
-    } on UserNotFoundAuthException {
-      showSnackBar(
-        context,
-        "User Not Found",
-      );
-    } on WrongPasswordAuthException {
-      showSnackBar(
-        context,
-        "wrong credentials",
-      );
-    } on GenericAuthException {
-      showSnackBar(
-        context,
-        "Authentication error",
-      );
+    } catch (e) {
+      log("e ERor Auteh Sec$e");
     }
   }
 }

@@ -136,8 +136,9 @@ class RegisterTab extends StatelessWidget {
 class SignInTab extends StatelessWidget {
   SignInTab({super.key});
 
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _password = TextEditingController();
+  final TextEditingController _email =
+      TextEditingController(text: "hamzabhinder5@gmail.com");
+  final TextEditingController _password = TextEditingController(text: '123456');
   @override
   Widget build(BuildContext context) {
     return Padding(
