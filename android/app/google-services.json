@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "259382682905",
+    "project_id": "bookcharm-64903",
+    "storage_bucket": "bookcharm-64903.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259382682905:android:95b4217bc6db362d771188",
+        "android_client_info": {
+          "package_name": "com.example.book_charm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "259382682905-8dn8nejfncgjo2d9cjvrvcg7t3jf6vck.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.book_charm",
+            "certificate_hash": "8e930aa211f73d6ce9979d1ac14a50f249fea42f"
+          }
+        },
+        {
+          "client_id": "259382682905-36t1k7hm0cgg4et9337mtk657lchi87v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1odvKuS-aK8MCUHP7lY_RCAoghy-g1T4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "259382682905-36t1k7hm0cgg4et9337mtk657lchi87v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "259382682905-edkatf8ftge319g40ho89ib441ffv502.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bookCharm"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

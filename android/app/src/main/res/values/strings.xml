@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook_app_id">416820444216830</string>
+    <string name="fb_login_protocol_scheme">fb416820444216830</string>
+    <string name="facebook_client_token">d23c73acf41a1146dc4d09dc7d3cdde5</string>
+    <string name="app_name">"CharmLogin"</string>
+
+</resources>
+
+
