@@ -24,8 +24,10 @@ class _GameScreenState extends State<GameScreen> {
             ElevatedButton(
               onPressed: () {
                 // Navigate to Flip Cards game screen
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FlipCardsScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FlipCardsScreen()));
               },
               child: const Text('Flip Cards'),
             ),
@@ -44,8 +46,10 @@ class _GameScreenState extends State<GameScreen> {
             ElevatedButton(
               onPressed: () {
                 // Navigate to MCQs game screen
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => McqsScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const McqsScreen()));
               },
               child: const Text('MCQs'),
             ),

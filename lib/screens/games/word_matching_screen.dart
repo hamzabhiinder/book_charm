@@ -1,7 +1,11 @@
-import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'dart:math';
 
-import 'package:flutter/material.dart';
+List<T> shuffleCopy<T>(List<T> listToShuffle) {
+  final shuffledList = List<T>.from(listToShuffle); // Create a copy
+  shuffledList.shuffle(Random()); // Shuffle the copy
+  return shuffledList;
+}
 
 class WordMatchingScreen extends StatefulWidget {
   @override
@@ -9,28 +13,18 @@ class WordMatchingScreen extends StatefulWidget {
 }
 
 class _WordMatchingScreenState extends State<WordMatchingScreen> {
-  final Random _random = Random(); // Create a Random object for shuffling
-
   final List<Map<String, String>> wordPairs = [
-    {'english': 'Hello', 'spanish': 'Hola'},
-    {'english': 'Goodbye', 'spanish': 'Adiós'},
-    {'english': 'Friend', 'spanish': 'Amigo'},
-    {'english': 'Family', 'spanish': 'Familia'},
-    // {'english': 'Water', 'spanish': 'Agua'},
-    // {'english': 'Sun', 'spanish': 'Sol'},
-    // {'english': 'Moon', 'spanish': 'Luna'},
+    {'english': 'Apple', 'spanish': 'Manzana'},
+    {'english': 'Banana', 'spanish': 'Plátano'},
+    {'english': 'Cherry', 'spanish': 'Cereza'},
+    {'english': 'Orange', 'spanish': 'Naranja'},
   ];
-  @override
-  void initState() {
-    super.initState();
-    wordPairs.shuffle(
-        _random); // Shuffle the wordPairs list on widget initialization
-  }
 
   @override
   Widget build(BuildContext context) {
     const wordWidth = 200.0; // Adjust this value to your desired width
-
+    wordPairs.shuffle();
+    List<Map<String, String>> shuffled = shuffleCopy(wordPairs);
     return Scaffold(
       appBar: AppBar(
         title: Text('Word Matching Game'),
@@ -61,7 +55,6 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
                     ),
                   ),
                   childWhenDragging: Container(),
-                  onDragCompleted: () => print('completed'),
                   child: SizedBox(
                     // Use SizedBox for fixed size
                     width: wordWidth,
@@ -81,7 +74,7 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
             ),
             // DragTarget List
             Column(
-              children: wordPairs.map((pair) {
+              children: shuffled.map((pair) {
                 final spanishWord = pair['spanish'];
                 return DragTarget<String>(
                   builder: (context, candidateData, rejectedData) {
@@ -106,7 +99,7 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
                     final englishWord = wordPairs.firstWhere(
                         (pair) => pair['english'] == data.data)['spanish'];
                     if (englishWord == spanishWord) {
-                      print(data.data);
+                      // log(data.data);
                       print("Accepted data: $data");
                       setState(() {
                         wordPairs.remove(pair); // Remove the matched pair
