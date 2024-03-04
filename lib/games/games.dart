@@ -1,4 +1,6 @@
 import 'package:book_charm/screens/games/flip_cards_screen.dart';
+import 'package:book_charm/screens/games/mcqs_screen.dart';
+import 'package:book_charm/screens/games/word_matching_screen.dart';
 import 'package:flutter/material.dart';
 
 class GameScreen extends StatefulWidget {
@@ -31,7 +33,10 @@ class _GameScreenState extends State<GameScreen> {
             ElevatedButton(
               onPressed: () {
                 // Navigate to Word Matching game screen
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => WordMatchingScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => WordMatchingScreen()));
               },
               child: const Text('Word Matching'),
             ),
@@ -39,7 +44,8 @@ class _GameScreenState extends State<GameScreen> {
             ElevatedButton(
               onPressed: () {
                 // Navigate to MCQs game screen
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => McqsScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => McqsScreen()));
               },
               child: const Text('MCQs'),
             ),
