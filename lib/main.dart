@@ -6,6 +6,7 @@ import 'package:book_charm/games/games.dart';
 import 'package:book_charm/providers/signin_provider.dart';
 import 'package:book_charm/screens/authentication/services/auth1/auth_sevices1.dart';
 import 'package:book_charm/screens/authentication/view/signup_screen.dart';
+import 'package:book_charm/screens/games/book_reading_screen.dart';
 import 'package:book_charm/screens/home/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,8 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const AuthenticationScreen(),
+        home: const BookReadingScreen(),
+        // home: const AuthenticationScreen(),
         // home: const GameScreen(),
       ),
     );
