@@ -6,7 +6,8 @@ import 'package:book_charm/games/games.dart';
 import 'package:book_charm/providers/signin_provider.dart';
 import 'package:book_charm/screens/authentication/services/auth1/auth_sevices1.dart';
 import 'package:book_charm/screens/authentication/view/signup_screen.dart';
-import 'package:book_charm/screens/home/home_screen.dart';
+import 'package:book_charm/screens/bottom_navigation/bottom_navigation.dart';
+import 'package:book_charm/screens/home/view/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,14 +39,23 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+          primaryColor: AppColors.primaryColor,
+
+          scaffoldBackgroundColor: Colors.white,
+          fontFamily: 'Roboto',
+          // Add more theme configurations as needed
         ),
-        // home: const AuthenticationScreen(),
-        home: const GameScreen(),
+        home: BottomNaigationScreen(),
+        // home: const GameScreen(),
       ),
     );
   }
+}
+
+class AppColors {
+  static const Color primaryColor = Color(0xFFC599FB); // #C599FB
+  static const Color secondaryColor = Color(0xFFEBE5EB); // #EBE5EB
+  // Add more custom colors as needed
 }
 
 class HandleLogin extends StatefulWidget {

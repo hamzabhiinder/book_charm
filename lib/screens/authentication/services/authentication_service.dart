@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/signin_provider.dart';
-import '../../home/home_screen.dart';
+import '../../home/view/home_screen.dart';
 
 class AuthServices {
   // handling google sign-in
