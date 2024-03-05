@@ -1,3 +1,6 @@
+import 'package:book_charm/screens/games/flip_cards_screen.dart';
+import 'package:book_charm/screens/games/mcqs_screen.dart';
+import 'package:book_charm/screens/games/word_matching_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -51,7 +54,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               ),
             ),
           ),
-          Divider(),
+          const Divider(),
           SizedBox(height: getResponsiveHeight(context, 15)),
           Center(
             child: Container(
@@ -64,7 +67,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   color: Colors.transparent,
                   width: 2.0,
                 ),
-                color: Color(0xffebe4eb),
+                color: const Color(0xffebe4eb),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +80,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                             'Daily Statistics for trainings',
                             style: TextStyle(
                               fontSize: getResponsiveFontSize(context, 18),
-                              color: Color.fromARGB(255, 63, 63, 63),
+                              color: const Color.fromARGB(255, 63, 63, 63),
                               fontWeight: FontWeight.w400,
                             ),
                           ),
@@ -86,7 +89,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                             'Average Time in \nSecond',
                             style: TextStyle(
                               fontSize: getResponsiveFontSize(context, 16),
-                              color: Color.fromARGB(255, 63, 63, 63),
+                              color: const Color.fromARGB(255, 63, 63, 63),
                               fontWeight: FontWeight.w400,
                             ),
                             textAlign: TextAlign.center,
@@ -114,39 +117,87 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             textAlign: TextAlign.center,
           ),
           SizedBox(height: getResponsiveWidth(context, 15)),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.9,
-            alignment: Alignment.topLeft,
-            decoration: BoxDecoration(
-              borderRadius:
-                  BorderRadius.circular(15), // Adjust the radius as needed
-              border: Border.all(
-                color: Colors.transparent,
-                width: 2.0,
-              ),
-              color: Color(0xffebe4eb),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Fill in the blanks',
-                  style: TextStyle(
-                    fontSize: getResponsiveFontSize(context, 20),
-                    color: const Color(0xff686868),
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                Image.asset(
-                  'assets/images/ic_fill.png',
-                  width: getResponsiveWidth(context, 40),
-                  height: getResponsiveWidth(context, 35),
-                ),
-              ],
-            ),
-          )
+          ReusableContainer(
+            title: 'Fill in the blanks',
+            imagePath: 'assets/images/ic_fill.png',
+            onTap: () {
+              nextScreen(context, McqsScreen());
+            },
+          ),
+          SizedBox(height: getResponsiveWidth(context, 15)),
+          ReusableContainer(
+            title: 'Find matches',
+            imagePath: 'assets/images/ic_match.png',
+            onTap: () {
+              nextScreen(context, WordMatchingScreen());
+            },
+          ),
+          SizedBox(height: getResponsiveWidth(context, 15)),
+          ReusableContainer(
+            title: 'Flashcards',
+            imagePath: 'assets/images/ic_flash.png',
+            onTap: () {
+              nextScreen(context, FlipCardsScreen());
+            },
+          ),
         ],
+      ),
+    );
+  }
+}
+
+class ReusableContainer extends StatelessWidget {
+  final String title;
+  final String imagePath;
+  final VoidCallback onTap;
+
+  const ReusableContainer({
+    Key? key,
+    required this.title,
+    required this.imagePath,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          padding: EdgeInsets.symmetric(
+            horizontal: getResponsiveWidth(context, 15),
+            vertical: getResponsiveHeight(context, 15),
+          ),
+          alignment: Alignment.topLeft,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: Colors.transparent,
+              width: 2.0,
+            ),
+            color: const Color(0xffebe4eb),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: getResponsiveFontSize(context, 20),
+                  color: const Color(0xff686868),
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              Image.asset(
+                imagePath,
+                width: getResponsiveWidth(context, 40),
+                height: getResponsiveWidth(context, 35),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -9,7 +9,7 @@ class BottomNaigationScreen extends StatefulWidget {
 }
 
 class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
-  int _selectedIndex = 3;
+  int _selectedIndex = 0;
   late PageController _pageController;
 
   @override
