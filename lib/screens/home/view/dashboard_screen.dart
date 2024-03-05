@@ -1,8 +1,11 @@
 import 'package:book_charm/main.dart';
+import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
+import '../../../providers/signin_provider.dart';
 import '../widgets/custom_container.dart';
 import '../widgets/cutsom_book_tile.dart';
 
@@ -33,6 +36,8 @@ class _DashBoardScreenState extends State<DashBoardScreen>
 
   @override
   Widget build(BuildContext context) {
+    final sp = context.watch<SignInProvider>();
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -47,8 +52,8 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   leading: Image.asset(
                     'assets/images/profile.png',
                   ),
-                  title: const Text(
-                    "Welcome Ameer",
+                  title: Text(
+                    "Welcome ${sp.userModel?.name ?? "user"}",
                     style: TextStyle(
                       color: Color(0xff686868),
                       fontSize: 20,

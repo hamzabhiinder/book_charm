@@ -7,12 +7,16 @@ import 'package:book_charm/providers/signin_provider.dart';
 import 'package:book_charm/screens/authentication/services/auth1/auth_sevices1.dart';
 import 'package:book_charm/screens/authentication/view/signup_screen.dart';
 import 'package:book_charm/screens/bottom_navigation/bottom_navigation.dart';
+import 'package:book_charm/screens/exercise/view/exercise.dart';
 import 'package:book_charm/screens/home/view/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/internet_provider.dart';
+import 'screens/profile/view/profile.dart';
+import 'utils/show_snackBar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +29,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -40,22 +43,14 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(
           primaryColor: AppColors.primaryColor,
-
           scaffoldBackgroundColor: Colors.white,
           fontFamily: 'Roboto',
-          // Add more theme configurations as needed
         ),
-        home: BottomNaigationScreen(),
+        home: HandleLogin(),
         // home: const GameScreen(),
       ),
     );
   }
-}
-
-class AppColors {
-  static const Color primaryColor = Color(0xFFC599FB); // #C599FB
-  static const Color secondaryColor = Color(0xFFEBE5EB); // #EBE5EB
-  // Add more custom colors as needed
 }
 
 class HandleLogin extends StatefulWidget {
@@ -66,11 +61,21 @@ class HandleLogin extends StatefulWidget {
 }
 
 class _HandleLoginState extends State<HandleLogin> {
+  Future<bool> isUserSignedIn() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      return user != null;
+    } catch (e) {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: AuthService.firebase().initialize(),
+        future: isUserSignedIn(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
@@ -78,15 +83,9 @@ class _HandleLoginState extends State<HandleLogin> {
               if (user != null) {
                 final sp = context.read<SignInProvider>();
                 sp.getDataFromSharedPreferences();
-                // if (user.isEmailVerified) {
-                //   devtools.log(" VERIFY EMAIL");
-                //   return NotesView();
-                // } else {
-                //   devtools.log("NOt VERIFY EMAIL");
-                //   return const VerifyEmail();
-                // }
+
                 log('user ${user.email}');
-                return HomeScreen();
+                return BottomNaigationScreen();
               } else {
                 return const AuthenticationScreen();
               }

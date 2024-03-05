@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/signin_provider.dart';
+import '../../bottom_navigation/bottom_navigation.dart';
 import '../../home/view/home_screen.dart';
 
 class AuthServices {
@@ -47,7 +48,7 @@ class AuthServices {
             await signInProvider.setSignIn();
             log('user Exist data= $value');
 
-            nextScreenReplace(context, const HomeScreen());
+            nextScreenReplace(context, BottomNaigationScreen());
           },
         );
         log("User Exist");
@@ -58,7 +59,7 @@ class AuthServices {
             await signInProvider.saveDataToSharedPreferences();
             await signInProvider.setSignIn();
 
-            nextScreenReplace(context, const HomeScreen());
+            nextScreenReplace(context, BottomNaigationScreen());
           },
         );
         log("save data to Firestore");
@@ -95,7 +96,7 @@ class AuthServices {
             await sp.saveDataToSharedPreferences();
             await sp.setSignIn();
 
-            nextScreenReplace(context, const HomeScreen());
+            nextScreenReplace(context, BottomNaigationScreen());
           },
         );
         log("User Exist");
@@ -106,7 +107,7 @@ class AuthServices {
             await sp.saveDataToSharedPreferences();
             await sp.setSignIn();
 
-            nextScreenReplace(context, const HomeScreen());
+            nextScreenReplace(context, BottomNaigationScreen());
           },
         );
         log("save data to Firestore");
@@ -142,7 +143,7 @@ class AuthServices {
           await sp.saveDataToSharedPreferences();
           await sp.setSignIn();
 
-          nextScreenReplace(context, const HomeScreen());
+          nextScreenReplace(context, BottomNaigationScreen());
         },
       );
       log("save data to Firestore");
@@ -176,7 +177,7 @@ class AuthServices {
         await sp.saveDataToSharedPreferences();
         await sp.setSignIn();
 
-        nextScreenReplace(context, const HomeScreen());
+        nextScreenReplace(context, BottomNaigationScreen());
         log("USER EXIST");
       }
     } catch (e) {

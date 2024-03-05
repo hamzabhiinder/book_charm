@@ -1,4 +1,6 @@
+import 'package:book_charm/screens/exercise/view/exercise.dart';
 import 'package:book_charm/screens/home/view/dashboard_screen.dart';
+import 'package:book_charm/screens/profile/view/profile.dart';
 import 'package:flutter/material.dart';
 
 class BottomNaigationScreen extends StatefulWidget {
@@ -7,7 +9,7 @@ class BottomNaigationScreen extends StatefulWidget {
 }
 
 class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 3;
   late PageController _pageController;
 
   @override
@@ -34,7 +36,7 @@ class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
           DashBoardScreen(),
           DictionaryScreen(),
           LibraryScreen(),
-          ExercisesScreen(),
+          ExerciseScreen(),
           ProfileScreen(),
         ],
         onPageChanged: (index) {
@@ -88,19 +90,5 @@ class LibraryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(child: Text('Library Screen'));
-  }
-}
-
-class ExercisesScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Exercises Screen'));
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Profile Screen'));
   }
 }
