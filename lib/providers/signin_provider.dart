@@ -66,8 +66,7 @@ class SignInProvider extends ChangeNotifier {
 
   // sign in with google
   Future signInWithGoogle() async {
-    final GoogleSignInAccount? googleSignInAccount =
-        await googleSignIn.signIn();
+    final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
     log('GoogleSignInAccount $googleSignInAccount');
     if (googleSignInAccount != null) {
       // executing our authentication
@@ -80,8 +79,7 @@ class SignInProvider extends ChangeNotifier {
         );
 
         // signing to firebase user instance
-        final User userDetails =
-            (await firebaseAuth.signInWithCredential(credential)).user!;
+        final User userDetails = (await firebaseAuth.signInWithCredential(credential)).user!;
 
         // now save all values
         _name = userDetails.displayName;
@@ -93,8 +91,7 @@ class SignInProvider extends ChangeNotifier {
       } on FirebaseAuthException catch (e) {
         switch (e.code) {
           case "account-exists-with-different-credential":
-            _errorCode =
-                "You already have an account with us. Use correct provider";
+            _errorCode = "You already have an account with us. Use correct provider";
             _hasError = true;
             notifyListeners();
             break;
@@ -127,8 +124,7 @@ class SignInProvider extends ChangeNotifier {
     log('profile ${profile}');
     if (result.status == LoginStatus.success) {
       try {
-        final OAuthCredential credential =
-            FacebookAuthProvider.credential(result.accessToken!.token);
+        final OAuthCredential credential = FacebookAuthProvider.credential(result.accessToken!.token);
         await firebaseAuth.signInWithCredential(credential);
         // saving the values
         _name = profile['name'];
@@ -141,8 +137,7 @@ class SignInProvider extends ChangeNotifier {
       } on FirebaseAuthException catch (e) {
         switch (e.code) {
           case "account-exists-with-different-credential":
-            _errorCode =
-                "You already have an account with us. Use correct provider";
+            _errorCode = "You already have an account with us. Use correct provider";
             _hasError = true;
             notifyListeners();
             break;
@@ -170,8 +165,7 @@ class SignInProvider extends ChangeNotifier {
     String password,
   ) async {
     try {
-      final result = await firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      final result = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
 
       // saving the values
       _name = name;
@@ -210,11 +204,9 @@ class SignInProvider extends ChangeNotifier {
     }
   }
 
-  Future signInWithEmailAndPassword(
-      BuildContext context, String email, String password) async {
+  Future signInWithEmailAndPassword(BuildContext context, String email, String password) async {
     try {
-      final result = await firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+      final result = await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       await getUserDataFromFirestore(result.user?.uid);
       // saving the values
     } on FirebaseAuthException catch (e) {
@@ -240,29 +232,20 @@ class SignInProvider extends ChangeNotifier {
 
   // ENTRY FOR CLOUDFIRESTORE
   Future getUserDataFromFirestore(uid) async {
-    await FirebaseFirestore.instance
-        .collection("users")
-        .doc(uid)
-        .get()
-        .then((DocumentSnapshot snapshot) => {
-              _uid = snapshot['uid'],
-              _name = snapshot['name'],
-              _email = snapshot['email'],
-              _imageUrl = snapshot['image_url'],
-              _provider = snapshot['provider'],
-            });
+    await FirebaseFirestore.instance.collection("users").doc(uid).get().then((DocumentSnapshot snapshot) => {
+          _uid = snapshot['uid'],
+          _name = snapshot['name'],
+          _email = snapshot['email'],
+          _imageUrl = snapshot['image_url'],
+          _provider = snapshot['provider'],
+        });
     log("Value ${name}");
   }
 
   Future saveDataToFirestore(
-      {String? name,
-      String? email,
-      String? uid,
-      String? image,
-      String? provider}) async {
+      {String? name, String? email, String? uid, String? image, String? provider}) async {
     if (name != null) {
-      final DocumentReference r =
-          FirebaseFirestore.instance.collection("users").doc(uid);
+      final DocumentReference r = FirebaseFirestore.instance.collection("users").doc(uid);
       await r.set({
         "name": name,
         "email": email,
@@ -271,8 +254,7 @@ class SignInProvider extends ChangeNotifier {
         "provider": provider,
       });
     } else {
-      final DocumentReference r =
-          FirebaseFirestore.instance.collection("users").doc(uid);
+      final DocumentReference r = FirebaseFirestore.instance.collection("users").doc(uid);
       await r.set({
         "name": _name,
         "email": _email,
@@ -305,7 +287,13 @@ class SignInProvider extends ChangeNotifier {
     await s.setString('uid', _uid!);
     await s.setString('image_url', _imageUrl!);
     await s.setString('provider', _provider!);
-
+    _userModel = UserModel(
+      email: _email ?? '',
+      imageUrl: _imageUrl ?? '',
+      name: _name ?? '',
+      provider: _provider ?? '',
+      uid: _uid ?? '',
+    );
     notifyListeners();
   }
 
@@ -331,8 +319,7 @@ class SignInProvider extends ChangeNotifier {
 
   // checkUser exists or not in cloudfirestore
   Future<bool> checkUserExists() async {
-    DocumentSnapshot snap =
-        await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+    DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(_uid).get();
     if (snap.exists) {
       print("EXISTING USER");
       return true;
@@ -347,11 +334,10 @@ class SignInProvider extends ChangeNotifier {
     await firebaseAuth.signOut;
     await googleSignIn.signOut();
     await facebookAuth.logOut();
-
-    _isSignedIn = false;
-    notifyListeners();
     // clear all storage information
     clearStoredData();
+    _isSignedIn = false;
+    notifyListeners();
   }
 
   Future clearStoredData() async {

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../utils/fl_charts/bar_graph.dart';
 import '../../../utils/show_snackBar.dart';
 
 class ExerciseScreen extends StatefulWidget {
@@ -23,8 +24,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
         children: [
           const SizedBox(height: kToolbarHeight - 18),
           Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getResponsiveWidth(context, 18)),
+            padding: EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 18)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -43,8 +43,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           ),
           SizedBox(height: getResponsiveHeight(context, 15)),
           Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getResponsiveWidth(context, 18)),
+            padding: EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 18)),
             child: Text(
               'Exercises',
               style: TextStyle(
@@ -61,8 +60,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               width: MediaQuery.of(context).size.width * 0.9,
               alignment: Alignment.topLeft,
               decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.circular(15), // Adjust the radius as needed
+                borderRadius: BorderRadius.circular(15), // Adjust the radius as needed
                 border: Border.all(
                   color: Colors.transparent,
                   width: 2.0,
@@ -79,20 +77,35 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                           Text(
                             'Daily Statistics for trainings',
                             style: TextStyle(
-                              fontSize: getResponsiveFontSize(context, 18),
-                              color: const Color.fromARGB(255, 63, 63, 63),
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          SizedBox(height: getResponsiveWidth(context, 15)),
-                          Text(
-                            'Average Time in \nSecond',
-                            style: TextStyle(
                               fontSize: getResponsiveFontSize(context, 16),
-                              color: const Color.fromARGB(255, 63, 63, 63),
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                          SizedBox(height: getResponsiveWidth(context, 10)),
+                          Text(
+                            'Average Time in \nSeconds',
+                            style: TextStyle(
+                              fontSize: getResponsiveFontSize(context, 15),
+                              color: Colors.grey.shade600,
                               fontWeight: FontWeight.w400,
                             ),
                             textAlign: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: getResponsiveHeight(context, 130),
+                            child: MyBarGraph(
+                              monthlySummary: <double>[
+                                5,
+                                4,
+                                4,
+                                4,
+                                4,
+                                4,
+                                4,
+                              ],
+                            ),
                           ),
                         ],
                       )),
