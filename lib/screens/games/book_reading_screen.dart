@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart'; // For Clipboard
@@ -12,42 +14,35 @@ class BookReadingScreen extends StatefulWidget {
 }
 
 class _BookReadingScreenState extends State<BookReadingScreen> {
+  String selectTextValue = '';
+  String translateTextValue = '';
+  OverlayEntry? overlayEntry;
   final translator = GoogleTranslator();
 
- void showTranslationBottomSheet(String originalText, String translatedText, BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          height: getResponsiveHeight(context, 200),
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Original Text: $originalText',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-             
-              SizedBox(height: 16.0),
-              Text(
-                'Translated Text: $translatedText',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-             
-            ],
-          ),
-        );
-      },
-    );
-  }
   void translateAction(String selectedText) async {
     try {
       // Replace 'es' with the language code you want to translate to
-      var translatedText =
-          await translator.translate(selectedText, from: 'es', to: 'en');
-      print("Translated text: $translatedText");
-      showTranslationBottomSheet(selectedText, translatedText, context);
+      var translatedText = await translator.translate(selectedText, from: 'es', to: 'en');
+      log("Translated text: $translatedText");
+      selectTextValue = selectedText;
+      translateTextValue = translatedText.text;
+      setState(() {});
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return SizedBox(
+            height: 200,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              //  mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Selected text: $selectTextValue"),
+                Text("Translated text: $translateTextValue")
+              ],
+            ),
+          );
+        },
+      );
     } catch (e) {
       print("Error translating text: $e");
     }
@@ -57,6 +52,7 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
   void copyAction(String selectedText) {
     Clipboard.setData(ClipboardData(text: selectedText));
     print("Copied to clipboard: $selectedText");
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   void shareAction(String selectedText) {
@@ -77,18 +73,19 @@ Muchas gracias.""";
       appBar: AppBar(
         title: const Text('Text Games'),
       ),
-      body: SingleChildScrollView(
-        child: SelectableText(
-          myText,
-          showCursor: true,
-          scrollPhysics: ClampingScrollPhysics(),
-          contextMenuBuilder: (context, editableTextState) =>
-              AdaptiveTextSelectionToolbar(
-            anchors: editableTextState.contextMenuAnchors,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
+      body: GestureDetector(
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: SingleChildScrollView(
+          child: SelectableText(
+            myText,
+            showCursor: true,
+            //  scrollPhysics: ClampingScrollPhysics(),
+            contextMenuBuilder: (context, editableTextState) => AdaptiveTextSelectionToolbar(
+              anchors: editableTextState.contextMenuAnchors,
+              children: [
+                InkWell(
                   onTap: () {
                     String selectedText = myText.substring(
                       editableTextState.textEditingValue.selection.baseOffset,
@@ -97,12 +94,22 @@ Muchas gracias.""";
                     print("Your custom action goes here! $selectedText");
                     translateAction(selectedText);
                   },
-                  child: Text('Translates'),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.translate,
+                          size: 15,
+                        ),
+                        SizedBox(width: 4),
+                        Text('Translate'),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
+                InkWell(
                   onTap: () {
                     String selectedText = myText.substring(
                       editableTextState.textEditingValue.selection.baseOffset,
@@ -111,12 +118,22 @@ Muchas gracias.""";
                     // print("Your custom action goes here! $selectedText");
                     copyAction(selectedText);
                   },
-                  child: Text('Copy'),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.copy,
+                          size: 15,
+                        ),
+                        SizedBox(width: 4),
+                        Text('Copy'),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
+                InkWell(
                   onTap: () {
                     String selectedText = myText.substring(
                       editableTextState.textEditingValue.selection.baseOffset,
@@ -124,16 +141,26 @@ Muchas gracias.""";
                     );
                     shareAction(selectedText);
                   },
-                  child: Text('Share'),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.share,
+                          size: 15,
+                        ),
+                        SizedBox(width: 4),
+                        Text('Share'),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-
-
-
