@@ -26,7 +26,7 @@ class MyBarGraph extends StatelessWidget {
     myBarData.initialize();
     const style = TextStyle(
       fontSize: 12,
-      color: AppColors.secondaryColor,
+      color: Colors.black54,
     );
     return BarChart(
       BarChartData(
@@ -36,32 +36,35 @@ class MyBarGraph extends StatelessWidget {
         borderData: FlBorderData(show: false),
         titlesData: FlTitlesData(
           show: true,
-          topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          rightTitles: AxisTitles(
+          topTitles:
+              const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          leftTitles: AxisTitles(
             sideTitles: SideTitles(
+              
               showTitles: true,
               getTitlesWidget: (value, title) {
                 switch (value.toInt()) {
                   case 0:
                     return const Text("0", style: style);
-                  case 2:
-                    return const Text("2", style: style);
-                  case 4:
-                    return const Text("4", style: style);
+                  case 3:
+                    return const Text("3", style: style);
+
                   case 6:
                     return const Text("6", style: style);
-                  case 8:
-                    return const Text("8", style: style);
-                  case 10:
-                    return const Text("10", style: style);
+                  case 9:
+                    return const Text("9", style: style);
+                  case 12:
+                    return const Text("12", style: style);
                   default:
                     return const Text("");
                 }
               },
-              reservedSize: 20,
+              interval: 3,
+              reservedSize: 0.5,
             ),
           ),
-          leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+          rightTitles:
+              const AxisTitles(sideTitles: SideTitles(showTitles: false)),
           bottomTitles: const AxisTitles(
             sideTitles: SideTitles(
               showTitles: true,
@@ -78,8 +81,10 @@ class MyBarGraph extends StatelessWidget {
                   BarChartRodData(
                     toY: data.y,
                     color: AppColors.primaryColor,
-                    width: 15,
-                    borderRadius: BorderRadius.circular(5),
+                    width: 12,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(6),
+                        topRight: Radius.circular(6)),
                     backDrawRodData: BackgroundBarChartRodData(
                       show: true,
                       color: Colors.grey[200],

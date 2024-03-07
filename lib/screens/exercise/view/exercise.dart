@@ -24,7 +24,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
         children: [
           const SizedBox(height: kToolbarHeight - 18),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 18)),
+            padding: EdgeInsets.symmetric(
+                horizontal: getResponsiveWidth(context, 18)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -43,7 +44,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           ),
           SizedBox(height: getResponsiveHeight(context, 15)),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 18)),
+            padding: EdgeInsets.symmetric(
+                horizontal: getResponsiveWidth(context, 18)),
             child: Text(
               'Exercises',
               style: TextStyle(
@@ -60,7 +62,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               width: MediaQuery.of(context).size.width * 0.9,
               alignment: Alignment.topLeft,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15), // Adjust the radius as needed
+                borderRadius:
+                    BorderRadius.circular(15), // Adjust the radius as needed
                 border: Border.all(
                   color: Colors.transparent,
                   width: 2.0,
@@ -93,9 +96,11 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          SizedBox(
+                          Container(
+                            padding: EdgeInsets.only(
+                                left: getResponsiveWidth(context, 10)),
                             height: getResponsiveHeight(context, 130),
-                            child: MyBarGraph(
+                            child: const MyBarGraph(
                               monthlySummary: <double>[
                                 5,
                                 4,
@@ -111,9 +116,78 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                       )),
                   Expanded(
                       flex: 2,
-                      child: Container(
-                        height: 100,
-                        color: Colors.yellow,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: getResponsiveWidth(context, 10)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: getResponsiveWidth(context, 30)),
+                            Text(
+                              'Daily goal',
+                              style: TextStyle(
+                                fontSize: getResponsiveFontSize(context, 15),
+                                color: Colors.grey.shade600,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            Container(
+                              height: getResponsiveHeight(context, 70),
+                              // width: getResponsiveWidth(context, 100),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    8), // Adjust the radius as needed
+                                border: Border.all(
+                                  color: Colors.black12,
+                                  width: 2.0,
+                                ),
+                                color: const Color(0xffebe4eb),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '10 \nWord',
+                                    style: TextStyle(
+                                      fontSize:
+                                          getResponsiveFontSize(context, 22),
+                                      color: Colors.grey.shade700,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  const Icon(
+                                    Icons.edit,
+                                    size: 28,
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: getResponsiveWidth(context, 5)),
+                            Text(
+                              'Today',
+                              style: TextStyle(
+                                fontSize: getResponsiveFontSize(context, 22),
+                                color: Colors.grey.shade700,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                            SizedBox(height: getResponsiveWidth(context, 5)),
+                            Text(
+                              '0',
+                              style: TextStyle(
+                                fontSize: getResponsiveFontSize(context, 24),
+                                color: Colors.grey.shade700,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ],
+                        ),
                       ))
                 ],
               ),
@@ -134,7 +208,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             title: 'Fill in the blanks',
             imagePath: 'assets/images/ic_fill.png',
             onTap: () {
-              nextScreen(context, McqsScreen());
+              nextScreen(context, const McqsScreen());
             },
           ),
           SizedBox(height: getResponsiveWidth(context, 15)),
@@ -150,7 +224,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             title: 'Flashcards',
             imagePath: 'assets/images/ic_flash.png',
             onTap: () {
-              nextScreen(context, FlipCardsScreen());
+              nextScreen(context, const FlipCardsScreen());
             },
           ),
         ],
@@ -165,11 +239,11 @@ class ReusableContainer extends StatelessWidget {
   final VoidCallback onTap;
 
   const ReusableContainer({
-    Key? key,
+    super.key,
     required this.title,
     required this.imagePath,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

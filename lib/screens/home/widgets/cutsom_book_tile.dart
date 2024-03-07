@@ -1,4 +1,4 @@
-
+import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:flutter/material.dart';
 import '../view/book_detail_page.dart';
 
@@ -23,9 +23,13 @@ class CustomBookTile extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
+            color: Colors.white,
+            // borderRadius: BorderRadius.circular(10.0),
+
+            border: Border(
+                bottom: BorderSide(
+              color: AppColors.secondaryColor,
+            ))),
         child: Row(
           children: [
             Container(

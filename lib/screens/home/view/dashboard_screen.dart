@@ -16,7 +16,8 @@ class DashBoardScreen extends StatefulWidget {
   State<DashBoardScreen> createState() => _DashBoardScreenState();
 }
 
-class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProviderStateMixin {
+class _DashBoardScreenState extends State<DashBoardScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _selectedIndex = 0;
 
@@ -53,7 +54,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
                   ),
                   title: Text(
                     "Welcome ${sp.userModel?.name ?? "user"}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xff686868),
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -76,22 +77,27 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
               //   ),
               // ),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                decoration:
-                    BoxDecoration(color: AppColors.secondaryColor, borderRadius: BorderRadius.circular(12)),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                decoration: BoxDecoration(
+                    color: AppColors.secondaryColor,
+                    borderRadius: BorderRadius.circular(12)),
                 child: const Column(
                   children: [
                     Text(
                       "\'Whoever guide someone to goodness,he\'ll get the reward similar to it\'",
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
                     ),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
                         "Sahih AlMuslim 1893 (a)",
                         textAlign: TextAlign.end,
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.w500),
                       ),
                     ),
                   ],
@@ -110,6 +116,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
               SizedBox(
                 height: 300,
                 child: TabBarView(
+                  physics: NeverScrollableScrollPhysics(),
                   controller: _tabController,
                   children: const [
                     // Your existing TabBarView content
@@ -154,8 +161,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
                         ),
                       ],
                     ),
-                    Center(child: Text('WEEK')),
-                    Center(child: Text('ALL')),
+                    ReusableColumn(), ReusableColumn(),
                   ],
                 ),
               ),
@@ -201,6 +207,51 @@ class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProv
           ),
         ),
       ),
+    );
+  }
+}
+
+class ReusableColumn extends StatelessWidget {
+  const ReusableColumn({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 15),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            CustomContainer(
+              url: 'assets/images/star.png',
+              text1: 'XP',
+              text2: '0',
+            ),
+            CustomContainer(
+              url: 'assets/images/flame.png',
+              text1: 'Streak',
+              text2: '0',
+            ),
+          ],
+        ),
+        SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            CustomContainer(
+              url: 'assets/images/stopwatch.png',
+              text1: 'Time',
+              text2: '0',
+            ),
+            CustomContainer(
+              url: 'assets/images/learning.png',
+              text1: 'Lesson',
+              text2: '0',
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

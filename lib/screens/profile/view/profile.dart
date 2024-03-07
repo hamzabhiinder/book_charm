@@ -248,6 +248,8 @@ class CustomListTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
+              padding: EdgeInsets.symmetric(
+                  vertical: getResponsiveHeight(context, 2)),
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 // border: Border.all(
@@ -257,7 +259,7 @@ class CustomListTile extends StatelessWidget {
               ),
               child: Image.asset(
                 imagePath,
-                width: getResponsiveWidth(context, 40),
+                width: getResponsiveWidth(context, 35),
                 height: getResponsiveWidth(context, 35),
               ),
             ),
