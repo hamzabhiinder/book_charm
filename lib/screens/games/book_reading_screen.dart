@@ -69,7 +69,7 @@ Muchas gracias.""";
                     print("Your custom action goes here! $selectedText");
                     translateAction(selectedText);
                   },
-                  child: Text('Translate'),
+                  child: Text('Translates'),
                 ),
               ),
               Padding(
