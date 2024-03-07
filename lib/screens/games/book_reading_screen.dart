@@ -14,12 +14,40 @@ class BookReadingScreen extends StatefulWidget {
 class _BookReadingScreenState extends State<BookReadingScreen> {
   final translator = GoogleTranslator();
 
+ void showTranslationBottomSheet(String originalText, String translatedText, BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: getResponsiveHeight(context, 200),
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Original Text: $originalText',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+             
+              SizedBox(height: 16.0),
+              Text(
+                'Translated Text: $translatedText',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+             
+            ],
+          ),
+        );
+      },
+    );
+  }
   void translateAction(String selectedText) async {
     try {
       // Replace 'es' with the language code you want to translate to
       var translatedText =
           await translator.translate(selectedText, from: 'es', to: 'en');
       print("Translated text: $translatedText");
+      showTranslationBottomSheet(selectedText, translatedText, context);
     } catch (e) {
       print("Error translating text: $e");
     }
@@ -106,3 +134,6 @@ Muchas gracias.""";
     );
   }
 }
+
+
+
