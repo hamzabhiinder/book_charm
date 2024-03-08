@@ -1,10 +1,9 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-
-import 'package:flutter/services.dart'; // For Clipboard
+import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:translator/translator.dart';
+import 'package:localstorage/localstorage.dart';
 
 class BookReadingScreen extends StatefulWidget {
   const BookReadingScreen({super.key});
@@ -19,10 +18,46 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
   OverlayEntry? overlayEntry;
   final translator = GoogleTranslator();
 
+  final LocalStorage storage = LocalStorage('dictionary.json');
+  bool initialized = false;
+  List<Map<String, String>> wordPairs = [];
+
+  void saveDictionary() {
+    storage.setItem('wordPairs', wordPairs);
+    print(wordPairs);
+  }
+
+  void addWordPair(String english, String spanish) {
+    if (!wordPairs.any((pair) =>
+        pair['english'] == english.toLowerCase() &&
+        pair['spanish'] == spanish.toLowerCase())) {
+      setState(() {
+        wordPairs.add({
+          'english': english.toLowerCase(),
+          'spanish': spanish.toLowerCase()
+        });
+        saveDictionary();
+      });
+    } else {
+      log('Word pair already exists in the dictionary.');
+    }
+  }
+
+  void loadDictionary() async {
+    await storage.ready;
+    var storedData = storage.getItem('wordPairs');
+    if (storedData != null) {
+      setState(() {
+        wordPairs = List<Map<String, String>>.from(storedData);
+      });
+    }
+  }
+
   void translateAction(String selectedText) async {
     try {
       // Replace 'es' with the language code you want to translate to
-      var translatedText = await translator.translate(selectedText, from: 'es', to: 'en');
+      var translatedText =
+          await translator.translate(selectedText, from: 'es', to: 'en');
       log("Translated text: $translatedText");
       selectTextValue = selectedText;
       translateTextValue = translatedText.text;
@@ -31,27 +66,34 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
         context: context,
         builder: (context) {
           return SizedBox(
-            height: 200,
+            // height: 200,
             width: MediaQuery.of(context).size.width,
             child: Column(
               //  mainAxisSize: MainAxisSize.min,
               children: [
-                Text("Selected text: $selectTextValue"),
-                Text("Translated text: $translateTextValue")
+                Text("$selectTextValue: $translateTextValue"),
+                // Text("Translated text: $translateTextValue"),
+                TextButton(
+                  onPressed: () {
+                    addWordPair(selectTextValue, translateTextValue);
+                    log('added to dictionary');
+                  },
+                  child: const Text('Add to dictionary'),
+                ),
               ],
             ),
           );
         },
       );
     } catch (e) {
-      print("Error translating text: $e");
+      log("Error translating text: $e");
     }
-    print("Translate action with text: $selectedText");
+    log("Translate action with text: $selectedText");
   }
 
   void copyAction(String selectedText) {
     Clipboard.setData(ClipboardData(text: selectedText));
-    print("Copied to clipboard: $selectedText");
+    log("Copied to clipboard: $selectedText");
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
@@ -82,7 +124,8 @@ Muchas gracias.""";
             myText,
             showCursor: true,
             //  scrollPhysics: ClampingScrollPhysics(),
-            contextMenuBuilder: (context, editableTextState) => AdaptiveTextSelectionToolbar(
+            contextMenuBuilder: (context, editableTextState) =>
+                AdaptiveTextSelectionToolbar(
               anchors: editableTextState.contextMenuAnchors,
               children: [
                 InkWell(
@@ -91,7 +134,7 @@ Muchas gracias.""";
                       editableTextState.textEditingValue.selection.baseOffset,
                       editableTextState.textEditingValue.selection.extentOffset,
                     );
-                    print("Your custom action goes here! $selectedText");
+                    log("Your custom action goes here! $selectedText");
                     translateAction(selectedText);
                   },
                   child: const Padding(
