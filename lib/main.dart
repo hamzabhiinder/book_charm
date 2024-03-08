@@ -9,6 +9,7 @@ import 'package:book_charm/screens/authentication/view/signup_screen.dart';
 import 'package:book_charm/screens/authentication/view/splash_screen.dart';
 import 'package:book_charm/screens/bottom_navigation/bottom_navigation.dart';
 import 'package:book_charm/screens/exercise/view/exercise.dart';
+import 'package:book_charm/screens/games/book_reading_screen.dart';
 import 'package:book_charm/screens/home/view/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,6 +25,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
