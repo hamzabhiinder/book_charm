@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:book_charm/utils/download/download_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
@@ -102,14 +103,30 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+  }
+
+  var myText = "";
+
+  Future<void> fetchData() async {
+    try {
+      var result = await readTextFromFile('Le Tour du monde_Jules Verne');
+      if (result != null) {
+        setState(() {
+          myText = result;
+        });
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     //spanish
-    const myText = """Señoras y señores,
-Os pido que votéis a favor del sufragio femenino.
-Os pido que hagáis justicia a las mujeres.
-Os pido que nos deis la oportunidad de 
-participar en la vida política de nuestro país.
-Muchas gracias.""";
 
     return Scaffold(
       appBar: AppBar(

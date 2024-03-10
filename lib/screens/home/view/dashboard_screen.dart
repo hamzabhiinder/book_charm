@@ -1,4 +1,5 @@
 import 'package:book_charm/main.dart';
+import 'package:book_charm/utils/download/download_file.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -118,7 +119,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                 child: TabBarView(
                   physics: NeverScrollableScrollPhysics(),
                   controller: _tabController,
-                  children: const [
+                  children: [
                     // Your existing TabBarView content
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,10 +130,20 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            CustomContainer(
-                              url: 'assets/images/star.png',
-                              text1: 'XP',
-                              text2: '0',
+                            InkWell(
+                              onTap: () {
+                                scrapePreTagContent(
+                                  url:
+                                      'https://archive.org/stream/letourdumondeenq00vernuoft/letourdumondeenq00vernuoft_djvu.txt',
+                                  bookName: 'Le Tour du monde',
+                                  authorName: 'Jules Verne',
+                                );
+                              },
+                              child: CustomContainer(
+                                url: 'assets/images/star.png',
+                                text1: 'XP',
+                                text2: '0',
+                              ),
                             ),
                             CustomContainer(
                               url: 'assets/images/flame.png',
