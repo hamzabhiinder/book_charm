@@ -1,0 +1,586 @@
+[
+  {
+    "Category": "Adventure",
+    "Books": [
+      {
+        "Name": "L'\u00cele au tr\u00e9sor",
+        "Author": "Robert Louis Stevenson",
+        "Link": "https://archive.org/details/bnf-bpt6k6566382t",
+        "Cover": "https://www.glenat.com/sites/default/files/images/livres/couv/9782344043493-001-T.jpeg",
+        "StreamLink": "https://archive.org/stream/bnf-bpt6k6566382t/bnf-bpt6k6566382t_djvu.txt"
+      },
+      {
+        "Name": "Le Tour du monde en quatre-vingts jours",
+        "Author": "Jules Verne",
+        "Link": "https://archive.org/details/letourdumondeenq00vernuoft",
+        "Cover": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsDn6mbBWwScUaS8JLPZHtJrfupm_p1gCdjw&usqp=CAU",
+        "StreamLink": "https://archive.org/stream/letourdumondeenq00vernuoft/letourdumondeenq00vernuoft_djvu.txt"
+      },
+      {
+        "Name": " Le Voyage d'un naturaliste autour du monde",
+        "Author": "Charles Darwin",
+        "Link": "https://archive.org/details/voyagebeagle02darwgoog",
+        "Cover": "https://m.media-amazon.com/images/I/618ZCGBb8PL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/voyagebeagle02darwgoog/voyagebeagle02darwgoog_djvu.txt"
+      },
+      {
+        "Name": "Les Voyages de Gulliver",
+        "Author": "Jonathan Swift",
+        "Link": "https://archive.org/details/bub_gb_lU5fFC0p5RoC",
+        "Cover": "https://www.glenat.com/sites/default/files/images/livres/couv/9782749303659-001-T.jpeg",
+        "StreamLink": "https://archive.org/stream/bub_gb_lU5fFC0p5RoC/bub_gb_lU5fFC0p5RoC_djvu.txt"
+      },
+      {
+        "Name": "Le roman exp\u00e9rimental",
+        "Author": "Emile Zola",
+        "Link": "https://archive.org/details/leromanexprime00zola/page/n7/mode/2up",
+        "Cover": "https://m.media-amazon.com/images/I/41Zk1+1DyEL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/leromanexprime00zola/leromanexprime00zola_djvu.txt"
+      },
+      {
+        "Name": "Vingt mille lieues sous les mers",
+        "Author": "Jules Verne",
+        "Link": "https://archive.org/details/bub_gb_Mzc6AAAAcAAJ",
+        "Cover": "https://pictures.abebooks.com/isbn/9782012031975-us.jpg",
+        "StreamLink": "https://archive.org/stream/bub_gb_Mzc6AAAAcAAJ/bub_gb_Mzc6AAAAcAAJ_djvu.txt"
+      },
+      {
+        "Name": "Les Cinq Semaines en ballon",
+        "Author": "Jules Verne",
+        "Link": "https://archive.org/details/bnf-bpt6k6501026z",
+        "Cover": "https://m.media-amazon.com/images/I/71VEflawLwL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/bnf-bpt6k6501026z/bnf-bpt6k6501026z_djvu.txt"
+      },
+      {
+        "Name": "La nuit du Renard",
+        "Author": "Mary Higgins Clark",
+        "Link": "https://archive.org/details/lanuitdurenardro0000clar",
+        "Cover": "https://m.media-amazon.com/images/I/71UX7YZxT9L._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/lanuitdurenardro0000clar/lanuitdurenardro0000clar_djvu.txt"
+      },
+      {
+        "Name": "Les bonnes",
+        "Author": "Jean Genet",
+        "Link": "https://archive.org/details/lesbonnes00gene",
+        "Cover": "https://m.media-amazon.com/images/I/61QValgMzDL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/lesbonnes00gene/lesbonnes00gene_djvu.txt"
+      },
+      {
+        "Name": "Apocalypse b\u00e9b\u00e9",
+        "Author": "Virginie Despentes",
+        "Link": "https://archive.org/details/apocalypsebbroma0000desp",
+        "Cover": "https://images.squarespace-cdn.com/content/v1/56d1c90b37013be34dbcc75c/1523566931991-BLP4QCAKNRCYJ2JV7G85/Apocalypse_Baby_C.jpg",
+        "StreamLink": "https://archive.org/stream/apocalypsebbroma0000desp/apocalypsebbroma0000desp_djvu.txt"
+      }
+    ]
+  },
+  {
+    "Category": "Classics",
+    "Books": [
+      {
+        "Name": "Les Liaisons Dangereuses",
+        "Author": "Pierre Choderlos ",
+        "Link": "https://archive.org/details/lesliaisonsdange00lacl",
+        "Cover": "https://images.booksense.com/images/456/452/9780486452456.jpg",
+        "StreamLink": "https://archive.org/stream/lesliaisonsdange00lacl/lesliaisonsdange00lacl_djvu.txt"
+      },
+      {
+        "Name": "La Cigale",
+        "Author": "Anonymous",
+        "Link": "https://archive.org/details/lacigale00born",
+        "Cover": "https://dynamic.indigoimages.ca/v1/books/books/2244401731/1.jpg?width=810&maxHeight=810&quality=85\"",
+        "StreamLink": "https://archive.org/stream/lacigale00born/lacigale00born_djvu.txt"
+      },
+      {
+        "Name": "Le Petit Prince",
+        "Author": "Antoine Saint",
+        "Link": "https://archive.org/details/lp_le-petit-prince_antoine-de-saint-exupry",
+        "Cover": "https://m.media-amazon.com/images/I/710wth0vXZL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/lp_le-petit-prince_antoine-de-saint-exupry/lp_le-petit-prince_antoine-de-saint-exupry_djvu.txt"
+      },
+      {
+        "Name": "Les Mis\u00e9rables",
+        "Author": "Victor Hugo",
+        "Link": "https://archive.org/details/lesmisrables00unkngoog",
+        "Cover": "https://cdn.kobo.com/book-images/a6bdd3f5-ba60-4ad3-8f6b-5f1427021961/1200/1200/False/les-miserables-305.jpg",
+        "StreamLink": "https://archive.org/stream/lesmisrables00unkngoog/lesmisrables00unkngoog_djvu.txt"
+      },
+      {
+        "Name": "Madame Bovary",
+        "Author": "Gustave Flaubert",
+        "Link": "https://archive.org/details/madamebovary14155gut",
+        "Cover": "https://wordery.com/jackets/66f42df4/madame-bovary-gustave-flaubert-9781606601112.jpg",
+        "StreamLink": "https://archive.org/stream/madamebovary14155gut/madamebovary14155gut_djvu.txt"
+      },
+      {
+        "Name": "Le Cid",
+        "Author": "Pierre Corneille",
+        "Link": "https://archive.org/details/lecidtragicomedi0000corn",
+        "Cover": "https://media.electre-ng.com/images/image-id/d88e3112f9d10899950aebcd69c5c9f13102fd583956fe08d2c5726a9b86e8f7.jpg",
+        "StreamLink": "https://archive.org/stream/lecidtragicomedi0000corn/lecidtragicomedi0000corn_djvu.txt"
+      },
+      {
+        "Name": "Portraits Litt\u00e9raires ",
+        "Author": "Sainte-Beuve",
+        "Link": "https://archive.org/details/portraitslittr00bir",
+        "Cover": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdv86urbvQiPSpga3p3SWg-xsbN3xm_oD707Pbb0bKAwDyoqaQlkVOUfbdzSHJk1f1uH8&usqp=CAU",
+        "StreamLink": "https://archive.org/stream/portraitslittr00bir/portraitslittr00bir_djvu.txt"
+      },
+      {
+        "Name": "Oeuvres de Lamartine",
+        "Author": "Lamartine",
+        "Link": "https://archive.org/details/oeuvresdelamart00lamagoog",
+        "Cover": "https://c8.alamy.com/comp/2A25BKD/french-satirical-magazine-cover-depicting-the-book-les-metiers-qui-tuent-the-jobs-that-kill-a-survey-of-labour-unions-on-occupational-diseases-by-the-brothers-leon-and-maurice-bonneff-1908-2A25BKD.jpg",
+        "StreamLink": "https://archive.org/stream/oeuvresdelamart00lamagoog/oeuvresdelamart00lamagoog_djvu.txt"
+      },
+      {
+        "Name": "Causeries",
+        "Author": "Alexandra Dumas",
+        "Link": "https://archive.org/details/causeries02duma/mode/2up",
+        "Cover": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmOT_6SBmDB3r9_ACaQXCpRHmX_A1Q4lzUTFj623nWE64z4RVp9Ks-Bmmi0MeDGRod6aM&usqp=CAU",
+        "StreamLink": "https://archive.org/stream/causeries02duma/causeries02duma_djvu.txt"
+      },
+      {
+        "Name": "Fragments des oeuvres",
+        "Author": "Alexandra Dumas",
+        "Link": "https://archive.org/details/fragmentsdesoeuv00duma",
+        "Cover": "https://m.media-amazon.com/images/I/61t5dnhihdL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/fragmentsdesoeuv00duma/fragmentsdesoeuv00duma_djvu.txt"
+      }
+    ]
+  },
+  {
+    "Category": "Drama",
+    "Books": [
+      {
+        "Name": "Les chroniques du chateau de Fontainebleau",
+        "Author": "L\u00e9on Deroy",
+        "Link": "https://archive.org/details/leschroniquesduc00derouoft/page/n7/mode/2up",
+        "Cover": "https://m.media-amazon.com/images/I/61DYQxzY9eL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/leschroniquesduc00derouoft/leschroniquesduc00derouoft_djvu.txt"
+      },
+      {
+        "Name": "Le Marchand de sable",
+        "Author": "Marc Levy",
+        "Link": "https://archive.org/details/monologues00unse",
+        "Cover": "https://www.thebookedition.com/1883969/le-marchand-de-sable.jpg",
+        "StreamLink": "https://archive.org/stream/monologues00unse/monologues00unse_djvu.txt"
+      },
+      {
+        "Name": "Cyrano de Bergerac",
+        "Author": "Edmond Rostand",
+        "Link": "https://archive.org/details/oeuvresdecyrano00berggoog",
+        "Cover": "https://www.publishersweekly.com/cover/9780152058050",
+        "StreamLink": "https://archive.org/stream/oeuvresdecyrano00berggoog/oeuvresdecyrano00berggoog_djvu.txt"
+      },
+      {
+        "Name": "Ph\u00e8dre",
+        "Author": "Jean Racine",
+        "Link": "https://archive.org/details/in.ernet.dli.2015.13931",
+        "Cover": "https://target.scene7.com/is/image/Target/GUEST_50a85295-2615-4fd1-ae46-92b877a27762?wid=488&hei=488&fmt=pjpeg",
+        "StreamLink": "https://archive.org/stream/in.ernet.dli.2015.13931/in.ernet.dli.2015.13931_djvu.txt"
+      },
+      {
+        "Name": "Tartuffe",
+        "Author": "Moli\u00e8re",
+        "Link": "https://archive.org/details/letartuffecomdi00bugoog",
+        "Cover": "https://dynamic.indigoimages.ca/books/9782413024842.jpg?scaleup=true&width=600&quality=85&lang=en",
+        "StreamLink": "https://archive.org/stream/letartuffecomdi00bugoog/letartuffecomdi00bugoog_djvu.txt"
+      },
+      {
+        "Name": "Le Mariage de Figaro",
+        "Author": "Pierre Beaumarchais",
+        "Link": "https://archive.org/details/lemariagedefigar0000vern",
+        "Cover": "https://static.fnac-static.com/multimedia/PE/Images/FR/NR/9b/4b/aa/11160475/1540-1/tsp20231212083531/Le-Mariage-de-Figaro.jpg",
+        "StreamLink": "https://archive.org/stream/lemariagedefigar0000vern/lemariagedefigar0000vern_djvu.txt"
+      },
+      {
+        "Name": "La Dame aux Cam\u00e9lias",
+        "Author": "Alexandre Dumas fils",
+        "Link": "https://archive.org/details/ladameauxcamlias02419gut",
+        "Cover": "https://live.staticflickr.com/4062/4680073851_d8009eb3b2_b.jpg",
+        "StreamLink": "https://archive.org/stream/ladameauxcamlias02419gut/ladameauxcamlias02419gut_djvu.txt"
+      },
+      {
+        "Name": "Germinal ",
+        "Author": "\u00c9mile Zola",
+        "Link": "https://archive.org/details/in.ernet.dli.2015.150390",
+        "Cover": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFkF52KWotYMjn7_WTELRRQIgQIwR8AyRNRKTMwkS8cHq9E9XPUZCX7mGkU1A1YXX9JyM&usqp=CAU",
+        "StreamLink": "https://archive.org/stream/in.ernet.dli.2015.150390/in.ernet.dli.2015.150390_djvu.txt"
+      },
+      {
+        "Name": "Ang\u00e9lique",
+        "Author": "Anne Golon",
+        "Link": "https://archive.org/details/anglique00haut",
+        "Cover": "https://angelique.cz/obaly-en/heinemann-1-book-1-angelique.jpg",
+        "StreamLink": "https://archive.org/stream/anglique00haut/anglique00haut_djvu.txt"
+      },
+      {
+        "Name": "Le roman exp\u00e9rimental",
+        "Author": "Emile Zola",
+        "Link": "https://archive.org/details/leromanexprime00zola/page/n7/mode/2up",
+        "Cover": "https://m.media-amazon.com/images/I/41Zk1+1DyEL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/leromanexprime00zola/leromanexprime00zola_djvu.txt"
+      }
+    ]
+  },
+  {
+    "Category": "Fantasy",
+    "Books": [
+      {
+        "Name": "Contes de F\u00e9es",
+        "Author": "Charles Perrault",
+        "Link": "https://archive.org/details/in.ernet.dli.2015.12813",
+        "Cover": "https://m.media-amazon.com/images/I/81wypkxVqzL._AC_UF894,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/in.ernet.dli.2015.12813/in.ernet.dli.2015.12813_djvu.txt"
+      },
+      {
+        "Name": "La Belle et la B\u00eate",
+        "Author": "Gabrielle-Suzanne Barbot de Villeneuve",
+        "Link": "https://archive.org/details/cihm_992271",
+        "Cover": "https://images.epagine.fr/364/9782080252364_1_75.jpg",
+        "StreamLink": "https://archive.org/stream/cihm_992271/cihm_992271_djvu.txt"
+      },
+      {
+        "Name": "Ars\u00e8ne Lupin",
+        "Author": "Maurice Leblanc",
+        "Link": "https://archive.org/details/arsnelupinsupe00lebl",
+        "Cover": "https://s01.static.libri.hu/cover/ba/4/7324000_4.jpg",
+        "StreamLink": "https://archive.org/stream/arsnelupinsupe00lebl/arsnelupinsupe00lebl_djvu.txt"
+      },
+      {
+        "Name": "Le Marchand de sable",
+        "Author": "Marc Levy",
+        "Link": "https://archive.org/details/monologues00unse",
+        "Cover": "https://www.thebookedition.com/1883969/le-marchand-de-sable.jpg",
+        "StreamLink": "https://archive.org/stream/monologues00unse/monologues00unse_djvu.txt"
+      },
+      {
+        "Name": "M\u00e9moires d'un \u00e2ne",
+        "Author": "Comtesse de S\u00e9gur",
+        "Link": "https://archive.org/details/mmoiresdunne00sguoft",
+        "Cover": "https://dynamic.indigoimages.ca/v1/books/books/2070584224/1.jpg?width=810&maxHeight=810&quality=85",
+        "StreamLink": "https://archive.org/stream/mmoiresdunne00sguoft/mmoiresdunne00sguoft_djvu.txt"
+      },
+      {
+        "Name": "L'Histoire de Gil Blas de Santillane",
+        "Author": "Alain-Ren\u00e9 Lesage",
+        "Link": "https://archive.org/details/abrgdelhistoire00wanogoog/page/n23/mode/2up",
+        "Cover": "https://m.media-amazon.com/images/I/51TAB0ThnWL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/abrgdelhistoire00wanogoog/abrgdelhistoire00wanogoog_djvu.txt"
+      },
+      {
+        "Name": "Le Cid",
+        "Author": "Pierre Corneille",
+        "Link": "https://archive.org/details/lecidtragicomedi0000corn",
+        "Cover": "https://media.electre-ng.com/images/image-id/d88e3112f9d10899950aebcd69c5c9f13102fd583956fe08d2c5726a9b86e8f7.jpg",
+        "StreamLink": "https://archive.org/stream/lecidtragicomedi0000corn/lecidtragicomedi0000corn_djvu.txt"
+      },
+      {
+        "Name": "Les Mis\u00e9rables",
+        "Author": "Victor Hugo",
+        "Link": "https://archive.org/details/lesmisrables00unkngoog",
+        "Cover": "https://cdn.kobo.com/book-images/a6bdd3f5-ba60-4ad3-8f6b-5f1427021961/1200/1200/False/les-miserables-305.jpg",
+        "StreamLink": "https://archive.org/stream/lesmisrables00unkngoog/lesmisrables00unkngoog_djvu.txt"
+      },
+      {
+        "Name": "Fragments des oeuvres",
+        "Author": "Alexandra Dumas",
+        "Link": "https://archive.org/details/fragmentsdesoeuv00duma",
+        "Cover": "https://m.media-amazon.com/images/I/61t5dnhihdL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/fragmentsdesoeuv00duma/fragmentsdesoeuv00duma_djvu.txt"
+      },
+      {
+        "Name": "L'\u00cele au tr\u00e9sor",
+        "Author": "Robert Louis Stevenson",
+        "Link": "https://archive.org/details/bnf-bpt6k6566382t",
+        "Cover": "https://www.glenat.com/sites/default/files/images/livres/couv/9782344043493-001-T.jpeg",
+        "StreamLink": "https://archive.org/stream/bnf-bpt6k6566382t/bnf-bpt6k6566382t_djvu.txt"
+      }
+    ]
+  },
+  {
+    "Category": "Fiction",
+    "Books": [
+      {
+        "Name": "Le rouge et le noir",
+        "Author": " Stendhal",
+        "Link": "https://archive.org/details/lerougeetlenoir00stengoog",
+        "Cover": "https://static.fnac-static.com/multimedia/PE/Images/FR/NR/2e/17/37/3610414/1540-1/tsp20240119073911/Le-rouge-et-le-noir-Texte-Abrege.jpg",
+        "StreamLink": "https://archive.org/stream/lerougeetlenoir00stengoog/lerougeetlenoir00stengoog_djvu.txt"
+      },
+      {
+        "Name": "Madame Bovary",
+        "Author": "Gustave Flaubert",
+        "Link": "https://archive.org/details/madamebovary14155gut",
+        "Cover": "https://wordery.com/jackets/66f42df4/madame-bovary-gustave-flaubert-9781606601112.jpg",
+        "StreamLink": "https://archive.org/stream/madamebovary14155gut/madamebovary14155gut_djvu.txt"
+      },
+      {
+        "Name": "Les Mis\u00e9rables",
+        "Author": "Victor Hugo",
+        "Link": "https://archive.org/details/lesmisrables00unkngoog",
+        "Cover": "https://cdn.kobo.com/book-images/a6bdd3f5-ba60-4ad3-8f6b-5f1427021961/1200/1200/False/les-miserables-305.jpg",
+        "StreamLink": "https://archive.org/stream/lesmisrables00unkngoog/lesmisrables00unkngoog_djvu.txt"
+      },
+      {
+        "Name": "Les bonnes",
+        "Author": "Jean Genet",
+        "Link": "https://archive.org/details/lesbonnes00gene",
+        "Cover": "https://m.media-amazon.com/images/I/61QValgMzDL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/lesbonnes00gene/lesbonnes00gene_djvu.txt"
+      },
+      {
+        "Name": "Apocalypse b\u00e9b\u00e9",
+        "Author": "Virginie Despentes",
+        "Link": "https://archive.org/details/apocalypsebbroma0000desp",
+        "Cover": "https://images.squarespace-cdn.com/content/v1/56d1c90b37013be34dbcc75c/1523566931991-BLP4QCAKNRCYJ2JV7G85/Apocalypse_Baby_C.jpg",
+        "StreamLink": "https://archive.org/stream/apocalypsebbroma0000desp/apocalypsebbroma0000desp_djvu.txt"
+      },
+      {
+        "Name": "Le Cid",
+        "Author": "Pierre Corneille",
+        "Link": "https://archive.org/details/lecidtragicomedi0000corn",
+        "Cover": "https://media.electre-ng.com/images/image-id/d88e3112f9d10899950aebcd69c5c9f13102fd583956fe08d2c5726a9b86e8f7.jpg",
+        "StreamLink": "https://archive.org/stream/lecidtragicomedi0000corn/lecidtragicomedi0000corn_djvu.txt"
+      },
+      {
+        "Name": "Ars\u00e8ne Lupin",
+        "Author": "Maurice Leblanc",
+        "Link": "https://archive.org/details/arsnelupinsupe00lebl",
+        "Cover": "https://s01.static.libri.hu/cover/ba/4/7324000_4.jpg",
+        "StreamLink": "https://archive.org/stream/arsnelupinsupe00lebl/arsnelupinsupe00lebl_djvu.txt"
+      },
+      {
+        "Name": "Les Myst\u00e8res de Paris",
+        "Author": "Eug\u00e8ne Sue",
+        "Link": "https://archive.org/details/lesmystresdepar02suegoog",
+        "Cover": "https://m.media-amazon.com/images/I/71xrdWnaP4L._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/lesmystresdepar02suegoog/lesmystresdepar02suegoog_djvu.txt"
+      },
+      {
+        "Name": "Le Petit Prince",
+        "Author": "Antoine Saint",
+        "Link": "https://archive.org/details/lp_le-petit-prince_antoine-de-saint-exupry",
+        "Cover": "https://m.media-amazon.com/images/I/710wth0vXZL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/lp_le-petit-prince_antoine-de-saint-exupry/lp_le-petit-prince_antoine-de-saint-exupry_djvu.txt"
+      },
+      {
+        "Name": " Le Voyage d'un naturaliste autour du monde",
+        "Author": "Charles Darwin",
+        "Link": "https://archive.org/details/voyagebeagle02darwgoog",
+        "Cover": "https://m.media-amazon.com/images/I/618ZCGBb8PL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/voyagebeagle02darwgoog/voyagebeagle02darwgoog_djvu.txt"
+      }
+    ]
+  },
+  {
+    "Category": "Mystery",
+    "Books": [
+      {
+        "Name": "Le Myst\u00e8re de la chambre jaune",
+        "Author": "Gaston Leroux",
+        "Link": "https://archive.org/details/elmisteridelacam1276lero",
+        "Cover": "https://images.epagine.fr/333/9782215122333_1_75.jpg",
+        "StreamLink": "https://archive.org/stream/elmisteridelacam1276lero/elmisteridelacam1276lero_djvu.txt"
+      },
+      {
+        "Name": "L'Affaire Lerouge",
+        "Author": "\u00c9mile Gaboriau",
+        "Link": "https://archive.org/details/laffairelerouge00gabo/page/n9/mode/2up",
+        "Cover": "https://www.le-livre.fr/photos/RO9/RO90073868.jpg",
+        "StreamLink": "https://archive.org/stream/laffairelerouge00gabo/laffairelerouge00gabo_djvu.txt"
+      },
+      {
+        "Name": "Monsieur Lecoq",
+        "Author": "Emile Gaboriau",
+        "Link": "https://archive.org/details/monsieurlecoqgab00gaboiala",
+        "Cover": "https://m.media-amazon.com/images/I/61ad-hlzLUL._AC_UF894,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/monsieurlecoqgab00gaboiala/monsieurlecoqgab00gaboiala_djvu.txt"
+      },
+      {
+        "Name": "Th\u00e9r\u00e8se Desqueyroux",
+        "Author": "Fran\u00e7ois Mauriac",
+        "Link": "https://archive.org/details/theresedesqueyro0000maur_d4z3",
+        "Cover": "https://upload.wikimedia.org/wikipedia/en/0/07/Th%C3%A9r%C3%A8se_Desqueyroux_2012_poster.png",
+        "StreamLink": "https://archive.org/stream/theresedesqueyro0000maur_d4z3/theresedesqueyro0000maur_d4z3_djvu.txt"
+      },
+      {
+        "Name": "Les Myst\u00e8res de Paris",
+        "Author": "Eug\u00e8ne Sue",
+        "Link": "https://archive.org/details/lesmystresdepar02suegoog",
+        "Cover": "https://m.media-amazon.com/images/I/71xrdWnaP4L._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/lesmystresdepar02suegoog/lesmystresdepar02suegoog_djvu.txt"
+      },
+      {
+        "Name": "Les Mis\u00e9rables",
+        "Author": "Victor Hugo",
+        "Link": "https://archive.org/details/lesmisrables00unkngoog",
+        "Cover": "https://cdn.kobo.com/book-images/a6bdd3f5-ba60-4ad3-8f6b-5f1427021961/1200/1200/False/les-miserables-305.jpg",
+        "StreamLink": "https://archive.org/stream/lesmisrables00unkngoog/lesmisrables00unkngoog_djvu.txt"
+      },
+      {
+        "Name": "L'\u00c9tranger",
+        "Author": "Albert Camus",
+        "Link": "https://archive.org/details/ltrangeroulafa02chom",
+        "Cover": "https://m.media-amazon.com/images/I/91g-tUclDbL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/ltrangeroulafa02chom/ltrangeroulafa02chom_djvu.txt"
+      }
+    ]
+  },
+  {
+    "Category": "Poetry",
+    "Books": [
+      {
+        "Name": "Les Fleurs du Mal ",
+        "Author": "Charles Baudelaire",
+        "Link": "https://archive.org/details/lesfleursdumal06099gut",
+        "Cover": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Fleurs-du-mal_titel.jpg/200px-Fleurs-du-mal_titel.jpg",
+        "StreamLink": "https://archive.org/stream/lesfleursdumal06099gut/lesfleursdumal06099gut_djvu.txt"
+      },
+      {
+        "Name": "Po\u00e8mes",
+        "Author": "Emile Verhaeren",
+        "Link": "https://archive.org/details/pomesverh01verhuoft/page/2/mode/2up",
+        "Cover": "https://dynamic.indigoimages.ca/books/9781163255315.jpg?scaleup=true&width=600&quality=85&lang=en",
+        "StreamLink": "https://archive.org/stream/pomesverh01verhuoft/pomesverh01verhuoft_djvu.txt"
+      },
+      {
+        "Name": "Alcools",
+        "Author": "Guillaume Apollinaire",
+        "Link": "https://archive.org/details/alcoolspomes18900000apol",
+        "Cover": "https://images.booksense.com/images/981/292/9798644292981.jpg",
+        "StreamLink": "https://archive.org/stream/alcoolspomes18900000apol/alcoolspomes18900000apol_djvu.txt"
+      },
+      {
+        "Name": "Feuilles d'automne",
+        "Author": "Victor Hugo",
+        "Link": "https://archive.org/details/lesfeuillesdaut01hugogoog",
+        "Cover": "https://cdn1.booknode.com/book_cover/981/les_feuilles_dautomne-980850-264-432.jpg",
+        "StreamLink": "https://archive.org/stream/lesfeuillesdaut01hugogoog/lesfeuillesdaut01hugogoog_djvu.txt"
+      },
+      {
+        "Name": "Les Contemplations",
+        "Author": "Victor Hugo",
+        "Link": "https://archive.org/details/lescontemplatio00hugogoog",
+        "Cover": "https://d3525k1ryd2155.cloudfront.net/f/997/014/9782253014997.IN.0.m.jpg",
+        "StreamLink": "https://archive.org/stream/lescontemplatio00hugogoog/lescontemplatio00hugogoog_djvu.txt"
+      },
+      {
+        "Name": "Sagesse",
+        "Author": "Paul Verlaine",
+        "Link": "https://archive.org/details/sagesse00verlgoog",
+        "Cover": "https://www.degruyter.com/document/cover/isbn/9780271086354/product_pages",
+        "StreamLink": "https://archive.org/stream/sagesse00verlgoog/sagesse00verlgoog_djvu.txt"
+      },
+      {
+        "Name": "Po\u00e9sie",
+        "Author": "Lorenzo de' Medici",
+        "Link": "https://archive.org/details/bub_gb_eVdrBtxUboUC",
+        "Cover": "https://m.media-amazon.com/images/I/71MP782as-L._AC_UF894,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/bub_gb_eVdrBtxUboUC/bub_gb_eVdrBtxUboUC_djvu.txt"
+      },
+      {
+        "Name": "Calligrammes",
+        "Author": "Guillaume Apollinaire",
+        "Link": "https://archive.org/details/calligrammespo00apol",
+        "Cover": "https://images.ucpress.edu/covers/isbn13/9780520242128.jpg",
+        "StreamLink": "https://archive.org/stream/calligrammespo00apol/calligrammespo00apol_djvu.txt"
+      },
+      {
+        "Name": "Contes et po\u00e9sies diverses",
+        "Author": " Voltaire",
+        "Link": "https://archive.org/details/contesetposies00volt",
+        "Cover": "https://m.media-amazon.com/images/I/61xGuQ2dG2L._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/contesetposies00volt/contesetposies00volt_djvu.txt"
+      }
+    ]
+  },
+  {
+    "Category": "Romance",
+    "Books": [
+      {
+        "Name": "Manon Lescaut",
+        "Author": "Abb\u00e9 Pr\u00e9vost",
+        "Link": "https://archive.org/details/manonlescaut00prgoog",
+        "Cover": "https://arthive.net/res/media/img/orig/work/00b/91260.jpg",
+        "StreamLink": "https://archive.org/stream/manonlescaut00prgoog/manonlescaut00prgoog_djvu.txt"
+      },
+      {
+        "Name": "Manon Lescaut",
+        "Author": "Benjamin Constant",
+        "Link": "https://archive.org/details/adolphebe00consuoft",
+        "Cover": "https://www.livredepoche.com/sites/default/files/styles/manual_crop_269_435/public/images/livres/couv/9782253045885-001-T.jpeg?itok=hfeiwb8n",
+        "StreamLink": "https://archive.org/stream/adolphebe00consuoft/adolphebe00consuoft_djvu.txt"
+      }
+    ]
+  },
+  {
+    "Category": "Thriller",
+    "Books": [
+      {
+        "Name": "L'\u00c9tranger",
+        "Author": "Albert Camus",
+        "Link": "https://archive.org/details/ltrangeroulafa02chom",
+        "Cover": "https://m.media-amazon.com/images/I/91g-tUclDbL._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/ltrangeroulafa02chom/ltrangeroulafa02chom_djvu.txt"
+      },
+      {
+        "Name": "Les Trois Crimes de Monsieur Combes",
+        "Author": "Georges Simenon",
+        "Link": "https://archive.org/details/thtrecompletdee00unkngoog",
+        "Cover": "https://m.media-amazon.com/images/I/51RXRYM1+rL._AC_SY1000_.jpg",
+        "StreamLink": "https://archive.org/stream/thtrecompletdee00unkngoog/thtrecompletdee00unkngoog_djvu.txt"
+      },
+      {
+        "Name": "Le Horla",
+        "Author": "Guy de Maupassant",
+        "Link": "https://archive.org/details/lehorla00maup",
+        "Cover": "https://m.media-amazon.com/images/I/81G4QYBgVxL._AC_UF894,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/lehorla00maup/lehorla00maup_djvu.txt"
+      },
+      {
+        "Name": "L'Affaire Lerouge",
+        "Author": "\u00c9mile Gaboriau",
+        "Link": "https://archive.org/details/laffairelerouge00gabo/page/n9/mode/2up",
+        "Cover": "https://www.le-livre.fr/photos/RO9/RO90073868.jpg",
+        "StreamLink": "https://archive.org/stream/laffairelerouge00gabo/laffairelerouge00gabo_djvu.txt"
+      },
+      {
+        "Name": "Vidocq : M\u00e9moires",
+        "Author": "Eug\u00e8ne Fran\u00e7ois Vidocq",
+        "Link": "https://archive.org/details/mmoiresdunforat00vidogoog",
+        "Cover": "https://i0.wp.com/ecx.images-amazon.com/images/I/51aiXu5GmLL._SX312_BO1,204,203,200_.jpg",
+        "StreamLink": "https://archive.org/stream/mmoiresdunforat00vidogoog/mmoiresdunforat00vidogoog_djvu.txt"
+      },
+      {
+        "Name": "Ars\u00e8ne Lupin",
+        "Author": "Maurice Leblanc",
+        "Link": "https://archive.org/details/arsnelupinsupe00lebl",
+        "Cover": "https://s01.static.libri.hu/cover/ba/4/7324000_4.jpg",
+        "StreamLink": "https://archive.org/stream/arsnelupinsupe00lebl/arsnelupinsupe00lebl_djvu.txt"
+      },
+      {
+        "Name": "Th\u00e9r\u00e8se Desqueyroux",
+        "Author": "Fran\u00e7ois Mauriac",
+        "Link": "https://archive.org/details/theresedesqueyro0000maur_d4z3",
+        "Cover": "https://upload.wikimedia.org/wikipedia/en/0/07/Th%C3%A9r%C3%A8se_Desqueyroux_2012_poster.png",
+        "StreamLink": "https://archive.org/stream/theresedesqueyro0000maur_d4z3/theresedesqueyro0000maur_d4z3_djvu.txt"
+      },
+      {
+        "Name": "L'Homme au masque de fer",
+        "Author": "Marius Jean",
+        "Link": "https://archive.org/details/lhommeaumasqued00topigoog",
+        "Cover": "https://m.media-amazon.com/images/I/51VW57MD3TL._AC_UF894,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/lhommeaumasqued00topigoog/lhommeaumasqued00topigoog_djvu.txt"
+      },
+      {
+        "Name": "Les Myst\u00e8res de Paris",
+        "Author": "Eug\u00e8ne Sue",
+        "Link": "https://archive.org/details/lesmystresdepar02suegoog",
+        "Cover": "https://m.media-amazon.com/images/I/71xrdWnaP4L._AC_UF1000,1000_QL80_.jpg",
+        "StreamLink": "https://archive.org/stream/lesmystresdepar02suegoog/lesmystresdepar02suegoog_djvu.txt"
+      }
+    ]
+  }
+]

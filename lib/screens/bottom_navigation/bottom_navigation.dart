@@ -1,5 +1,6 @@
 import 'package:book_charm/screens/exercise/view/exercise.dart';
 import 'package:book_charm/screens/home/view/dashboard_screen.dart';
+import 'package:book_charm/screens/home/view/library_screen.dart';
 import 'package:book_charm/screens/profile/view/profile.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,8 @@ class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      _pageController.animateToPage(index, duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+      _pageController.animateToPage(index,
+          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
     });
   }
 
@@ -82,12 +84,5 @@ class DictionaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(child: Text('Dictionary Screen'));
-  }
-}
-
-class LibraryScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Library Screen'));
   }
 }
