@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:book_charm/screens/games/book_reading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -88,6 +89,11 @@ class BookDetailPage extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       // Implement your download functionality here
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const BookReadingScreen()));
                     },
                     child: const Text('Download'),
                   ),
