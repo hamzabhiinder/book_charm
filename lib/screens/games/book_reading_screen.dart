@@ -58,7 +58,7 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
     try {
       // Replace 'es' with the language code you want to translate to
       var translatedText =
-          await translator.translate(selectedText, from: 'es', to: 'en');
+          await translator.translate(selectedText, from: 'fr', to: 'en');
       log("Translated text: $translatedText");
       selectTextValue = selectedText;
       translateTextValue = translatedText.text;
