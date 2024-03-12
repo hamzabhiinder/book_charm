@@ -17,8 +17,7 @@ class DashBoardScreen extends StatefulWidget {
   State<DashBoardScreen> createState() => _DashBoardScreenState();
 }
 
-class _DashBoardScreenState extends State<DashBoardScreen>
-    with SingleTickerProviderStateMixin {
+class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _selectedIndex = 0;
 
@@ -34,6 +33,29 @@ class _DashBoardScreenState extends State<DashBoardScreen>
       _tabController.index = index;
     });
   }
+
+  List recommendationData = [
+    {
+      "imageUrl": "assets/images/a_december_to_remember.jpg",
+      "bookName": "A December To Remember",
+      "authorName": "Janny Bayliss"
+    },
+    {
+      "imageUrl": "assets/images/all_the_little_bird_hearts.jpg",
+      "bookName": "All The Little Bird-Hearts",
+      "authorName": "Viktoria Lloyd-Barlow"
+    },
+    {
+      "imageUrl": "assets/images/bright_lights_big_christmas.jpg",
+      "bookName": "Bright Lights, Big Christmas",
+      "authorName": "Mary Kay Andrews"
+    },
+    {
+      "imageUrl": "assets/images/bright_lights_big_christmas.jpg",
+      "bookName": "Bright Lights, Big Christmas",
+      "authorName": "Mary Kay Andrews"
+    }
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -78,27 +100,22 @@ class _DashBoardScreenState extends State<DashBoardScreen>
               //   ),
               // ),
               Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                decoration: BoxDecoration(
-                    color: AppColors.secondaryColor,
-                    borderRadius: BorderRadius.circular(12)),
+                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                decoration:
+                    BoxDecoration(color: AppColors.secondaryColor, borderRadius: BorderRadius.circular(12)),
                 child: const Column(
                   children: [
                     Text(
                       "\'Whoever guide someone to goodness,he\'ll get the reward similar to it\'",
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
                     ),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
                         "Sahih AlMuslim 1893 (a)",
                         textAlign: TextAlign.end,
-                        style: TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.w500),
+                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
                       ),
                     ),
                   ],
@@ -117,14 +134,14 @@ class _DashBoardScreenState extends State<DashBoardScreen>
               SizedBox(
                 height: 300,
                 child: TabBarView(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   controller: _tabController,
                   children: [
                     // Your existing TabBarView content
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Row(
@@ -139,23 +156,23 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                                   authorName: 'Jules Verne',
                                 );
                               },
-                              child: CustomContainer(
+                              child: const CustomContainer(
                                 url: 'assets/images/star.png',
                                 text1: 'XP',
                                 text2: '0',
                               ),
                             ),
-                            CustomContainer(
+                            const CustomContainer(
                               url: 'assets/images/flame.png',
                               text1: 'Streak',
                               text2: '0',
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             CustomContainer(
@@ -172,7 +189,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                         ),
                       ],
                     ),
-                    ReusableColumn(), ReusableColumn(),
+                    const ReusableColumn(), const ReusableColumn(),
                   ],
                 ),
               ),
@@ -191,29 +208,19 @@ class _DashBoardScreenState extends State<DashBoardScreen>
               const SizedBox(
                 height: 10,
               ),
-              const CustomBookTile(
-                url: 'assets/images/a_december_to_remember.jpg',
-                text1: 'A December To\nRemember',
-                text2: 'Janny Bayliss',
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: recommendationData.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return CustomBookTile(
+                    imageUrl: recommendationData[index]['imageUrl'],
+                    bookName: recommendationData[index]['bookName'],
+                    authorName: recommendationData[index]['authorName'],
+                  );
+                },
               ),
-              const SizedBox(height: 10),
-              const CustomBookTile(
-                url: 'assets/images/all_the_little_bird_hearts.jpg',
-                text1: 'All The Little\nBird-Hearts',
-                text2: 'Viktoria Lloyd-Barlow',
-              ),
-              const SizedBox(height: 10),
-              const CustomBookTile(
-                url: 'assets/images/bright_lights_big_christmas.jpg',
-                text1: 'Bright Lights, Big\nChristmas',
-                text2: 'Mary Kay Andrews',
-              ),
-              const SizedBox(height: 10),
-              const CustomBookTile(
-                url: 'assets/images/bright_lights_big_christmas.jpg',
-                text1: 'Bright Lights, Big\nChristmas',
-                text2: 'Mary Kay Andrews',
-              )
+             
             ],
           ),
         ),

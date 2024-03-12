@@ -1,5 +1,3 @@
-
-
 import 'dart:developer';
 import 'dart:io'; // Import this for file operations
 import 'package:http/http.dart' as http;
@@ -8,9 +6,7 @@ import 'package:path_provider/path_provider.dart';
 // Import this for file path
 
 Future<String?> scrapePreTagContent(
-    {required String url,
-    required String bookName,
-    required String authorName}) async {
+    {required String url, required String bookName, required String authorName}) async {
   try {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -39,7 +35,6 @@ Future<String?> scrapePreTagContent(
   }
 }
 
-
 Future<void> saveTextToFile(String text, String bookName) async {
   try {
     final externalDir = await getExternalStorageDirectory();
@@ -49,8 +44,15 @@ Future<void> saveTextToFile(String text, String bookName) async {
       throw Exception('External storage not available');
     }
 
-    final file = File('${externalDir.path}/$bookName.txt');
+    final filePath = '${externalDir.path}/$bookName.txt';
+    final file = File(filePath);
 
+    // Check if the book is already downloaded
+    if (await file.exists()) {
+      log('Book already downloaded: $filePath');
+      // You can add additional handling here if needed
+      return;
+    }
     await file.writeAsString(text);
 
     log('Text saved to file: ${file.path}');
