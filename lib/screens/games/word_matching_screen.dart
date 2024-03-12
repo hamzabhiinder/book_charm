@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:localstorage/localstorage.dart';
 
 List<T> shuffleCopy<T>(List<T> listToShuffle) {
   final shuffledList = List<T>.from(listToShuffle); // Create a copy
@@ -13,12 +14,49 @@ class WordMatchingScreen extends StatefulWidget {
 }
 
 class _WordMatchingScreenState extends State<WordMatchingScreen> {
-  final List<Map<String, String>> wordPairs = [
-    {'english': 'Apple', 'spanish': 'Manzana'},
-    {'english': 'Banana', 'spanish': 'Plátano'},
-    {'english': 'Cherry', 'spanish': 'Cereza'},
-    {'english': 'Orange', 'spanish': 'Naranja'},
-  ];
+  List<Map<String, String>> wordPairs = [];
+
+  final LocalStorage storage = LocalStorage('dictionary.json');
+  Future<void> loadDictionary() async {
+    await storage.ready;
+    print('Storage is ready');
+
+    var storedData = storage.getItem('wordPairs');
+    print('Stored data: $storedData');
+
+    if (storedData != null) {
+      if (storedData is List<dynamic>) {
+        List<Map<String, String>> castedData = [];
+
+        for (var item in storedData) {
+          if (item is Map<String, dynamic>) {
+            Map<String, String> stringMap = {};
+
+            // Convert keys and values to strings
+            item.forEach((key, value) {
+              stringMap[key] = value.toString();
+            });
+
+            castedData.add(stringMap);
+          } else {
+            print('Error: Unexpected data format in dictionary.json');
+          }
+        }
+        setState(() {
+          wordPairs = castedData;
+        });
+      } else {
+        print('Error: Unexpected data format in dictionary.json');
+      }
+    }
+    print('Updated wordPairs: $wordPairs');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadDictionary();
+  }
 
   @override
   Widget build(BuildContext context) {
