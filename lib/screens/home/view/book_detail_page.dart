@@ -1,7 +1,9 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
 import 'package:book_charm/screens/games/book_reading_screen.dart';
+import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -28,10 +30,7 @@ class BookDetailPage extends StatefulWidget {
 }
 
 class _BookDetailPageState extends State<BookDetailPage> {
-  // Replace with the actual path to the book file in the device's storage
-  String bookFilePath = '/path/to/book/file.txt';
-
-  // State variable to track book availability
+  bool isLoading = false;
   bool isBookAvailable = false;
 
   @override
@@ -40,20 +39,23 @@ class _BookDetailPageState extends State<BookDetailPage> {
     checkBookAvailability();
   }
 
-  // Function to check if the book file exists
   void checkBookAvailability() async {
     final externalDir = await getExternalStorageDirectory();
 
     if (externalDir == null) {
-      // External storage is not available
       throw Exception('External storage not available');
     }
 
-    final filePath = '${externalDir.path}/${widget.bookName}';
+    final filePath =
+        '${externalDir.path}/${widget.bookName}_${widget.authorName}.txt';
     final file = File(filePath);
+
     setState(() {
-      isBookAvailable = File(bookFilePath).existsSync();
+      isBookAvailable = file.existsSync();
+      isLoading = false;
     });
+    if (isBookAvailable) {}
+    log('isBookAvailable $isBookAvailable');
   }
 
   @override
@@ -81,7 +83,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                     color: Colors.black.withOpacity(0.3),
                     child: Center(
                       child: Container(
-                        padding: EdgeInsets.only(top: 40),
+                        padding: const EdgeInsets.only(top: 40),
                         height: MediaQuery.of(context).size.height * 0.4,
                         child: widget.isLibrary
                             ? CachedNetworkImage(
@@ -106,7 +108,8 @@ class _BookDetailPageState extends State<BookDetailPage> {
               children: [
                 Text(
                   widget.bookName,
-                  style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 24.0, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   widget.authorName,
@@ -135,17 +138,53 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       // Implement your download functionality here
-                      scrapePreTagContent(
-                        url: widget.downloadUrl ?? '',
-                        bookName: widget.bookName,
-                        authorName: widget.authorName,
-                      );
-                      // Navigator.push(
-                      //     context, MaterialPageRoute(builder: (context) => const BookReadingScreen()));
+                      if (!isBookAvailable) {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        await scrapePreTagContent(
+                          url: widget.downloadUrl ?? '',
+                          bookName: widget.bookName,
+                          authorName: widget.authorName,
+                        );
+                        checkBookAvailability();
+                        log('loading $isLoading');
+                        // Future.delayed(Duration(seconds: 3)).then((value) {
+                        //   setState(() {
+                        //     isLoading = false;
+                        //   });
+                        // });
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BookReadingScreen(
+                                bookName: widget.bookName,
+                                authorName: widget.authorName),
+                          ),
+                        );
+                      }
                     },
-                    child: const Text('Download'),
+                    child: isBookAvailable
+                        ? const Text('Read')
+                        : Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text('Download'),
+                              SizedBox(width: 10),
+                              isLoading
+                                  ? SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                          strokeWidth: 2.5,
+                                          color: AppColors.primaryColor),
+                                    )
+                                  : Container()
+                            ],
+                          ),
                   ),
                 ),
               ],

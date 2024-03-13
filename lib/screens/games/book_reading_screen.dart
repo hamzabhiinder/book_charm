@@ -7,7 +7,10 @@ import 'package:translator/translator.dart';
 import 'package:localstorage/localstorage.dart';
 
 class BookReadingScreen extends StatefulWidget {
-  const BookReadingScreen({super.key});
+  final String bookName;
+  final String authorName;
+  const BookReadingScreen(
+      {super.key, required this.bookName, required this.authorName});
 
   @override
   State<BookReadingScreen> createState() => _BookReadingScreenState();
@@ -113,7 +116,8 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
 
   Future<void> fetchData() async {
     try {
-      var result = await readTextFromFile('Le Tour du monde_Jules Verne');
+      var result =
+          await readTextFromFile('${widget.bookName}_${widget.authorName}');
       if (result != null) {
         setState(() {
           myText = result;

@@ -21,7 +21,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
   Future<void> _loadJsonData() async {
     try {
-      String jsonString = await rootBundle.loadString('assets/data/bookFrenchData.json');
+      String jsonString =
+          await rootBundle.loadString('assets/data/bookFrenchData.json');
       setState(() {
         categories = json.decode(jsonString);
       });
@@ -55,7 +56,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 ),
               ),
               SizedBox(
-                height: getResponsiveHeight(context, 170), // Set the height as needed
+                height: getResponsiveHeight(
+                    context, 170), // Set the height as needed
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: books.length,
@@ -63,15 +65,19 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     String bookName = books[bookIndex]['Name'];
                     String imageUrl = books[bookIndex]['Cover'];
                     String authorName = books[bookIndex]['Author'];
+                    String downloadUrl = books[bookIndex]['StreamLink'];
                     return GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(_buildPageRoute(imageUrl, bookName, authorName));
+                        Navigator.of(context).push(_buildPageRoute(
+                            imageUrl, bookName, authorName, downloadUrl));
                       },
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 10)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: getResponsiveWidth(context, 10)),
                         child: Container(
                           alignment: Alignment.center,
-                          width: getResponsiveWidth(context, 100), // Set the width as needed
+                          width: getResponsiveWidth(
+                              context, 100), // Set the width as needed
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             // mainAxisAlignment: MainAxisAlignment.center,
@@ -83,14 +89,17 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   width: getResponsiveWidth(context, 90),
                                   fit: BoxFit.cover,
                                   imageUrl: imageUrl,
-                                  errorWidget: (context, url, error) => ClipRRect(
+                                  errorWidget: (context, url, error) =>
+                                      ClipRRect(
                                     borderRadius: BorderRadius.circular(8.0),
                                     child: Container(
-                                        width: getResponsiveHeight(context, 100),
+                                        width:
+                                            getResponsiveHeight(context, 100),
                                         height: getResponsiveWidth(context, 90),
                                         decoration: BoxDecoration(
                                           color: Colors.grey,
-                                          borderRadius: BorderRadius.circular(13),
+                                          borderRadius:
+                                              BorderRadius.circular(13),
                                         ),
                                         child: Icon(
                                           Icons.error_outline,
@@ -107,7 +116,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   bookName,
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: getResponsiveFontSize(context, 12),
+                                    fontSize:
+                                        getResponsiveFontSize(context, 12),
                                     fontWeight: FontWeight.w600,
                                   ),
                                   maxLines: 2,
@@ -120,7 +130,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                   authorName,
                                   style: TextStyle(
                                     color: Colors.grey.shade600,
-                                    fontSize: getResponsiveFontSize(context, 11),
+                                    fontSize:
+                                        getResponsiveFontSize(context, 11),
                                     fontWeight: FontWeight.w400,
                                   ),
                                   maxLines: 1,
@@ -142,7 +153,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
     );
   }
 
-  PageRouteBuilder _buildPageRoute(imageUrl, bookName, authorName) {
+  PageRouteBuilder _buildPageRoute(
+      imageUrl, bookName, authorName, downloadUrl) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return BookDetailPage(
@@ -150,13 +162,15 @@ class _LibraryScreenState extends State<LibraryScreen> {
           bookName: bookName,
           authorName: authorName,
           isLibrary: true,
+          downloadUrl: downloadUrl,
         );
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
         const curve = Curves.easeInOut;
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
         var offsetAnimation = animation.drive(tween);
 
         return SlideTransition(
