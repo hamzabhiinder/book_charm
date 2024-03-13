@@ -1,4 +1,5 @@
 import 'package:book_charm/providers/signin_provider.dart';
+import 'package:book_charm/screens/profile/services/profile_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:book_charm/screens/profile/view/widget/switch_button.dart';
@@ -38,8 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(height: getResponsiveHeight(context, 10)),
             Container(
               decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.circular(15), // Adjust the radius as needed
+                borderRadius: BorderRadius.circular(15), // Adjust the radius as needed
                 border: Border.all(
                   color: Colors.transparent,
                   width: 2.0,
@@ -59,20 +59,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     child: Image.asset(
                       'assets/images/flame.png',
-                      width: getResponsiveWidth(
-                          context, 50), // Adjust the width as needed
-                      height: getResponsiveHeight(
-                          context, 50), // Adjust the height as needed
+                      width: getResponsiveWidth(context, 50), // Adjust the width as needed
+                      height: getResponsiveHeight(context, 50), // Adjust the height as needed
                     ),
                   ),
                   SizedBox(
-                      width: getResponsiveWidth(context,
-                          10)), // Adjust the spacing between leading and title
+                      width: getResponsiveWidth(context, 10)), // Adjust the spacing between leading and title
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Name',
+                        '${sp.userModel?.name ?? "Name"}',
                         style: TextStyle(
                           fontSize: getResponsiveFontSize(context, 22),
                           fontWeight: FontWeight.w500,
@@ -113,9 +110,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.white.withOpacity(0.7),
               ),
-              child: const Column(
+              child: Column(
                 children: [
                   CustomListTile(
+                    onTap: () => ProfileService.showBottomSheet(context),
                     title: 'Change Name',
                     imagePath: 'assets/images/profile.png',
                     trailingIcon: Icons.arrow_forward_ios,
@@ -178,13 +176,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               child: Column(
                 children: [
-                  CustomListTile(
+                  const CustomListTile(
                     title: 'Languages',
                     imagePath: 'assets/images/translator.png',
                     trailingIcon: Icons.arrow_forward_ios,
                     trailingIconColor: AppColors.primaryColor,
                   ),
-                  CustomListTile(
+                  const CustomListTile(
                     title: 'Help',
                     imagePath: 'assets/images/help.png',
                     trailingIcon: Icons.arrow_forward_ios,
@@ -193,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   CustomListTile(
                     onTap: () {
                       sp.userSignOut().then((value) {
-                        nextScreenReplace(context, AuthenticationScreen());
+                        nextScreenReplace(context, const AuthenticationScreen());
                       });
                     },
                     title: 'Logout',
@@ -248,8 +246,7 @@ class CustomListTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(
-                  vertical: getResponsiveHeight(context, 2)),
+              padding: EdgeInsets.symmetric(vertical: getResponsiveHeight(context, 2)),
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 // border: Border.all(
