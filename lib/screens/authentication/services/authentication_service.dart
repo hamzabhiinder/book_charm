@@ -163,25 +163,31 @@ class AuthServices {
     final sp = context.read<SignInProvider>();
     final ip = context.read<InternetProvider>();
     await ip.checkInternetConnection();
-
+    sp.setSignInLoader(true);
     if (!ip.hasInternet) {
       showSnackBar(context, "Check your Internet connection");
+      sp.setSignInLoader(false);
+
       return;
     }
 
     try {
       // await AuthService.firebase().logIn(email: email, password: password);
+      sp.setSignInLoader(true);
+
       await sp.signInWithEmailAndPassword(context, email, password);
       final userExists = await sp.checkUserExists();
       if (userExists) {
         await sp.saveDataToSharedPreferences();
         await sp.setSignIn();
+        sp.setSignInLoader(false);
 
         nextScreenReplace(context, BottomNaigationScreen());
         log("USER EXIST");
       }
     } catch (e) {
       log("e ERor Auteh Sec$e");
+      sp.setSignInLoader(false);
     }
   }
 }

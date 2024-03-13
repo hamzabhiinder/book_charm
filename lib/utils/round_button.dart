@@ -93,7 +93,8 @@ class RoundElevatedButton extends StatelessWidget {
             ),
           ),
           child: loading
-              ? const Center(child: CircularProgressIndicator())
+              ? const Center(
+                  child: CircularProgressIndicator(color: Colors.white))
               : Center(
                   child: Text(
                     title,
