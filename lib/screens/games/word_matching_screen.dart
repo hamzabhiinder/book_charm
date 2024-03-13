@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:localstorage/localstorage.dart';
 
-List<T> shuffleCopy<T>(List<T> listToShuffle) {
-  final shuffledList = List<T>.from(listToShuffle); // Create a copy
-  shuffledList.shuffle(Random()); // Shuffle the copy
-  return shuffledList;
-}
-
 class WordMatchingScreen extends StatefulWidget {
   @override
   _WordMatchingScreenState createState() => _WordMatchingScreenState();
@@ -15,6 +9,7 @@ class WordMatchingScreen extends StatefulWidget {
 
 class _WordMatchingScreenState extends State<WordMatchingScreen> {
   List<Map<String, String>> wordPairs = [];
+  int score = 0;
 
   final LocalStorage storage = LocalStorage('dictionary.json');
   Future<void> loadDictionary() async {
@@ -58,11 +53,47 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
     loadDictionary();
   }
 
+  void updateScore(bool isCorrect) {
+    setState(() {
+      if (isCorrect) {
+        score += 5;
+      } else {
+        score += 1;
+      }
+    });
+    if (wordPairs.isEmpty) {
+      setState(() {
+        score += 10;
+      });
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Congratulations!'),
+            content:
+                Text('You completed the lesson.\nYour Final Score: $score'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the dialog
+                  Navigator.pop(
+                      context); // Navigate back to the previous screen
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     const wordWidth = 200.0; // Adjust this value to your desired width
     wordPairs.shuffle();
     List<Map<String, String>> shuffled = shuffleCopy(wordPairs);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Word Matching Game'),
@@ -79,14 +110,13 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
                   data: englishWord,
                   feedback: Material(
                     child: SizedBox(
-                      // Use SizedBox for fixed size
                       width: wordWidth,
                       child: Container(
                         padding: EdgeInsets.all(8),
                         color: Colors.blue.withOpacity(0.7),
                         child: Text(
                           englishWord!,
-                          overflow: TextOverflow.ellipsis, // Handle overflow
+                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -94,7 +124,6 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
                   ),
                   childWhenDragging: Container(),
                   child: SizedBox(
-                    // Use SizedBox for fixed size
                     width: wordWidth,
                     child: Container(
                       padding: EdgeInsets.all(8),
@@ -102,7 +131,7 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
                       color: Colors.yellow,
                       child: Text(
                         englishWord,
-                        overflow: TextOverflow.ellipsis, // Handle overflow
+                        overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -117,7 +146,6 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
                 return DragTarget<String>(
                   builder: (context, candidateData, rejectedData) {
                     return SizedBox(
-                      // Use SizedBox for fixed size
                       width: wordWidth,
                       child: Container(
                         padding: EdgeInsets.all(8),
@@ -125,7 +153,7 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
                         color: Colors.red,
                         child: Text(
                           spanishWord!,
-                          overflow: TextOverflow.ellipsis, // Handle overflow
+                          overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -133,25 +161,32 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
                   },
                   onWillAcceptWithDetails: (data) => true,
                   onAcceptWithDetails: (data) {
-                    // Check if the english word matches the spanish word
                     final englishWord = wordPairs.firstWhere(
                         (pair) => pair['english'] == data.data)['spanish'];
                     if (englishWord == spanishWord) {
-                      // log(data.data);
                       print("Accepted data: $data");
                       setState(() {
-                        wordPairs.remove(pair); // Remove the matched pair
+                        wordPairs.remove(pair);
+                        updateScore(true); // Update score for correct answer
                       });
                     } else {
                       print("Words don't match.");
+                      updateScore(false); // Update score for incorrect answer
                     }
                   },
                 );
               }).toList(),
             ),
+            Text('Score: $score'),
           ],
         ),
       ),
     );
   }
+}
+
+List<T> shuffleCopy<T>(List<T> listToShuffle) {
+  final shuffledList = List<T>.from(listToShuffle);
+  shuffledList.shuffle(Random());
+  return shuffledList;
 }

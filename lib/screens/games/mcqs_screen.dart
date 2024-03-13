@@ -12,6 +12,7 @@ class McqsScreen extends StatefulWidget {
 class _McqsScreenState extends State<McqsScreen> {
   int currentIndex = 0;
   int score = 0;
+  int totalXP = 0; // Added for total XP tracking
   late Map<String, String> currentWordPair;
   List<String> options = [];
 
@@ -70,7 +71,7 @@ class _McqsScreenState extends State<McqsScreen> {
     options.add(currentWordPair['spanish']!);
 
     // Generate two more random options
-    while (options.length < 3) {
+    while (options.length < 3 && wordPairs.length > 3) {
       final randomOption =
           wordPairs[Random().nextInt(wordPairs.length)]['spanish']!;
       if (!options.contains(randomOption)) {
@@ -78,41 +79,52 @@ class _McqsScreenState extends State<McqsScreen> {
       }
     }
 
-    options
-        .shuffle(); // Shuffle the options so the correct answer isn't always in the same position
+    options.shuffle();
   }
 
   void checkAnswer(String selectedOption) {
+    int questionXP = 0; // XP earned for the current question
+
     if (selectedOption == currentWordPair['spanish']) {
       // Correct answer
       setState(() {
         score++;
+        questionXP = 5; // You get 5 XP for a correct answer
       });
+    } else {
+      // Incorrect answer
+      questionXP = 1; // You get 1 XP for an incorrect answer
     }
 
-    // Move to the next question or end the quiz
+    totalXP += questionXP;
+
     if (currentIndex < wordPairs.length - 1) {
       setState(() {
         currentIndex++;
         getNextWordPair();
       });
     } else {
-      // End of quiz, you can navigate to a result screen or perform any other action
-      // For simplicity, we'll just show an alert with the score
+      totalXP += 10; // You get 10 extra XP for completing the lesson
+
       showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Quiz Completed'),
-          content: Text('Your score: $score'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        ),
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Congratulations!'),
+            content: Text(
+                'You completed the lesson.\nYour Final Score: $score \nYour Final Xp: $totalXP \n for this lesson'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the dialog
+                  Navigator.pop(
+                      context); // Navigate back to the previous screen
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
       );
     }
   }
@@ -144,6 +156,10 @@ class _McqsScreenState extends State<McqsScreen> {
             const SizedBox(height: 20),
             Text(
               'Score: $score',
+              style: const TextStyle(fontSize: 18),
+            ),
+            Text(
+              'XP: $totalXP',
               style: const TextStyle(fontSize: 18),
             ),
           ],
