@@ -105,7 +105,10 @@ class CustomBookTile extends StatelessWidget {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return BookDetailPage(
-            url: imageUrl, bookName: bookName, authorName: authorName);
+            url: imageUrl,
+            bookName: bookName,
+            authorName: authorName,
+            isLibrary: isNetworkImage);
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
