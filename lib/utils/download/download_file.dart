@@ -6,7 +6,9 @@ import 'package:path_provider/path_provider.dart';
 // Import this for file path
 
 Future<String?> scrapePreTagContent(
-    {required String url, required String bookName, required String authorName}) async {
+    {required String url,
+    required String bookName,
+    required String authorName}) async {
   try {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -16,7 +18,7 @@ Future<String?> scrapePreTagContent(
       if (preTag != null) {
         // Save the text to a file
         await saveTextToFile(preTag.text, '${bookName}_$authorName');
-        log('object ${preTag.text}');
+        log('object ${preTag.text.length}');
         // Store the text in local storage (SharedPreferences)
         //  saveTextToLocalStorage(preTag.text);
 

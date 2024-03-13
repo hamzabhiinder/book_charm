@@ -7,6 +7,7 @@ import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../utils/download/download_file.dart';
@@ -32,6 +33,30 @@ class BookDetailPage extends StatefulWidget {
 class _BookDetailPageState extends State<BookDetailPage> {
   bool isLoading = false;
   bool isBookAvailable = false;
+  final LocalStorage storage = LocalStorage('downloadedBooks');
+// Function to add downloaded book to local storage
+  void addDownloadedBook() {
+    List<dynamic> downloadedBooks = storage.getItem('books') ?? [];
+    log('${downloadedBooks.length} ${downloadedBooks..toString()}');
+
+    // Check if the book is not already in the list
+    bool isBookAlreadyAdded = downloadedBooks.any((book) =>
+        book['bookName'] == widget.bookName &&
+        book['authorName'] == widget.authorName);
+
+    if (!isBookAlreadyAdded) {
+      downloadedBooks.add({
+        'bookName': widget.bookName,
+        'authorName': widget.authorName,
+        'filePath': '${widget.bookName}_${widget.authorName}.txt',
+        'url': widget.url,
+        'downloadUrl': widget.downloadUrl,
+      });
+
+      storage.setItem('books', downloadedBooks);
+      log('${downloadedBooks.length} ${downloadedBooks..toString()}');
+    }
+  }
 
   @override
   void initState() {
@@ -39,7 +64,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     checkBookAvailability();
   }
 
-  void checkBookAvailability() async {
+  Future<void> checkBookAvailability() async {
     final externalDir = await getExternalStorageDirectory();
 
     if (externalDir == null) {
@@ -149,13 +174,9 @@ class _BookDetailPageState extends State<BookDetailPage> {
                           bookName: widget.bookName,
                           authorName: widget.authorName,
                         );
-                        checkBookAvailability();
+                        await checkBookAvailability();
+                        addDownloadedBook();
                         log('loading $isLoading');
-                        // Future.delayed(Duration(seconds: 3)).then((value) {
-                        //   setState(() {
-                        //     isLoading = false;
-                        //   });
-                        // });
                       } else {
                         Navigator.push(
                           context,

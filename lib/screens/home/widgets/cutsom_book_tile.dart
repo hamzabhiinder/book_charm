@@ -1,4 +1,5 @@
 import 'package:book_charm/utils/show_snackBar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../view/book_detail_page.dart';
 
@@ -7,10 +8,13 @@ class CustomBookTile extends StatelessWidget {
   final String bookName;
   final String authorName;
 
-  const CustomBookTile({
+  var isNetworkImage;
+
+  CustomBookTile({
     required this.imageUrl,
     required this.bookName,
     required this.authorName,
+    this.isNetworkImage = false,
   });
 
   @override
@@ -46,12 +50,26 @@ class CustomBookTile extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.asset(
-                  imageUrl,
-                  height: 80,
-                  width: 60,
-                  fit: BoxFit.cover,
-                ),
+                child: isNetworkImage
+                    ? CachedNetworkImage(
+                        imageUrl: imageUrl,
+                        height: 80,
+                        width: 60,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(
+                          Icons.error_outline,
+                          size: 40,
+                          color: Colors.red,
+                        ),
+                      )
+                    : Image.asset(
+                        imageUrl,
+                        height: 80,
+                        width: 60,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
             const SizedBox(width: 20.0),
@@ -86,13 +104,15 @@ class CustomBookTile extends StatelessWidget {
   PageRouteBuilder _buildPageRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
-        return BookDetailPage(url: imageUrl, bookName: bookName, authorName: authorName);
+        return BookDetailPage(
+            url: imageUrl, bookName: bookName, authorName: authorName);
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
         const curve = Curves.easeInOut;
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
         var offsetAnimation = animation.drive(tween);
 
         return SlideTransition(
