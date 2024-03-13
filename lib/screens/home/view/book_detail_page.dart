@@ -1,19 +1,60 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:book_charm/screens/games/book_reading_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:path_provider/path_provider.dart';
 
-class BookDetailPage extends StatelessWidget {
+import '../../../utils/download/download_file.dart';
+
+class BookDetailPage extends StatefulWidget {
   final String url;
-  final String text1;
-  final String text2;
-
-  const BookDetailPage({
+  final String bookName;
+  final String authorName;
+  final String? downloadUrl;
+  bool isLibrary;
+  BookDetailPage({
     required this.url,
-    required this.text1,
-    required this.text2,
+    required this.bookName,
+    required this.authorName,
+    this.isLibrary = false,
+    this.downloadUrl,
   });
+
+  @override
+  State<BookDetailPage> createState() => _BookDetailPageState();
+}
+
+class _BookDetailPageState extends State<BookDetailPage> {
+  // Replace with the actual path to the book file in the device's storage
+  String bookFilePath = '/path/to/book/file.txt';
+
+  // State variable to track book availability
+  bool isBookAvailable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    checkBookAvailability();
+  }
+
+  // Function to check if the book file exists
+  void checkBookAvailability() async {
+    final externalDir = await getExternalStorageDirectory();
+
+    if (externalDir == null) {
+      // External storage is not available
+      throw Exception('External storage not available');
+    }
+
+    final filePath = '${externalDir.path}/${widget.bookName}';
+    final file = File(filePath);
+    setState(() {
+      isBookAvailable = File(bookFilePath).existsSync();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +65,13 @@ class BookDetailPage extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.5,
             child: Hero(
-              tag: 'bookTileHeroTag$text1',
+              tag: 'bookTileHeroTag${widget.bookName}',
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(url),
+                    image: widget.isLibrary == true
+                        ? CachedNetworkImageProvider(widget.url)
+                        : AssetImage(widget.url) as ImageProvider,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -40,10 +83,15 @@ class BookDetailPage extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.only(top: 40),
                         height: MediaQuery.of(context).size.height * 0.4,
-                        child: Image.asset(
-                          url,
-                          fit: BoxFit.cover,
-                        ),
+                        child: widget.isLibrary
+                            ? CachedNetworkImage(
+                                imageUrl: widget.url,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(
+                                widget.url,
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                   ),
@@ -57,12 +105,11 @@ class BookDetailPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  text1,
-                  style: const TextStyle(
-                      fontSize: 24.0, fontWeight: FontWeight.bold),
+                  widget.bookName,
+                  style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  text2,
+                  widget.authorName,
                   style: const TextStyle(fontSize: 18.0, color: Colors.grey),
                 ),
                 const SizedBox(height: 16.0),
@@ -83,17 +130,20 @@ class BookDetailPage extends StatelessWidget {
                   style: TextStyle(fontSize: 16.0),
                 ),
                 const SizedBox(height: 16.0),
+
                 // Download button
                 Align(
                   alignment: Alignment.centerRight,
                   child: ElevatedButton(
                     onPressed: () {
                       // Implement your download functionality here
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const BookReadingScreen()));
+                      scrapePreTagContent(
+                        url: widget.downloadUrl ?? '',
+                        bookName: widget.bookName,
+                        authorName: widget.authorName,
+                      );
+                      // Navigator.push(
+                      //     context, MaterialPageRoute(builder: (context) => const BookReadingScreen()));
                     },
                     child: const Text('Download'),
                   ),
@@ -106,4 +156,3 @@ class BookDetailPage extends StatelessWidget {
     );
   }
 }
-
