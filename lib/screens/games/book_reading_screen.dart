@@ -110,6 +110,7 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
     // TODO: implement initState
     super.initState();
     fetchData();
+    loadDictionary();
   }
 
   var myText = "";
@@ -118,6 +119,7 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
     try {
       var result =
           await readTextFromFile('${widget.bookName}_${widget.authorName}');
+
       if (result != null) {
         setState(() {
           myText = result;

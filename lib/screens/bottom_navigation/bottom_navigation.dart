@@ -1,5 +1,6 @@
 import 'package:book_charm/screens/exercise/view/exercise.dart';
 import 'package:book_charm/screens/home/view/dashboard_screen.dart';
+import 'package:book_charm/screens/home/view/dictionary_screen.dart';
 import 'package:book_charm/screens/home/view/downloaded_books_screen.dart';
 import 'package:book_charm/screens/home/view/library_screen.dart';
 import 'package:book_charm/screens/profile/view/profile.dart';
@@ -83,12 +84,5 @@ class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
         onTap: _onItemTapped,
       ),
     );
-  }
-}
-
-class DictionaryScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text('Dictionary Screen'));
   }
 }

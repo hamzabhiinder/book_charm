@@ -91,8 +91,12 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
   @override
   Widget build(BuildContext context) {
     const wordWidth = 200.0; // Adjust this value to your desired width
-    wordPairs.shuffle();
-    List<Map<String, String>> shuffled = shuffleCopy(wordPairs);
+    List<Map<String, String>> selectedWords = shuffleCopy(wordPairs)..shuffle();
+
+    // Select up to 5 words randomly
+    selectedWords = selectedWords.take(5).toList();
+
+    List<Map<String, String>> shuffled = shuffleCopy(selectedWords);
 
     return Scaffold(
       appBar: AppBar(
@@ -104,7 +108,7 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
           children: [
             // Draggable List
             Column(
-              children: wordPairs.map((pair) {
+              children: selectedWords.map((pair) {
                 final englishWord = pair['english'];
                 return Draggable<String>(
                   data: englishWord,

@@ -80,7 +80,7 @@ Future<String?> readTextFromFile(String bookName) async {
     }
 
     String fileContent = await file.readAsString();
-    log('File content:\n$fileContent');
+    log('File content:\n${fileContent.length}');
 
     return fileContent;
   } catch (e) {

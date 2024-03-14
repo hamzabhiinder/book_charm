@@ -13,7 +13,7 @@ class _McqsScreenState extends State<McqsScreen> {
   int currentIndex = 0;
   int score = 0;
   int totalXP = 0; // Added for total XP tracking
-  late Map<String, String> currentWordPair;
+  Map<String, String>? currentWordPair;
   List<String> options = [];
 
   List<Map<String, String>> wordPairs = [];
@@ -58,17 +58,23 @@ class _McqsScreenState extends State<McqsScreen> {
   @override
   void initState() {
     super.initState();
-    loadDictionary().then((_) => getNextWordPair());
+    loadDictionary().then((_) {
+      wordPairs.shuffle();
+      wordPairs = wordPairs.take(10).toList();
+      getNextWordPair();
+    });
   }
 
   void getNextWordPair() {
-    currentWordPair = wordPairs[currentIndex];
-    generateOptions();
+    if (wordPairs.isNotEmpty) {
+      currentWordPair = wordPairs[currentIndex];
+      generateOptions();
+    }
   }
 
   void generateOptions() {
     options.clear();
-    options.add(currentWordPair['spanish']!);
+    options.add(currentWordPair!['spanish']!);
 
     // Generate two more random options
     while (options.length < 3 && wordPairs.length > 3) {
@@ -85,7 +91,7 @@ class _McqsScreenState extends State<McqsScreen> {
   void checkAnswer(String selectedOption) {
     int questionXP = 0; // XP earned for the current question
 
-    if (selectedOption == currentWordPair['spanish']) {
+    if (selectedOption == currentWordPair!['spanish']) {
       // Correct answer
       setState(() {
         score++;
@@ -130,7 +136,19 @@ class _McqsScreenState extends State<McqsScreen> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
+    if (currentWordPair == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('MCQs Quiz'),
+        ),
+        body: Center(
+          child: CircularProgressIndicator(), // Or any loading indicator
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('MCQs Quiz'),
@@ -140,7 +158,11 @@ class _McqsScreenState extends State<McqsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'What is the meaning of "${currentWordPair['english']}" in Spanish?',
+              'Question: ${currentIndex + 1} / ${wordPairs.length}',
+              style: const TextStyle(fontSize: 18),
+            ),
+            Text(
+              'What is the meaning of "${currentWordPair!['english']}" in Spanish?',
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),

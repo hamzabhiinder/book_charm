@@ -10,11 +10,7 @@ class FlipCardsScreen extends StatefulWidget {
 }
 
 class _FlipCardsScreenState extends State<FlipCardsScreen> {
-  List<Map<String, String>> wordPairs = [
-    {'english': 'Hello', 'spanish': 'Hola'},
-    {'english': 'Goodbye', 'spanish': 'Adiós'},
-    // Add more word pairs as needed
-  ];
+  List<Map<String, String>> wordPairs = [];
   final LocalStorage storage = LocalStorage('dictionary.json');
 
   void loadDictionary() async {
