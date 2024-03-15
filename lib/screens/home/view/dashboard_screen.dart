@@ -155,13 +155,13 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                           children: [
                             CustomContainer(
                               url: 'assets/images/star.png',
-                              text1: 'XP',
-                              text2: '0',
+                              title: 'XP',
+                              subTitle: '0',
                             ),
                             CustomContainer(
                               url: 'assets/images/flame.png',
-                              text1: 'Streak',
-                              text2: '0',
+                              title: 'Streak',
+                              subTitle: '0',
                             ),
                           ],
                         ),
@@ -173,13 +173,13 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                           children: [
                             CustomContainer(
                               url: 'assets/images/stopwatch.png',
-                              text1: 'Time',
-                              text2: '0',
+                              title: 'Time',
+                              subTitle: '0',
                             ),
                             CustomContainer(
                               url: 'assets/images/learning.png',
-                              text1: 'Lesson',
-                              text2: '0',
+                              title: 'Lesson',
+                              subTitle: '0',
                             ),
                           ],
                         ),
@@ -238,13 +238,13 @@ class ReusableColumn extends StatelessWidget {
           children: [
             CustomContainer(
               url: 'assets/images/star.png',
-              text1: 'XP',
-              text2: '0',
+              title: 'XP',
+              subTitle: '0',
             ),
             CustomContainer(
               url: 'assets/images/flame.png',
-              text1: 'Streak',
-              text2: '0',
+              title: 'Streak',
+              subTitle: '0',
             ),
           ],
         ),
@@ -254,13 +254,13 @@ class ReusableColumn extends StatelessWidget {
           children: [
             CustomContainer(
               url: 'assets/images/stopwatch.png',
-              text1: 'Time',
-              text2: '0',
+              title: 'Time',
+              subTitle: '0',
             ),
             CustomContainer(
               url: 'assets/images/learning.png',
-              text1: 'Lesson',
-              text2: '0',
+              title: 'Lesson',
+              subTitle: '0',
             ),
           ],
         ),

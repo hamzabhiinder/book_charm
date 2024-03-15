@@ -161,7 +161,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
           url: imageUrl,
           bookName: bookName,
           authorName: authorName,
-          isLibrary: true,
+          isNetworkImage: true,
           downloadUrl: downloadUrl,
         );
       },

@@ -11,6 +11,7 @@ import 'package:book_charm/screens/bottom_navigation/bottom_navigation.dart';
 import 'package:book_charm/screens/exercise/view/exercise.dart';
 import 'package:book_charm/screens/games/book_reading_screen.dart';
 import 'package:book_charm/screens/home/view/home_screen.dart';
+import 'package:book_charm/screens/pdf_viewer/pdf_viewer_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Roboto',
         ),
         home: const SplashScreen(),
-        // home: const GameScreen(),
+        // home: const PdfViewerScreen(),
       ),
     );
   }

@@ -108,7 +108,7 @@ class CustomBookTile extends StatelessWidget {
             url: imageUrl,
             bookName: bookName,
             authorName: authorName,
-            isLibrary: isNetworkImage);
+            isNetworkImage: isNetworkImage);
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);

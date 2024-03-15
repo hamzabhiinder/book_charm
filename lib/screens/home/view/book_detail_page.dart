@@ -17,12 +17,12 @@ class BookDetailPage extends StatefulWidget {
   final String bookName;
   final String authorName;
   final String? downloadUrl;
-  bool isLibrary;
+  bool isNetworkImage;
   BookDetailPage({
     required this.url,
     required this.bookName,
     required this.authorName,
-    this.isLibrary = false,
+    this.isNetworkImage = false,
     this.downloadUrl,
   });
 
@@ -96,7 +96,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: widget.isLibrary == true
+                    image: widget.isNetworkImage == true
                         ? CachedNetworkImageProvider(widget.url)
                         : AssetImage(widget.url) as ImageProvider,
                     fit: BoxFit.fill,
@@ -110,7 +110,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       child: Container(
                         padding: const EdgeInsets.only(top: 40),
                         height: MediaQuery.of(context).size.height * 0.4,
-                        child: widget.isLibrary
+                        child: widget.isNetworkImage
                             ? CachedNetworkImage(
                                 imageUrl: widget.url,
                                 fit: BoxFit.cover,

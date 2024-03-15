@@ -19,7 +19,6 @@ class BookReadingScreen extends StatefulWidget {
 class _BookReadingScreenState extends State<BookReadingScreen> {
   String selectTextValue = '';
   String translateTextValue = '';
-  OverlayEntry? overlayEntry;
   final translator = GoogleTranslator();
 
   final LocalStorage storage = LocalStorage('dictionary.json');
@@ -75,7 +74,7 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
             child: Column(
               //  mainAxisSize: MainAxisSize.min,
               children: [
-                Text("$selectTextValue: $translateTextValue"),
+                Text("$selectTextValue:\n $translateTextValue"),
                 // Text("Translated text: $translateTextValue"),
                 TextButton(
                   onPressed: () {

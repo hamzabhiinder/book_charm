@@ -81,7 +81,9 @@ class _FlipCardsScreenState extends State<FlipCardsScreen> {
                   color: Colors.blue,
                   child: Center(
                     child: Text(
-                      wordPairs[currentIndex]['english']!,
+                      wordPairs.isNotEmpty
+                          ? wordPairs[currentIndex]['english']!
+                          : "Empty",
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -93,7 +95,9 @@ class _FlipCardsScreenState extends State<FlipCardsScreen> {
                   color: Colors.grey,
                   child: Center(
                     child: Text(
-                      wordPairs[currentIndex]['spanish']!,
+                      wordPairs.isNotEmpty
+                          ? wordPairs[currentIndex]['spanish']!
+                          : "Empty",
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

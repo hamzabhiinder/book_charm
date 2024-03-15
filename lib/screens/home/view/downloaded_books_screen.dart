@@ -59,7 +59,7 @@ class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
           url: imageUrl,
           bookName: bookName,
           authorName: authorName,
-          isLibrary: true,
+          isNetworkImage: true,
           downloadUrl: downloadUrl,
         );
       },

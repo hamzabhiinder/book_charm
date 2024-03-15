@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class CustomContainer extends StatelessWidget {
   final String url;
-  final String text1;
-  final String text2;
+  final String title;
+  final String subTitle;
   const CustomContainer({
     super.key,
     required this.url,
-    required this.text1,
-    required this.text2,
+    required this.title,
+    required this.subTitle,
   });
 
   @override
@@ -30,8 +30,8 @@ class CustomContainer extends StatelessWidget {
             url,
             height: 50,
           ),
-          Text(text1),
-          Text(text2),
+          Text(title),
+          Text(subTitle),
         ],
       ),
     );
