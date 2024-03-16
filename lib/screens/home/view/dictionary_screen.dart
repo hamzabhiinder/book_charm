@@ -72,8 +72,8 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
         itemBuilder: (context, index) {
           final pair = wordPairs[index];
           return ListTile(
-            title: Text(pair['english'] ?? ''),
-            subtitle: Text(pair['spanish'] ?? ''),
+            title: Text(pair['meaning'] ?? ''),
+            subtitle: Text(pair['word'] ?? ''),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

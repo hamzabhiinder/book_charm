@@ -74,12 +74,12 @@ class _McqsScreenState extends State<McqsScreen> {
 
   void generateOptions() {
     options.clear();
-    options.add(currentWordPair!['spanish']!);
+    options.add(currentWordPair!['word']!);
 
     // Generate two more random options
     while (options.length < 3 && wordPairs.length > 3) {
       final randomOption =
-          wordPairs[Random().nextInt(wordPairs.length)]['spanish']!;
+          wordPairs[Random().nextInt(wordPairs.length)]['word']!;
       if (!options.contains(randomOption)) {
         options.add(randomOption);
       }
@@ -91,7 +91,7 @@ class _McqsScreenState extends State<McqsScreen> {
   void checkAnswer(String selectedOption) {
     int questionXP = 0; // XP earned for the current question
 
-    if (selectedOption == currentWordPair!['spanish']) {
+    if (selectedOption == currentWordPair!['word']) {
       // Correct answer
       setState(() {
         score++;
@@ -162,7 +162,7 @@ class _McqsScreenState extends State<McqsScreen> {
               style: const TextStyle(fontSize: 18),
             ),
             Text(
-              'What is the meaning of "${currentWordPair!['english']}" in Spanish?',
+              'What is the meaning of "${currentWordPair!['meaning']}" in Spanish?',
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),

@@ -109,7 +109,7 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
             // Draggable List
             Column(
               children: selectedWords.map((pair) {
-                final englishWord = pair['english'];
+                final englishWord = pair['meaning'];
                 return Draggable<String>(
                   data: englishWord,
                   feedback: Material(
@@ -146,7 +146,7 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
             // DragTarget List
             Column(
               children: shuffled.map((pair) {
-                final spanishWord = pair['spanish'];
+                final spanishWord = pair['word'];
                 return DragTarget<String>(
                   builder: (context, candidateData, rejectedData) {
                     return SizedBox(
@@ -166,7 +166,7 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
                   onWillAcceptWithDetails: (data) => true,
                   onAcceptWithDetails: (data) {
                     final englishWord = wordPairs.firstWhere(
-                        (pair) => pair['english'] == data.data)['spanish'];
+                        (pair) => pair['meaning'] == data.data)['word'];
                     if (englishWord == spanishWord) {
                       print("Accepted data: $data");
                       setState(() {

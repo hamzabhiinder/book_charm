@@ -16,6 +16,7 @@ class PdfViewerScreen extends StatefulWidget {
 
 class _PdfViewerScreenState extends State<PdfViewerScreen> {
   late PdfViewerController _pdfViewerController;
+  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
   OverlayEntry? _overlayEntry;
   String selectTextValue = '';
   String translateTextValue = '';
@@ -107,6 +108,13 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Syncfusion Flutter PDF Viewer'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  _pdfViewerKey.currentState?.openBookmarkView();
+                },
+                icon: Icon(Icons.bookmark))
+          ],
         ),
         body: SfPdfViewer.network(
           'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
@@ -118,6 +126,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
               _showContextMenu(context, details);
             }
           },
+          key: _pdfViewerKey,
           controller: _pdfViewerController,
         ));
   }

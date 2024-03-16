@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'package:book_charm/utils/download/download_file.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
@@ -23,23 +25,38 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
 
   final LocalStorage storage = LocalStorage('dictionary.json');
   bool initialized = false;
-  List<Map<String, String>> wordPairs = [];
+  List<Map<String, dynamic>> wordPairs = [];
 
   void saveDictionary() {
     storage.setItem('wordPairs', wordPairs);
     print(wordPairs);
   }
 
+  void addDictionaryDataToFirestore(
+      String language, List<Map<String, dynamic>> wordPairs) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser;
+    // Add sample data to Firestore
+    firestore.collection('Dictionary').doc(user?.uid).set({
+      language: wordPairs,
+    }).then((value) {
+      log('Sample data added to Firestore');
+    }).catchError((error) {
+      log('Failed to add sample data: $error');
+    });
+  }
+
   void addWordPair(String english, String spanish) {
     if (!wordPairs.any((pair) =>
-        pair['english'] == english.toLowerCase() &&
-        pair['spanish'] == spanish.toLowerCase())) {
+        pair['meaning'] == english.toLowerCase() &&
+        pair['word'] == spanish.toLowerCase())) {
       setState(() {
-        wordPairs.add({
-          'english': english.toLowerCase(),
-          'spanish': spanish.toLowerCase()
-        });
+        wordPairs.add(
+            {'meaning': english.toLowerCase(), 'word': spanish.toLowerCase()});
+        //Add to Firebase
+
         saveDictionary();
+        addDictionaryDataToFirestore('fr', wordPairs);
       });
     } else {
       log('Word pair already exists in the dictionary.');
@@ -51,7 +68,7 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
     var storedData = storage.getItem('wordPairs');
     if (storedData != null) {
       setState(() {
-        wordPairs = List<Map<String, String>>.from(storedData);
+        wordPairs = List<Map<String, dynamic>>.from(storedData);
       });
     }
   }
@@ -136,6 +153,7 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Text Games'),
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.save))],
       ),
       body: GestureDetector(
         onTap: () {
