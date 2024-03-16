@@ -5,7 +5,7 @@ class OverallStats {
   int streak = 0;
   int time = 0;
   int lessonsCompleted = 0;
-
+  static const String localStorageKey = 'overallStats';
   OverallStats({
     required this.xp,
     required this.streak,
@@ -31,8 +31,7 @@ class OverallStats {
     );
   }
 
-  static Future<OverallStats> loadFromLocalStorage(
-      String localStorageKey) async {
+  static Future<OverallStats> loadFromLocalStorage() async {
     final LocalStorage storage = LocalStorage(localStorageKey);
     await storage.ready;
     var storedData = storage.getItem('overallStats');
@@ -42,15 +41,20 @@ class OverallStats {
     return OverallStats(xp: 0, streak: 0, time: 0, lessonsCompleted: 0);
   }
 
-  Future<void> saveToLocalStorage(String localStorageKey) async {
+  Future<void> saveToLocalStorage() async {
     final LocalStorage storage = LocalStorage(localStorageKey);
     await storage.ready;
     await storage.setItem('overallStats', toJson());
   }
 
-  void updateStats(int score) {
-    xp += score; // Update XP with the current score
-    lessonsCompleted++; // Increment lessons completed
-    // You can add more logic for updating streak, time, etc. here if needed
+  Future<void> updateScore(int score) async {
+    xp += score;
+    await saveToLocalStorage();
+  }
+
+  Future<void> completeLesson() async {
+    xp += 10;
+    lessonsCompleted++;
+    await saveToLocalStorage();
   }
 }

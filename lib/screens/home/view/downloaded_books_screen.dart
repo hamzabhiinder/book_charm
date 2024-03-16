@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:book_charm/screens/home/view/book_detail_page.dart';
 import 'package:book_charm/screens/home/widgets/cutsom_book_tile.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
+import 'package:book_charm/utils/stats/overall_stats.dart';
+import 'package:book_charm/utils/stats/stats_ui.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
@@ -15,11 +17,11 @@ class DownloadedBooksScreen extends StatefulWidget {
 class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
   final LocalStorage storage = LocalStorage('downloadedBooks');
   bool isLoading = true;
-
+  OverallStats? overallStats;
   @override
   void initState() {
     super.initState();
-    // Simulate loading delay
+    OverallStats.loadFromLocalStorage().then((value) => overallStats = value);
     Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         isLoading = false;
@@ -35,19 +37,26 @@ class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
       appBar: AppBar(
         title: Text('Downloaded Books'),
       ),
-      body: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: books.length,
-        itemBuilder: (BuildContext context, int index) {
-          return CustomBookTile(
-            imageUrl: books[index]['url'],
-            bookName: books[index]['bookName'],
-            authorName: books[index]['authorName'],
-            isNetworkImage: true,
-          );
-        },
-      ),
+      body: overallStats != null
+          ? StatsScreen(overallStats: overallStats!)
+          : Text("Loading"),
+      //  Row(
+      //   children: [
+      // ListView.builder(
+      //   physics: NeverScrollableScrollPhysics(),
+      //   shrinkWrap: true,
+      //   itemCount: books.length,
+      //   itemBuilder: (BuildContext context, int index) {
+      //     return CustomBookTile(
+      //       imageUrl: books[index]['url'],
+      //       bookName: books[index]['bookName'],
+      //       authorName: books[index]['authorName'],
+      //       isNetworkImage: true,
+      //     );
+      //   },
+      // ),
+      // ],
+      // ),
     );
   }
 
