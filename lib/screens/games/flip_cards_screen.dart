@@ -52,6 +52,7 @@ class _FlipCardsScreenState extends State<FlipCardsScreen> {
   void initState() {
     super.initState();
     loadDictionary();
+    wordPairs = wordPairs.take(10).toList();
   }
 
   int currentIndex = 0;
