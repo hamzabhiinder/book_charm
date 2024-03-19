@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:book_charm/utils/stats/overall_stats.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 
@@ -19,6 +20,7 @@ class _McqsScreenState extends State<McqsScreen> {
   List<Map<String, String>> wordPairs = [];
 
   final LocalStorage storage = LocalStorage('dictionary.json');
+  late OverallStats overallStats;
 
   Future<void> loadDictionary() async {
     await storage.ready;
@@ -63,6 +65,10 @@ class _McqsScreenState extends State<McqsScreen> {
       wordPairs = wordPairs.take(10).toList();
       getNextWordPair();
     });
+    OverallStats.loadFromLocalStorage().then((value) {
+      overallStats = value;
+      print("errroe: ${overallStats.toJson()}");
+    });
   }
 
   void getNextWordPair() {
@@ -95,6 +101,7 @@ class _McqsScreenState extends State<McqsScreen> {
       // Correct answer
       setState(() {
         score++;
+
         questionXP = 5; // You get 5 XP for a correct answer
       });
     } else {
@@ -103,7 +110,11 @@ class _McqsScreenState extends State<McqsScreen> {
     }
 
     totalXP += questionXP;
-
+    try {
+      overallStats.updateScore(questionXP);
+    } catch (e) {
+      print(e);
+    }
     if (currentIndex < wordPairs.length - 1) {
       setState(() {
         currentIndex++;
@@ -125,6 +136,13 @@ class _McqsScreenState extends State<McqsScreen> {
                   Navigator.pop(context); // Close the dialog
                   Navigator.pop(
                       context); // Navigate back to the previous screen
+                  try {
+                    overallStats.updateScore(10);
+                    overallStats.completeLesson();
+                  } catch (e) {
+                    print("error1:");
+                    print(e);
+                  }
                 },
                 child: Text('OK'),
               ),

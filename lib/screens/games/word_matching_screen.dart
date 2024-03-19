@@ -1,3 +1,4 @@
+import 'package:book_charm/utils/stats/overall_stats.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:localstorage/localstorage.dart';
@@ -10,7 +11,9 @@ class WordMatchingScreen extends StatefulWidget {
 class _WordMatchingScreenState extends State<WordMatchingScreen> {
   List<Map<String, String>> wordPairs = [];
   int score = 0;
-
+  late OverallStats overallStats;
+  //  =      OverallStats(xp: 0, streak: 0, time: 0, lessonsCompleted: 0);
+  List<Map<String, String>> selectedWords = [];
   final LocalStorage storage = LocalStorage('dictionary.json');
   Future<void> loadDictionary() async {
     await storage.ready;
@@ -50,20 +53,40 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
   @override
   void initState() {
     super.initState();
-    loadDictionary();
+    loadDictionary().then((value) {
+      selectedWords = shuffleCopy(wordPairs)..shuffle();
+      selectedWords = selectedWords.take(5).toList();
+    });
+    OverallStats.loadFromLocalStorage().then((value) => overallStats = value);
   }
 
-  void updateScore(bool isCorrect) {
+  void updateScoreLocal(bool isCorrect) {
     setState(() {
       if (isCorrect) {
         score += 5;
+        try {
+          overallStats.updateScore(5);
+        } catch (e) {
+          print(e);
+        }
       } else {
+        try {
+          overallStats.updateScore(1);
+        } catch (e) {
+          print(e);
+        }
         score += 1;
       }
     });
-    if (wordPairs.isEmpty) {
+    if (selectedWords.isEmpty) {
       setState(() {
         score += 10;
+        try {
+          overallStats.completeLesson();
+          // overallStats.updateScore(5);
+        } catch (e) {
+          print(e);
+        }
       });
       showDialog(
         context: context,
@@ -91,10 +114,6 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
   @override
   Widget build(BuildContext context) {
     const wordWidth = 200.0; // Adjust this value to your desired width
-    List<Map<String, String>> selectedWords = shuffleCopy(wordPairs)..shuffle();
-
-    // Select up to 5 words randomly
-    selectedWords = selectedWords.take(5).toList();
 
     List<Map<String, String>> shuffled = shuffleCopy(selectedWords);
 
@@ -170,12 +189,14 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
                     if (englishWord == spanishWord) {
                       print("Accepted data: $data");
                       setState(() {
-                        wordPairs.remove(pair);
-                        updateScore(true); // Update score for correct answer
+                        selectedWords.remove(pair);
+                        updateScoreLocal(
+                            true); // Update score for correct answer
                       });
                     } else {
                       print("Words don't match.");
-                      updateScore(false); // Update score for incorrect answer
+                      updateScoreLocal(
+                          false); // Update score for incorrect answer
                     }
                   },
                 );
