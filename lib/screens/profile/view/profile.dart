@@ -22,187 +22,194 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: kToolbarHeight - 10),
-            Text(
-              'Settings',
-              style: TextStyle(
-                color: const Color(0xff686868),
-                fontSize: getResponsiveFontSize(context, 30),
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            SizedBox(height: getResponsiveHeight(context, 10)),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15), // Adjust the radius as needed
-                border: Border.all(
-                  color: Colors.transparent,
-                  width: 2.0,
-                ),
-                color: Colors.white,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 188, 137, 250),
-                        width: 2.0,
-                      ),
-                    ),
-                    child: Image.asset(
-                      'assets/images/flame.png',
-                      width: getResponsiveWidth(context, 50), // Adjust the width as needed
-                      height: getResponsiveHeight(context, 50), // Adjust the height as needed
-                    ),
-                  ),
-                  SizedBox(
-                      width: getResponsiveWidth(context, 10)), // Adjust the spacing between leading and title
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${sp.userModel?.name ?? "Name"}',
-                        style: TextStyle(
-                          fontSize: getResponsiveFontSize(context, 22),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Text(
-                        'Edit personal details',
-                        style: TextStyle(
-                          fontSize: getResponsiveFontSize(context, 14),
-                          color: const Color(0xff686868),
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Spacer(), // This will push the trailing icon to the end
-                  const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: AppColors.primaryColor,
-                    size: 20,
-                    weight: 40,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: getResponsiveHeight(context, 25)),
-            const Text(
-              'Account Settings',
-              style: TextStyle(
-                color: Color(0xff686868),
-                fontSize: 20,
-                // fontWeight: FontWeight.w400,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white.withOpacity(0.7),
-              ),
-              child: Column(
-                children: [
-                  CustomListTile(
-                    onTap: () => ProfileService.showBottomSheet(context),
-                    title: 'Change Name',
-                    imagePath: 'assets/images/profile.png',
-                    trailingIcon: Icons.arrow_forward_ios,
-                    trailingIconColor: AppColors.primaryColor,
-                  ),
-                  CustomListTile(
-                    title: 'Change Email',
-                    imagePath: 'assets/images/email.png',
-                    trailingIcon: Icons.arrow_forward_ios,
-                    trailingIconColor: AppColors.primaryColor,
-                  ),
-                  CustomListTile(
-                    title: 'Change Password',
-                    imagePath: 'assets/images/pass.png',
-                    trailingIcon: Icons.arrow_forward_ios,
-                    trailingIconColor: AppColors.primaryColor,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: getResponsiveHeight(context, 25)),
-            const Text(
-              'Notifications',
-              style: TextStyle(
-                color: Color(0xff686868),
-                fontSize: 20,
-                // fontWeight: FontWeight.w400,
-              ),
-            ),
-            const SizedBox(height: 10),
-            CustomListTile(
-              title: 'Notifications',
-              imagePath: 'assets/images/notification.png',
-              trailingIcon: Icons.arrow_forward_ios,
-              trailingIconColor: AppColors.primaryColor,
-              trailingWidget: Center(
-                child: WhiteSwitch(
-                  value: true,
-                  onChanged: (value) {
-                    // Handle switch state change
-                    print('Switch value: $value');
-                  },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: kToolbarHeight - 10),
+              Text(
+                'Settings',
+                style: TextStyle(
+                  color: const Color(0xff686868),
+                  fontSize: getResponsiveFontSize(context, 30),
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-            ),
-            SizedBox(height: getResponsiveHeight(context, 25)),
-            const Text(
-              'Regional',
-              style: TextStyle(
-                color: Color(0xff686868),
-                fontSize: 20,
-                // fontWeight: FontWeight.w400,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white.withOpacity(0.7),
-              ),
-              child: Column(
-                children: [
-                  const CustomListTile(
-                    title: 'Languages',
-                    imagePath: 'assets/images/translator.png',
-                    trailingIcon: Icons.arrow_forward_ios,
-                    trailingIconColor: AppColors.primaryColor,
+              SizedBox(height: getResponsiveHeight(context, 10)),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.circular(15), // Adjust the radius as needed
+                  border: Border.all(
+                    color: Colors.transparent,
+                    width: 2.0,
                   ),
-                  const CustomListTile(
-                    title: 'Help',
-                    imagePath: 'assets/images/help.png',
-                    trailingIcon: Icons.arrow_forward_ios,
-                    trailingIconColor: AppColors.primaryColor,
-                  ),
-                  CustomListTile(
-                    onTap: () {
-                      sp.userSignOut().then((value) {
-                        nextScreenReplace(context, const AuthenticationScreen());
-                      });
+                  color: Colors.white,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 188, 137, 250),
+                          width: 2.0,
+                        ),
+                      ),
+                      child: Image.asset(
+                        'assets/images/flame.png',
+                        width: getResponsiveWidth(
+                            context, 50), // Adjust the width as needed
+                        height: getResponsiveHeight(
+                            context, 50), // Adjust the height as needed
+                      ),
+                    ),
+                    SizedBox(
+                        width: getResponsiveWidth(context,
+                            10)), // Adjust the spacing between leading and title
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${sp.userModel?.name ?? "Name"}',
+                          style: TextStyle(
+                            fontSize: getResponsiveFontSize(context, 22),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Text(
+                          'Edit personal details',
+                          style: TextStyle(
+                            fontSize: getResponsiveFontSize(context, 14),
+                            color: const Color(0xff686868),
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(), // This will push the trailing icon to the end
+                    const Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: AppColors.primaryColor,
+                      size: 20,
+                      weight: 40,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: getResponsiveHeight(context, 25)),
+              const Text(
+                'Account Settings',
+                style: TextStyle(
+                  color: Color(0xff686868),
+                  fontSize: 20,
+                  // fontWeight: FontWeight.w400,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white.withOpacity(0.7),
+                ),
+                child: Column(
+                  children: [
+                    CustomListTile(
+                      onTap: () => ProfileService.showBottomSheet(context),
+                      title: 'Change Name',
+                      imagePath: 'assets/images/profile.png',
+                      trailingIcon: Icons.arrow_forward_ios,
+                      trailingIconColor: AppColors.primaryColor,
+                    ),
+                    CustomListTile(
+                      title: 'Change Email',
+                      imagePath: 'assets/images/email.png',
+                      trailingIcon: Icons.arrow_forward_ios,
+                      trailingIconColor: AppColors.primaryColor,
+                    ),
+                    CustomListTile(
+                      title: 'Change Password',
+                      imagePath: 'assets/images/pass.png',
+                      trailingIcon: Icons.arrow_forward_ios,
+                      trailingIconColor: AppColors.primaryColor,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: getResponsiveHeight(context, 25)),
+              const Text(
+                'Notifications',
+                style: TextStyle(
+                  color: Color(0xff686868),
+                  fontSize: 20,
+                  // fontWeight: FontWeight.w400,
+                ),
+              ),
+              const SizedBox(height: 10),
+              CustomListTile(
+                title: 'Notifications',
+                imagePath: 'assets/images/notification.png',
+                trailingIcon: Icons.arrow_forward_ios,
+                trailingIconColor: AppColors.primaryColor,
+                trailingWidget: Center(
+                  child: WhiteSwitch(
+                    value: true,
+                    onChanged: (value) {
+                      // Handle switch state change
+                      print('Switch value: $value');
                     },
-                    title: 'Logout',
-                    imagePath: 'assets/images/logout.png',
-                    trailingIcon: Icons.arrow_forward_ios,
-                    trailingIconColor: AppColors.primaryColor,
                   ),
-                ],
+                ),
               ),
-            )
-          ],
+              SizedBox(height: getResponsiveHeight(context, 25)),
+              const Text(
+                'Regional',
+                style: TextStyle(
+                  color: Color(0xff686868),
+                  fontSize: 20,
+                  // fontWeight: FontWeight.w400,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white.withOpacity(0.7),
+                ),
+                child: Column(
+                  children: [
+                    const CustomListTile(
+                      title: 'Languages',
+                      imagePath: 'assets/images/translator.png',
+                      trailingIcon: Icons.arrow_forward_ios,
+                      trailingIconColor: AppColors.primaryColor,
+                    ),
+                    const CustomListTile(
+                      title: 'Help',
+                      imagePath: 'assets/images/help.png',
+                      trailingIcon: Icons.arrow_forward_ios,
+                      trailingIconColor: AppColors.primaryColor,
+                    ),
+                    CustomListTile(
+                      onTap: () {
+                        sp.userSignOut().then((value) {
+                          nextScreenReplace(
+                              context, const AuthenticationScreen());
+                        });
+                      },
+                      title: 'Logout',
+                      imagePath: 'assets/images/logout.png',
+                      trailingIcon: Icons.arrow_forward_ios,
+                      trailingIconColor: AppColors.primaryColor,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -246,7 +253,8 @@ class CustomListTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(vertical: getResponsiveHeight(context, 2)),
+              padding: EdgeInsets.symmetric(
+                  vertical: getResponsiveHeight(context, 2)),
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 // border: Border.all(

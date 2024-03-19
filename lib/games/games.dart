@@ -17,43 +17,45 @@ class _GameScreenState extends State<GameScreen> {
       appBar: AppBar(
         title: const Text('Text Games'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to Flip Cards game screen
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const FlipCardsScreen()));
-              },
-              child: const Text('Flip Cards'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to Word Matching game screen
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => WordMatchingScreen()));
-              },
-              child: const Text('Word Matching'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to MCQs game screen
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const McqsScreen()));
-              },
-              child: const Text('MCQs'),
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate to Flip Cards game screen
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const FlipCardsScreen()));
+                },
+                child: const Text('Flip Cards'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate to Word Matching game screen
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WordMatchingScreen()));
+                },
+                child: const Text('Word Matching'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Navigate to MCQs game screen
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const McqsScreen()));
+                },
+                child: const Text('MCQs'),
+              ),
+            ],
+          ),
         ),
       ),
     );
