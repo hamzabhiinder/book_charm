@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
           fontFamily: 'Roboto',
         ),
-        home: const SplashScreen(),
+       home: const SplashScreen(),
         // home: const PdfViewerScreen(),
       ),
     );
