@@ -117,7 +117,7 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
           ],
         ),
         body: SfPdfViewer.network(
-          'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
+          'http://sitesecoles.ac-poitiers.fr/st-pardoux/sites/st-pardoux/IMG/pdf/la-cigale-et-la-fourmi-jean-de-la-fontaine---cm1---cm2---arts-du-langage---histoire-des-arts---cycle-3-2.pdf',
           onTextSelectionChanged: (PdfTextSelectionChangedDetails details) {
             if (details.selectedText == null && _overlayEntry != null) {
               _overlayEntry!.remove();
