@@ -1,6 +1,7 @@
 import 'package:book_charm/main.dart';
 import 'package:book_charm/utils/download/download_file.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
+import 'package:book_charm/utils/stats/overall_stats.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,10 +22,15 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _selectedIndex = 0;
-
+  OverallStats overallStats =
+      OverallStats(xp: 0, streak: 0, time: 0, lessonsCompleted: 0);
   @override
   void initState() {
     super.initState();
+    OverallStats.loadFromLocalStorage().then((value) {
+      overallStats = value;
+      print("errroe: ${overallStats.toJson()}");
+    });
     _tabController = TabController(length: 3, vsync: this);
   }
 
@@ -142,7 +148,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                 child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _tabController,
-                  children: const [
+                  children: [
                     // Your existing TabBarView content
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,12 +162,18 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                             CustomContainer(
                               url: 'assets/images/star.png',
                               title: 'XP',
-                              subTitle: '0',
+                              subTitle: overallStats
+                                  .calculateLastSectionStats(
+                                      'today')['xpInSection']
+                                  .toString(),
                             ),
                             CustomContainer(
                               url: 'assets/images/flame.png',
                               title: 'Streak',
-                              subTitle: '0',
+                              subTitle: overallStats
+                                  .calculateLastSectionStats(
+                                      'today')['streakChangesInSection']
+                                  .toString(),
                             ),
                           ],
                         ),
@@ -179,7 +191,10 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                             CustomContainer(
                               url: 'assets/images/learning.png',
                               title: 'Lesson',
-                              subTitle: '0',
+                              subTitle: overallStats
+                                  .calculateLastSectionStats(
+                                      'today')['lessonChangesInSection']
+                                  .toString(),
                             ),
                           ],
                         ),
