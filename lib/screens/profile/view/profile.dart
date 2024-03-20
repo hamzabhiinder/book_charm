@@ -1,5 +1,7 @@
 import 'package:book_charm/providers/signin_provider.dart';
 import 'package:book_charm/screens/profile/services/profile_service.dart';
+import 'package:book_charm/screens/profile/view/widget/change_password.dart';
+import 'package:book_charm/screens/profile/view/widget/language_selector.dart';
 import 'package:flutter/material.dart';
 
 import 'package:book_charm/screens/profile/view/widget/switch_button.dart';
@@ -137,6 +139,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       trailingIconColor: AppColors.primaryColor,
                     ),
                     CustomListTile(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ChangePasswordWidget(); // Show the ChangePasswordWidget
+                          },
+                        );
+                      },
                       title: 'Change Password',
                       imagePath: 'assets/images/pass.png',
                       trailingIcon: Icons.arrow_forward_ios,
@@ -187,7 +197,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Column(
                   children: [
-                    const CustomListTile(
+                    CustomListTile(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const LanguageList();
+                          },
+                        );
+                      },
                       title: 'Languages',
                       imagePath: 'assets/images/translator.png',
                       trailingIcon: Icons.arrow_forward_ios,

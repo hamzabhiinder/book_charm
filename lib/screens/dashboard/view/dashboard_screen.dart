@@ -29,8 +29,10 @@ class _DashBoardScreenState extends State<DashBoardScreen>
   void initState() {
     super.initState();
     OverallStats.loadStatsData().then((value) {
-      overallStats = value;
-      print("errroe: ${overallStats.toJson()}");
+      print("Sucees: ${overallStats.toJson()}");
+      setState(() {
+        overallStats = value;
+      });
     });
     _tabController = TabController(length: 3, vsync: this);
   }

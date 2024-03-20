@@ -181,7 +181,7 @@ class AuthServices {
         await sp.saveDataToSharedPreferences();
         await sp.setSignIn();
         sp.setSignInLoader(false);
-
+        // getUserData ---> dictionary firebase, stats, my books overrite
         nextScreenReplace(context, BottomNaigationScreen());
         log("USER EXIST");
       }

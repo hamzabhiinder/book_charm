@@ -21,6 +21,7 @@ import 'package:provider/provider.dart';
 
 import 'providers/internet_provider.dart';
 import 'screens/profile/view/profile.dart';
+import 'screens/profile/view/widget/language_selector.dart';
 import 'utils/show_snackBar.dart';
 
 void main() async {
@@ -48,6 +49,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => TimeTrackerService(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => LanguageProvider()..loadSelectedLanguage(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
