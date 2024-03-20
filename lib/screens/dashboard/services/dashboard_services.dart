@@ -61,11 +61,25 @@ class CounterDisplayPage extends StatelessWidget {
   }
 }
 
+// String formatDuration(Duration duration) {
+//   String twoDigits(int n) => n.toString().padLeft(2, '0');
+//   String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+//   String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+//   return '${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds';
+// }
+
 String formatDuration(Duration duration) {
-  String twoDigits(int n) => n.toString().padLeft(2, '0');
-  String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-  String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-  return '${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds';
+  if (duration == null) return '';
+
+  if (duration.inDays >= 1) {
+    return '${duration.inDays} day${duration.inDays > 1 ? 's' : ''}';
+  } else if (duration.inHours >= 1) {
+    return '${duration.inHours} hr${duration.inHours > 1 ? 's' : ''}';
+  } else if (duration.inMinutes >= 1) {
+    return '${duration.inMinutes} min${duration.inMinutes > 1 ? 's' : ''}';
+  } else {
+    return '${duration.inSeconds} sec${duration.inSeconds > 1 ? 's' : ''}';
+  }
 }
 
 class DashBoardService {}
