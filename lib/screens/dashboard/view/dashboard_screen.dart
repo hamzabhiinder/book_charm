@@ -28,7 +28,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
   @override
   void initState() {
     super.initState();
-    OverallStats.loadFromLocalStorage().then((value) {
+    OverallStats.loadStatsData().then((value) {
       overallStats = value;
       print("errroe: ${overallStats.toJson()}");
     });
