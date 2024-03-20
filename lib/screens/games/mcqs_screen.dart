@@ -65,7 +65,7 @@ class _McqsScreenState extends State<McqsScreen> {
       wordPairs = wordPairs.take(10).toList();
       getNextWordPair();
     });
-    OverallStats.loadFromLocalStorage().then((value) {
+    OverallStats.loadStatsData().then((value) {
       overallStats = value;
       print("errroe: ${overallStats.toJson()}");
     });

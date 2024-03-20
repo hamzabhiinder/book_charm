@@ -57,7 +57,7 @@ class _WordMatchingScreenState extends State<WordMatchingScreen> {
       selectedWords = shuffleCopy(wordPairs)..shuffle();
       selectedWords = selectedWords.take(5).toList();
     });
-    OverallStats.loadFromLocalStorage().then((value) => overallStats = value);
+    OverallStats.loadStatsData().then((value) => overallStats = value);
   }
 
   void updateScoreLocal(bool isCorrect) {

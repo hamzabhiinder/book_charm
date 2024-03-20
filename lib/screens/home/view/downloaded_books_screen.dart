@@ -21,7 +21,7 @@ class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
   @override
   void initState() {
     super.initState();
-    OverallStats.loadFromLocalStorage().then((value) => overallStats = value);
+    OverallStats.loadStatsData().then((value) => overallStats = value);
     Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         isLoading = false;
