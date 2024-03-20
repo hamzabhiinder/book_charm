@@ -5,6 +5,8 @@ import 'dart:ui';
 import 'package:book_charm/screens/games/book_reading_screen.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:localstorage/localstorage.dart';
@@ -54,8 +56,24 @@ class _BookDetailPageState extends State<BookDetailPage> {
       });
 
       storage.setItem('books', downloadedBooks);
-      log('${downloadedBooks.length} ${downloadedBooks..toString()}');
+
+      log('${downloadedBooks.length} updated the books list');
+      addBooksDataToFirestore(downloadedBooks);
     }
+  }
+
+  void addBooksDataToFirestore(List<dynamic> downloadedBooks) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser;
+    // Add sample data to Firestore
+    firestore
+        .collection('MyBooks')
+        .doc(user?.uid)
+        .set({"myBooks": downloadedBooks}).then((value) {
+      log('Sample data added to Firestore');
+    }).catchError((error) {
+      log('Failed to add sample data: $error');
+    });
   }
 
   @override
