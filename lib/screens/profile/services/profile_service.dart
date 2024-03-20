@@ -1,37 +1,58 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+
+import '../../../providers/signin_provider.dart';
 
 class ProfileService {
   static void showBottomSheet(BuildContext context) {
-  TextEditingController _nameController = TextEditingController(); // Add a text controller for the text field
+    final sp = context.read<SignInProvider>();
 
-  showModalBottomSheet(
-    context: context,
-    builder: (BuildContext context) {
-      return SingleChildScrollView(
-        child: Container(
+    TextEditingController _nameController =
+        TextEditingController(); // Add a text controller for the text field
+    Future<void> _updateNameOnFirebase(String newName) async {
+      try {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser?.uid)
+            .update({
+          'name': newName,
+        });
+      } catch (e) {
+        print('Error updating name: $e');
+      }
+    }
+
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
           padding: EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Add the text field for changing the name
               TextField(
                 controller: _nameController,
                 decoration: InputDecoration(
-                  labelText: 'New Name',
-                  border: OutlineInputBorder(),
+                  labelText: 'Update Name',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
                 ),
               ),
               SizedBox(height: 16),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   // Add the 'Change' button
-                  ElevatedButton(
+                  OutlinedButton(
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the bottom sheet
-                      String newName = _nameController.text; // Get the new name from the text field
-                      // Add your logic for changing the name here
+                      _updateNameOnFirebase(_nameController.text);
                     },
                     child: Text('Change'),
                   ),
@@ -46,10 +67,8 @@ class ProfileService {
               ),
             ],
           ),
-        ),
-      );
-    },
-  );
-}
-
+        );
+      },
+    );
+  }
 }

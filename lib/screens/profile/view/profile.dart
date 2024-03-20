@@ -16,6 +16,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  nameBottomSheet() {
+    ProfileService.showBottomSheet(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final sp = context.read<SignInProvider>();
@@ -118,7 +122,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: [
                     CustomListTile(
-                      onTap: () => ProfileService.showBottomSheet(context),
+                      onTap: () {
+                        nameBottomSheet();
+                      },
                       title: 'Change Name',
                       imagePath: 'assets/images/profile.png',
                       trailingIcon: Icons.arrow_forward_ios,

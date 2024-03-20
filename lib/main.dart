@@ -8,8 +8,10 @@ import 'package:book_charm/screens/authentication/services/auth1/auth_sevices1.d
 import 'package:book_charm/screens/authentication/view/signup_screen.dart';
 import 'package:book_charm/screens/authentication/view/splash_screen.dart';
 import 'package:book_charm/screens/bottom_navigation/bottom_navigation.dart';
+import 'package:book_charm/screens/dashboard/services/dashboard_services.dart';
 import 'package:book_charm/screens/exercise/view/exercise.dart';
 import 'package:book_charm/screens/games/book_reading_screen.dart';
+import 'package:book_charm/screens/home/view/downloaded_books_screen.dart';
 import 'package:book_charm/screens/home/view/home_screen.dart';
 import 'package:book_charm/screens/pdf_viewer/pdf_viewer_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,6 +45,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: ((context) => InternetProvider()),
         ),
+        ChangeNotifierProvider(
+          create: (_) => TimeTrackerService(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -51,7 +56,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
           fontFamily: 'Roboto',
         ),
-       home: const SplashScreen(),
+        home: const SplashScreen(),
         // home: const PdfViewerScreen(),
       ),
     );

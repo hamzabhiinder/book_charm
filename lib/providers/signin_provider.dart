@@ -50,6 +50,7 @@ class SignInProvider extends ChangeNotifier {
   UserModel? _userModel;
   UserModel? get userModel => _userModel;
 
+
   SignInProvider() {
     checkSignInUser();
   }

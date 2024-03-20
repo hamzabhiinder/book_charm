@@ -34,28 +34,28 @@ class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
     List<dynamic> books = storage.getItem('books') ?? [];
     log('$books');
     return Scaffold(
-      body: overallStats != null ? StatsScreen(overallStats: overallStats!) : Text("Loading"),
-      //  Row(
-      //   children: [
-      // ListView.builder(
-      //   physics: NeverScrollableScrollPhysics(),
-      //   shrinkWrap: true,
-      //   itemCount: books.length,
-      //   itemBuilder: (BuildContext context, int index) {
-      //     return CustomBookTile(
-      //       imageUrl: books[index]['url'],
-      //       bookName: books[index]['bookName'],
-      //       authorName: books[index]['authorName'],
-      //       isNetworkImage: true,
-      //     );
-      //   },
-      // ),
-      // ],
-      // ),
+      appBar: AppBar(
+        title: Text('Downloaded Books'),
+      ),
+      body: //overallStats != null ? StatsScreen(overallStats: overallStats!) : Text("Loading"),
+          ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: books.length,
+        itemBuilder: (BuildContext context, int index) {
+          return CustomBookTile(
+            imageUrl: books[index]['url'],
+            bookName: books[index]['bookName'],
+            authorName: books[index]['authorName'],
+            isNetworkImage: true,
+          );
+        },
+      ),
     );
   }
 
-  PageRouteBuilder _buildPageRoute(imageUrl, bookName, authorName, downloadUrl) {
+  PageRouteBuilder _buildPageRoute(
+      imageUrl, bookName, authorName, downloadUrl) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return BookDetailPage(
@@ -70,7 +70,8 @@ class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
         const curve = Curves.easeInOut;
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
         var offsetAnimation = animation.drive(tween);
 
         return SlideTransition(
