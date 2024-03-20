@@ -68,7 +68,7 @@ String formatDuration(Duration duration) {
   return '${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds';
 }
 
-class DashBoardService {}
+
 
 class TimeTrackerService with WidgetsBindingObserver, ChangeNotifier {
   late DateTime _appStartTime;

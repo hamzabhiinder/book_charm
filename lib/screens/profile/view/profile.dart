@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:book_charm/providers/signin_provider.dart';
 import 'package:book_charm/screens/profile/services/profile_service.dart';
+import 'package:book_charm/screens/profile/view/widget/language_selector.dart';
 import 'package:flutter/material.dart';
 
 import 'package:book_charm/screens/profile/view/widget/switch_button.dart';
@@ -16,6 +19,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
+
   nameBottomSheet() {
     ProfileService.showBottomSheet(context);
   }
@@ -44,8 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(height: getResponsiveHeight(context, 10)),
               Container(
                 decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.circular(15), // Adjust the radius as needed
+                  borderRadius: BorderRadius.circular(15), // Adjust the radius as needed
                   border: Border.all(
                     color: Colors.transparent,
                     width: 2.0,
@@ -65,20 +69,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       child: Image.asset(
                         'assets/images/flame.png',
-                        width: getResponsiveWidth(
-                            context, 50), // Adjust the width as needed
-                        height: getResponsiveHeight(
-                            context, 50), // Adjust the height as needed
+                        width: getResponsiveWidth(context, 50), // Adjust the width as needed
+                        height: getResponsiveHeight(context, 50), // Adjust the height as needed
                       ),
                     ),
                     SizedBox(
-                        width: getResponsiveWidth(context,
-                            10)), // Adjust the spacing between leading and title
+                        width:
+                            getResponsiveWidth(context, 10)), // Adjust the spacing between leading and title
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${sp.userModel?.name ?? "Name"}',
+                          sp.userModel?.name ?? "Name",
                           style: TextStyle(
                             fontSize: getResponsiveFontSize(context, 22),
                             fontWeight: FontWeight.w500,
@@ -130,13 +132,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       trailingIcon: Icons.arrow_forward_ios,
                       trailingIconColor: AppColors.primaryColor,
                     ),
-                    CustomListTile(
+                    const CustomListTile(
                       title: 'Change Email',
                       imagePath: 'assets/images/email.png',
                       trailingIcon: Icons.arrow_forward_ios,
                       trailingIconColor: AppColors.primaryColor,
                     ),
-                    CustomListTile(
+                    const CustomListTile(
                       title: 'Change Password',
                       imagePath: 'assets/images/pass.png',
                       trailingIcon: Icons.arrow_forward_ios,
@@ -162,7 +164,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 trailingIconColor: AppColors.primaryColor,
                 trailingWidget: Center(
                   child: WhiteSwitch(
-                    value: true,
+                    value: false,
                     onChanged: (value) {
                       // Handle switch state change
                       print('Switch value: $value');
@@ -187,7 +189,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Column(
                   children: [
-                    const CustomListTile(
+                    CustomListTile(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const LanguageList();
+                          },
+                        );
+                      },
                       title: 'Languages',
                       imagePath: 'assets/images/translator.png',
                       trailingIcon: Icons.arrow_forward_ios,
@@ -202,8 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     CustomListTile(
                       onTap: () {
                         sp.userSignOut().then((value) {
-                          nextScreenReplace(
-                              context, const AuthenticationScreen());
+                          nextScreenReplace(context, const AuthenticationScreen());
                         });
                       },
                       title: 'Logout',
@@ -259,8 +268,7 @@ class CustomListTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(
-                  vertical: getResponsiveHeight(context, 2)),
+              padding: EdgeInsets.symmetric(vertical: getResponsiveHeight(context, 2)),
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 // border: Border.all(
