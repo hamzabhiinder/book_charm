@@ -47,15 +47,14 @@ class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
             imageUrl: books[index]['url'],
             bookName: books[index]['bookName'],
             authorName: books[index]['authorName'],
-            isNetworkImage: true,
+            isNetworkImage: books[index]['url'][0] == 'a' ? false : true,
           );
         },
       ),
     );
   }
 
-  PageRouteBuilder _buildPageRoute(
-      imageUrl, bookName, authorName, downloadUrl) {
+  PageRouteBuilder _buildPageRoute(imageUrl, bookName, authorName, downloadUrl) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return BookDetailPage(
@@ -70,8 +69,7 @@ class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;
         const curve = Curves.easeInOut;
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
         var offsetAnimation = animation.drive(tween);
 
         return SlideTransition(

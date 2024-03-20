@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:localstorage/localstorage.dart';
 
 class WordMatchingScreen extends StatefulWidget {
+  const WordMatchingScreen({super.key});
+
   @override
   _WordMatchingScreenState createState() => _WordMatchingScreenState();
 }
