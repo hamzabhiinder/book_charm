@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'package:http/http.dart' as http;
 import '../../../utils/download/download_file.dart';
 
 class BookDetailPage extends StatefulWidget {
@@ -50,7 +50,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
       downloadedBooks.add({
         'bookName': widget.bookName,
         'authorName': widget.authorName,
-        'filePath': '${widget.bookName}_${widget.authorName}.txt',
+        'filePath': '${widget.bookName}_${widget.authorName}.pdf',
         'url': widget.url,
         'downloadUrl': widget.downloadUrl,
       });
@@ -78,10 +78,13 @@ class _BookDetailPageState extends State<BookDetailPage> {
 
   @override
   void initState() {
-    super.initState();
     checkBookAvailability();
+    super.initState();
   }
 
+  final String fileUrl =
+      'https://www.example.com/sample.pdf'; // Replace with your file URL
+  String? _downloadMessage;
   Future<void> checkBookAvailability() async {
     final externalDir = await getExternalStorageDirectory();
 
@@ -90,7 +93,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     }
 
     final filePath =
-        '${externalDir.path}/${widget.bookName}_${widget.authorName}.txt';
+        '${externalDir.path}/Download/${widget.bookName}_${widget.authorName}.pdf';
     final file = File(filePath);
 
     setState(() {
@@ -99,6 +102,30 @@ class _BookDetailPageState extends State<BookDetailPage> {
     });
     if (isBookAvailable) {}
     log('isBookAvailable $isBookAvailable');
+  }
+
+  Future<void> downloadPdfFile(
+      {required String url,
+      required String bookName,
+      required String authorName}) async {
+    setState(() {
+      _downloadMessage = 'Downloading...';
+    });
+
+    final extDir = await getExternalStorageDirectory();
+    final String dirPath = '${extDir?.path}/Download';
+    await Directory(dirPath).create(recursive: true);
+    final String filePath =
+        '$dirPath/${bookName}_$authorName.pdf'; // Change the file name as needed
+
+    final http.Response response = await http.get(Uri.parse(url));
+    final File file = File(filePath);
+    await file.writeAsBytes(response.bodyBytes);
+
+    setState(() {
+      _downloadMessage = 'Download complete. File saved to: $filePath';
+    });
+    log('Downloaded Successfully');
   }
 
   @override
@@ -187,7 +214,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         setState(() {
                           isLoading = true;
                         });
-                        await scrapePreTagContent(
+                        await downloadPdfFile(
                           url: widget.downloadUrl ?? '',
                           bookName: widget.bookName,
                           authorName: widget.authorName,
@@ -211,10 +238,10 @@ class _BookDetailPageState extends State<BookDetailPage> {
                         : Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text('Download'),
-                              SizedBox(width: 10),
+                              const Text('Download'),
+                              const SizedBox(width: 10),
                               isLoading
-                                  ? SizedBox(
+                                  ? const SizedBox(
                                       height: 20,
                                       width: 20,
                                       child: CircularProgressIndicator(

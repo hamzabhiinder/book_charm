@@ -88,3 +88,22 @@ Future<String?> readTextFromFile(String bookName) async {
     return null;
   }
 }
+
+Future<String?> getPdfPath(String bookName) async {
+  try {
+    final Directory? externalDir = await getExternalStorageDirectory();
+    if (externalDir == null) {
+      throw Exception('External storage not available');
+    }
+    final String dirPath = '${externalDir.path}/Download';
+    final String pdfPath = '${dirPath}/$bookName.pdf';
+    final File pdfFile = File(pdfPath);
+    if (!pdfFile.existsSync()) {
+      throw Exception('PDF not found: $pdfPath');
+    }
+    return pdfPath;
+  } catch (e) {
+    print('Error getting PDF path: $e');
+    return null;
+  }
+}

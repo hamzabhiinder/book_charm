@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:book_charm/screens/home/view/book_detail_page.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -12,19 +13,27 @@ class LibraryScreen extends StatefulWidget {
 
 class _LibraryScreenState extends State<LibraryScreen> {
   List<dynamic> categories = [];
+  Map<String, dynamic> loadJsonData = {};
+  var language = "English";
 
   @override
   void initState() {
     super.initState();
+    
     _loadJsonData();
   }
 
   Future<void> _loadJsonData() async {
     try {
+      log("Wotrking");
       String jsonString =
-          await rootBundle.loadString('assets/data/bookFrenchData.json');
+          await rootBundle.loadString('assets/data/booksData.json');
       setState(() {
-        categories = json.decode(jsonString);
+        loadJsonData = json.decode(jsonString);
+        categories = loadJsonData['English']
+            .map((book) => book['Category'])
+            .toSet()
+            .toList();
       });
     } catch (e) {
       print('Error loading JSON: $e');
@@ -42,8 +51,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
       body: ListView.builder(
         itemCount: categories.length,
         itemBuilder: (context, index) {
-          String category = categories[index]['Category'];
-          List<dynamic> books = categories[index]['Books'];
+          String category = categories[index];
+          List<dynamic> books = loadJsonData['English']
+              .where((book) => book['Category'] == category)
+              .toList();
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +76,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     String bookName = books[bookIndex]['Name'];
                     String imageUrl = books[bookIndex]['Cover'];
                     String authorName = books[bookIndex]['Author'];
-                    String downloadUrl = books[bookIndex]['StreamLink'];
+                    String downloadUrl = books[bookIndex]['Link'];
                     return GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(_buildPageRoute(

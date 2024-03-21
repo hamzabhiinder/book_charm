@@ -1,10 +1,13 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:book_charm/utils/download/download_file.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:translator/translator.dart';
 import 'package:localstorage/localstorage.dart';
 
@@ -21,6 +24,9 @@ class BookReadingScreen extends StatefulWidget {
 class _BookReadingScreenState extends State<BookReadingScreen> {
   String selectTextValue = '';
   String translateTextValue = '';
+  late PdfViewerController _pdfViewerController;
+  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
+  OverlayEntry? _overlayEntry;
   final translator = GoogleTranslator();
 
   final LocalStorage storage = LocalStorage('dictionary.json');
@@ -124,21 +130,42 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    _pdfViewerController = PdfViewerController();
+
     super.initState();
-    fetchData();
+    loadPdfFilePath();
     loadDictionary();
   }
 
-  var myText = "";
+  Future<void> loadPdfFilePath() async {
+    try {
+      final Directory? externalDir = await getExternalStorageDirectory();
+      if (externalDir == null) {
+        throw Exception('External storage not available');
+      }
+      final String pdfPath =
+          '${externalDir.path}/Download/${widget.bookName}_${widget.authorName}.pdf';
+      final File pdfFile = File(pdfPath);
+      if (!pdfFile.existsSync()) {
+        throw Exception('PDF not found: $pdfPath');
+      }
+      setState(() {
+        pdfFilePath = pdfPath;
+      });
+    } catch (e) {
+      print('Error getting PDF path: $e');
+    }
+  }
 
+  // var pdfFilePath = "";
+  String pdfFilePath = '';
   Future<void> fetchData() async {
     try {
-      var result =
-          await readTextFromFile('${widget.bookName}_${widget.authorName}');
+      var result = await getPdfPath('${widget.bookName}_${widget.authorName}');
 
       if (result != null) {
         setState(() {
-          myText = result;
+          pdfFilePath = result;
         });
       }
     } catch (e) {
@@ -149,101 +176,34 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
   @override
   Widget build(BuildContext context) {
     //spanish
-
+    log('File Name $pdfFilePath');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Text Games'),
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.save))],
       ),
       body: GestureDetector(
-        onTap: () {
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        child: SingleChildScrollView(
-          child: SelectableText(
-            myText,
-            showCursor: true,
-            //  scrollPhysics: ClampingScrollPhysics(),
-            contextMenuBuilder: (context, editableTextState) =>
-                AdaptiveTextSelectionToolbar(
-              anchors: editableTextState.contextMenuAnchors,
-              children: [
-                InkWell(
-                  onTap: () {
-                    String selectedText = myText.substring(
-                      editableTextState.textEditingValue.selection.baseOffset,
-                      editableTextState.textEditingValue.selection.extentOffset,
-                    );
-                    log("Your custom action goes here! $selectedText");
-                    translateAction(selectedText);
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: pdfFilePath.isEmpty
+              ? CircularProgressIndicator()
+              : SfPdfViewer.file(
+                  File('${pdfFilePath}'),
+                  onTextSelectionChanged:
+                      (PdfTextSelectionChangedDetails details) {
+                    if (details.selectedText == null && _overlayEntry != null) {
+                      _overlayEntry!.remove();
+                      _overlayEntry = null;
+                    } else if (details.selectedText != null &&
+                        _overlayEntry == null) {
+                      //_showContextMenu(context, details);
+                    }
                   },
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.translate,
-                          size: 15,
-                        ),
-                        SizedBox(width: 4),
-                        Text('Translate'),
-                      ],
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    String selectedText = myText.substring(
-                      editableTextState.textEditingValue.selection.baseOffset,
-                      editableTextState.textEditingValue.selection.extentOffset,
-                    );
-                    // print("Your custom action goes here! $selectedText");
-                    copyAction(selectedText);
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.copy,
-                          size: 15,
-                        ),
-                        SizedBox(width: 4),
-                        Text('Copy'),
-                      ],
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    String selectedText = myText.substring(
-                      editableTextState.textEditingValue.selection.baseOffset,
-                      editableTextState.textEditingValue.selection.extentOffset,
-                    );
-                    shareAction(selectedText);
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.share,
-                          size: 15,
-                        ),
-                        SizedBox(width: 4),
-                        Text('Share'),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+                  key: _pdfViewerKey,
+                  controller: _pdfViewerController,
+                )
           ),
-        ),
-      ),
     );
   }
 }
