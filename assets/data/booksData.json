@@ -1,0 +1,545 @@
+{
+  "French": [
+    {
+      "Name": "Les Liaisons Dangereuses",
+      "Author": "Pierre Choderlos ",
+      "Link": "https://ia804701.us.archive.org/16/items/lesliaisonsdange00lacl/lesliaisonsdange00lacl.pdf",
+      "Category": "Classics",
+      "Cover": "https://images.booksense.com/images/456/452/9780486452456.jpg"
+    },
+    {
+      "Name": "La Cigale",
+      "Author": "Anonymous",
+      "Link": "http://sitesecoles.ac-poitiers.fr/st-pardoux/sites/st-pardoux/IMG/pdf/la-cigale-et-la-fourmi-jean-de-la-fontaine---cm1---cm2---arts-du-langage---histoire-des-arts---cycle-3-2.pdf",
+      "Category": "Classics",
+      "Cover": "https://d3fa68hw0m2vcc.cloudfront.net/794/168442996.jpeg"
+    },
+    {
+      "Name": "Le Petit Prince",
+      "Author": "Antoine Saint",
+      "Link": "https://www.ebooksgratuits.com/pdf/st_exupery_le_petit_prince.pdf",
+      "Category": "Fiction",
+      "Cover": "https://m.media-amazon.com/images/I/710wth0vXZL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+      "Name": "Les Misérables",
+      "Author": "Victor Hugo",
+      "Link": "https://beq.ebooksgratuits.com/vents/Hugo-miserables-1.pdf",
+      "Category": "Classics",
+      "Cover": "https://cdn.kobo.com/book-images/a6bdd3f5-ba60-4ad3-8f6b-5f1427021961/1200/1200/False/les-miserables-305.jpg"
+    },
+    {
+      "Name": "Madame Bovary",
+      "Author": "Gustave Flaubert",
+      "Link": "https://beq.ebooksgratuits.com/vents/Flaubert-Bovary.pdf",
+      "Category": "Classics",
+      "Cover": "https://wordery.com/jackets/66f42df4/madame-bovary-gustave-flaubert-9781606601112.jpg"
+    },
+    {
+      "Name": "Le Cid",
+      "Author": "Pierre Corneille",
+      "Link": "https://www.theatre-classique.fr/pages/pdf/CORNEILLEP_CID37.pdf",
+      "Category": "Classics",
+      "Cover": "https://media.electre-ng.com/images/image-id/d88e3112f9d10899950aebcd69c5c9f13102fd583956fe08d2c5726a9b86e8f7.jpg"
+    },
+    {
+      "Name": "Portraits Littéraires ",
+      "Author": "Sainte-Beuve",
+      "Link": "https://cerisy-colloques.fr/wp-content/uploads/2020/02/PortraitsLitterature-PubCerisy2018.pdf",
+      "Category": "Classics",
+      "Cover": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdv86urbvQiPSpga3p3SWg-xsbN3xm_oD707Pbb0bKAwDyoqaQlkVOUfbdzSHJk1f1uH8&usqp=CAU"
+    },
+    {
+      "Name": "Oeuvres de Lamartine",
+      "Author": "Lamartine",
+      "Link": "https://ia601305.us.archive.org/25/items/oeuvresdelamart00lamagoog/oeuvresdelamart00lamagoog.pdf",
+      "Category": "Classics",
+      "Cover": "https://c8.alamy.com/comp/2A25BKD/french-satirical-magazine-cover-depicting-the-book-les-metiers-qui-tuent-the-jobs-that-kill-a-survey-of-labour-unions-on-occupational-diseases-by-the-brothers-leon-and-maurice-bonneff-1908-2A25BKD.jpg"
+    },
+    {
+      "Name": "Causeries",
+      "Author": "Alexandra Dumas",
+      "Link": "https://ia801600.us.archive.org/35/items/causeries02duma/causeries02duma.pdf",
+      "Category": "Classics",
+      "Cover": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmOT_6SBmDB3r9_ACaQXCpRHmX_A1Q4lzUTFj623nWE64z4RVp9Ks-Bmmi0MeDGRod6aM&usqp=CAU"
+    },
+    {
+      "Name": "Fragments des oeuvres",
+      "Author": "Alexandra Dumas",
+      "Link": "https://ia802600.us.archive.org/0/items/fragmentsdesoeuv00duma/fragmentsdesoeuv00duma.pdf",
+      "Category": "Classics",
+      "Cover": "https://m.media-amazon.com/images/I/61t5dnhihdL._AC_UF1000,1000_QL80_.jpg"
+    }
+  ],
+  "Spanish": [
+    {
+      "Name": "Don Quijote de la Mancha",
+      "Author": "Miguel de Cervantes",
+      "Link": "https://repository.unilibre.edu.co/bitstream/handle/10901/8147/elingeniosofinal.pdf?sequence=1&isAllowed=y",
+      "Category": "Classics",
+      "Cover": "https://www.psupress.org/images/covers/294wide/978-0-271-08231-8md_294.jpg"
+    },
+    {
+      "Name": "El Lazarillo de Tormes",
+      "Author": "Anonimo",
+      "Link": "https://www.unaula.edu.co/sites/default/files/ebooks/LazarilloDeTormes.pdf",
+      "Category": "Classics",
+      "Cover": "https://m.media-amazon.com/images/I/614ljj65RGL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+      "Name": "La Celestina",
+      "Author": "Fernando de Rojas",
+      "Link": "https://web.seducoahuila.gob.mx/biblioweb/upload/Celestina.PDF",
+      "Category": "Classics",
+      "Cover": "https://images.penguinrandomhouse.com/cover/9788491050278"
+    },
+    {
+      "Name": "La vida es sueño",
+      "Author": "Pedro Calderón de la Barca",
+      "Link": "https://www.unaula.edu.co/sites/default/files/ebooks/LaVidaEsSueno_ebook.pdf",
+      "Category": "Classics",
+      "Cover": "https://cdn11.bigcommerce.com/s-si4e0s8t1l/images/stencil/1280x1280/products/113865/114103/apii1gnwv__01148.1612295286.jpg?c=1"
+    },
+    {
+      "Name": "Fuente Ovejuna",
+      "Author": "Lope de Vega",
+      "Link": "https://www.rae.es/sites/default/files/Fuenteovejuna_Lope_de_Vega.pdf",
+      "Category": "Classics",
+      "Cover": "https://m.media-amazon.com/images/I/41OiOYcGdzL.jpg"
+    },
+    {
+      "Name": "Rimas",
+      "Author": "Gustavo Adolfo Bécquer",
+      "Link": "https://web.seducoahuila.gob.mx/biblioweb/upload/rimas.pdf",
+      "Category": "Classics",
+      "Cover": "https://www.esmeraldapublishing.com/wp-content/uploads/2020/02/Rimas-Gustavo-Adolfo-B%C3%A9cquer-Portada-01-2.jpg"
+    },
+    {
+      "Name": "Pepita Jiménez",
+      "Author": "Juan Valera",
+      "Link": "https://www.stockcero.com/pdfs/ProlAza%96aPepita.pdf",
+      "Category": "Classics",
+      "Cover": "https://pictures.abebooks.com/isbn/9788489163546-us.jpg"
+    },
+    {
+      "Name": "La Regenta",
+      "Author": "Leopoldo Alas",
+      "Link": "https://www.vicentellop.com/TEXTOS/alasclarin/laregenta.pdf",
+      "Category": "Classics",
+      "Cover": "https://m.media-amazon.com/images/I/711oJQwnLJL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+      "Name": "Coraline",
+      "Author": "Neil Gaiman",
+      "Link": "https://ia600208.us.archive.org/1/items/coraline_202403/coraline.pdf",
+      "Category": "Horror",
+      "Cover": "https://m.media-amazon.com/images/I/71FvtJvTkRL._SY522_.jpg"
+    },
+    {
+      "Name": "El Exorcista",
+      "Author": "William Peter Blatty",
+      "Link": "https://ia600208.us.archive.org/21/items/william-peter-blatty-el-exorcista-ediciones-b-2007/William%20Peter%20Blatty%20-%20El%20Exorcista-Ediciones%20B%20%282007%29.pdf",
+      "Category": "Horror",
+      "Cover": "https://m.media-amazon.com/images/I/71gnmyiJGnL._AC_UY327_FMwebp_QL65_.jpg",
+      "Column6": "https://m.media-amazon.com/images/I/514H9mgFLcL._SX342_SY445_.jpg"
+    }
+  ],
+  "English": [
+    {
+      "Name": "The Big Four",
+      "Author": "Agatha Christie",
+      "Link": "https://ia601303.us.archive.org/24/items/agatha-christie_the-big-four/agatha-christie_the-big-four.pdf",
+      "Category": "Mystery",
+      "Cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1372506728i/16316.jpg"
+    },
+    {
+      "Name": "The Hound of the Baskervilles",
+      "Author": "Arthur Conan Doyle",
+      "Link": "https://www.ibe.it/ebook/The-Hound-of-the-Baskervilles.pdf",
+      "Category": "Mystery",
+      "Cover": "https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_360,c_scale/jackets/9781847494962.jpg"
+    },
+    {
+      "Name": "The Mystery of the Edwin Drood",
+      "Author": "Charles Dickens",
+      "Link": "https://ia601309.us.archive.org/17/items/mysteryofedwindr00dickrich/mysteryofedwindr00dickrich.pdf",
+      "Category": "Mystery",
+      "Cover": "https://coronadotimes.com/wp-content/uploads/2017/10/Edwin-Drood.jpg"
+    },
+    {
+      "Name": "Rebecca",
+      "Author": "Daphne du Maurier",
+      "Link": "https://mlsh.ru/files/2016-05/69b5fe47cd357ef18ac9cb50e8c67409.pdf",
+      "Category": "Mystery",
+      "Cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1386605169i/17899948.jpg"
+    },
+    {
+      "Name": "The Woman in White",
+      "Author": "Wilkie Collins",
+      "Link": "https://ia601209.us.archive.org/32/items/womaninwhiteano03collgoog/womaninwhiteano03collgoog.pdf",
+      "Category": "Mystery",
+      "Cover": "https://cdn.penguin.co.uk/dam-assets/books/9780141389431/9780141389431-jacket-large.jpg"
+    },
+    {
+      "Name": "The Moonstone",
+      "Author": "Wilkie Collins",
+      "Link": "https://ia801506.us.archive.org/26/items/in.ernet.dli.2015.202518/2015.202518.The-Moonstone.pdf",
+      "Category": "Mystery",
+      "Cover": "https://excellerbooks.com/wp-content/uploads/2022/03/THE-MOONSTONE-1-791x1024.jpg"
+    },
+    {
+      "Name": "The Murders in the Rue Morgue",
+      "Author": "Edgar Allan Poe",
+      "Link": "https://ia804702.us.archive.org/34/items/in.ernet.dli.2015.547632/2015.547632.The-murders.pdf",
+      "Category": "Classic",
+      "Cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1661025564i/3301759.jpg"
+    },
+    {
+      "Name": "The Strange Case of Dr. Jekyll and Mr. Hyde",
+      "Author": "Robert Louis Stevenson",
+      "Link": "https://ia902900.us.archive.org/25/items/in.ernet.dli.2015.149608/2015.149608.The-Strange-Case-Of-Dr-Jekyll-And-Mr-Hyde-And-Kidnapped.pdf",
+      "Category": "Classic",
+      "Cover": "https://m.media-amazon.com/images/I/715JRl9HMJL._SY522_.jpg"
+    },
+    {
+      "Name": "A Study in Scarlet",
+      "Author": "Arthur Conan Doyle",
+      "Link": "https://ia802503.us.archive.org/12/items/studyinscarlet0000doyl_k3b6/studyinscarlet0000doyl_k3b6.pdf",
+      "Category": "Classic",
+      "Cover": "https://m.media-amazon.com/images/I/41zV5nEnEEL.jpg"
+    },
+    {
+      "Name": "Pride and Prejudice",
+      "Author": "Jane Austen",
+      "Link": "https://www.gutenberg.org/files/1342/old/pandp12p.pdf",
+      "Category": "Classic",
+      "Cover": "https://readaloudrevival.com/wp-content/uploads/2016/05/Pride-and-Prejudice.png.webp"
+    },
+    {
+      "Name": "Jane Eyre",
+      "Author": "Charlotte Brontë",
+      "Link": "https://www.ucm.es/data/cont/docs/119-2014-04-09-Jane%20Eyre.pdf",
+      "Category": "Classic",
+      "Cover": "https://archive.org/details/in.ernet.dli.2015.16207/page/n277/mode/2up"
+    },
+    {
+      "Name": "Frankenstein",
+      "Author": "Mary Shelley",
+      "Link": "https://ia804705.us.archive.org/4/items/in.ernet.dli.2015.91897/2015.91897.Frankenstein.pdf",
+      "Category": "Fiction",
+      "Cover": "https://i.harperapps.com/hcanz/covers/9780746089446/x293.jpg"
+    },
+    {
+      "Name": "The Adventures of Sherlock Holmes",
+      "Author": "Sir Arthur Conan Doyle",
+      "Link": "https://people.maths.ox.ac.uk/moulton/documents/The_Adventures_of_Sherlock_Holmes.pdf",
+      "Category": "Fiction",
+      "Cover": "https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_360,c_scale/jackets/9781847496164.jpg"
+    },
+    {
+      "Name": "Great Expectations",
+      "Author": "Charles Dickens",
+      "Link": "https://www.argentina.gob.ar/sites/default/files/great_expectations_dickens.pdf",
+      "Category": "Fiction",
+      "Cover": "https://pictures.abebooks.com/isbn/9780195455472-uk.jpg"
+    },
+    {
+      "Name": "The Lord of the Rings trilogy",
+      "Author": "John Ronald Reuel Tolkien",
+      "Link": "https://gosafir.com/mag/wp-content/uploads/2019/12/Tolkien-J.-The-lord-of-the-rings-HarperCollins-ebooks-2010.pdf",
+      "Category": "Fiction",
+      "Cover": "https://m.media-amazon.com/images/I/51Jh5DZzPFL._SY445_SX342_.jpg"
+    },
+    {
+      "Name": "To Kill a Mockingbird",
+      "Author": "Harper Lee",
+      "Link": "https://giove.isti.cnr.it/demo/eread/libri/angry/mockingbird.pdf",
+      "Category": "Fiction",
+      "Cover": "https://blog.12min.com/wp-content/uploads/2018/04/05c-To-Kill-a-Mockingbird-PDF-Summary.jpg"
+    },
+    {
+      "Name": 1984,
+      "Author": "George Orwell",
+      "Link": "https://rauterberg.employee.id.tue.nl/lecturenotes/DDM110%20CAS/Orwell-1949%201984.pdf",
+      "Category": "Fiction",
+      "Cover": "https://m.media-amazon.com/images/I/41sjzA8EGhL._SY445_SX342_.jpg"
+    },
+    {
+      "Name": "The Haunting of Hill House",
+      "Author": " Shirley Jackson ",
+      "Link": "https://havenner.weebly.com/uploads/2/0/5/7/20575006/jackson-shirley-the-haunting-of-hill-house.pdf",
+      "Category": "Horror",
+      "Cover": "https://cdn2.penguin.com.au/covers/400/9780141191447.jpg"
+    },
+    {
+      "Name": "The Shining",
+      "Author": "Stephen King",
+      "Link": "https://ia801400.us.archive.org/2/items/the-shining-by-stephen-king-1977/The%20Shining.pdf",
+      "Category": "Horror",
+      "Cover": "https://m.media-amazon.com/images/I/41gcbw-zBoL._SY445_SX342_.jpg"
+    },
+    {
+      "Name": "The Lottery",
+      "Author": "Shirley Jackson",
+      "Link": "https://bpb-us-e2.wpmucdn.com/sites.middlebury.edu/dist/d/2396/files/2019/09/jackson_lottery.pdf",
+      "Category": "Horror",
+      "Cover": "https://img1.od-cdn.com/ImageType-400/0484-1/C3D/028/06/%7BC3D02806-DEE2-4458-8003-A867221CE110%7DImg400.jpg"
+    },
+    {
+      "Name": "The Exorcist",
+      "Author": "William Peter Blatty",
+      "Link": "http://www.geocities.ws/thebookstore/the%20exorcist.pdf",
+      "Category": "Horror",
+      "Cover": "https://m.media-amazon.com/images/I/41G6Xwc2V2L._SY445_SX342_.jpg"
+    },
+    {
+      "Name": "Storyteller",
+      "Author": "Edgar Allan Poe",
+      "Link": "https://americanenglish.state.gov/files/ae/resource_files/edgar_allan_poe_storyteller.pdf",
+      "Category": "Horror",
+      "Cover": "https://images.booksense.com/images/468/078/9781688078468.jpg"
+    },
+    {
+      "Name": "The Love Hypothesis",
+      "Author": "Ali Hazelwood",
+      "Link": "https://ia801506.us.archive.org/31/items/the-love-hypothesis-by-ali-hazelwood/The%20Love%20Hypothesis%20by%20Ali%20Hazelwood.pdf",
+      "Category": "Romance",
+      "Cover": "https://m.media-amazon.com/images/I/7116DHz6S9L._SY522_.jpg"
+    },
+    {
+      "Name": "It Ends With Us",
+      "Author": "Colleen Hoover",
+      "Link": "https://icrrd.com/public/media/15-05-2021-052358It-Ends-with-Us.pdf",
+      "Category": "Romance",
+      "Cover": "https://m.media-amazon.com/images/I/51V6CkO9lkL._SY445_SX342_.jpg"
+    },
+    {
+      "Name": "It Starts With Us",
+      "Author": "Colleen Hoover",
+      "Link": "https://ia601507.us.archive.org/27/items/it-starts-with-us-colleen-hoover-z-lib.org_20221128/It%20Starts%20with%20Us%20%28Colleen%20Hoover%29%20%28z-lib.org%29.pdf",
+      "Category": "Romance",
+      "Cover": "https://m.media-amazon.com/images/I/71PNGYHykrL._AC_UY327_FMwebp_QL65_.jpg"
+    },
+    {
+      "Name": "Little Women",
+      "Author": "Louisa May Alcott",
+      "Link": "https://www.defence.lk/upload/ebooks/Little%20Women.pdf",
+      "Category": "Romance",
+      "Cover": "https://m.media-amazon.com/images/I/51F9Eium2IL._SY445_SX342_.jpg"
+    },
+    {
+      "Name": "Red, White & Royal Blue",
+      "Author": "Casey McQuiston",
+      "Link": "https://www.booksfree.org/wp-content/uploads/2022/02/Red-White-And-Royal-Blue-pdf-free-download.pdf",
+      "Category": "Comdey",
+      "Cover": "https://tailieutuhoc.com/_next/image?url=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F41ptxLrdxFL.jpg&w=1080&q=75"
+    },
+    {
+      "Name": "Diary of a Wimpy Kid: No Brainer",
+      "Author": "Jeff Kinney",
+      "Link": "https://ia800509.us.archive.org/26/items/NoBrainerDiaryOfAWimpyKidBook18JeffKi/No%20Brainer%20%28Diary%20of%20a%20Wimpy%20Kid%20Book%20%2318%29_text.pdf",
+      "Category": "Comdey",
+      "Cover": "https://m.media-amazon.com/images/I/51Md5DMsP1L._SY445_SX342_.jpg"
+    },
+    {
+      "Name": "Diary of a Wimpy Kid",
+      "Author": "Jeff Kinney",
+      "Link": "https://ia802902.us.archive.org/19/items/diaryofawimpykidbookseriesbyjeffkinney_202004/Diary%20of%20a%20wimpy%20kid%20book01.pdf",
+      "Category": "Comdey",
+      "Cover": "https://m.media-amazon.com/images/I/91XUENePBlL._SY522_.jpg"
+    },
+    {
+      "Name": "Diary of a Wimpy Kid: Dog Days",
+      "Author": "Jeff Kinney",
+      "Link": "https://ia803408.us.archive.org/6/items/20210412_20210412_1655/Dog_Days_-_Jeff_Kinney%20%281%29.pdf",
+      "Category": "Comdey",
+      "Cover": "https://m.media-amazon.com/images/I/51t15vTaW9L._SY445_SX342_.jpg"
+    },
+    {
+      "Name": "Diary of a Wimpy Kid: The Ugly Truth",
+      "Author": "Jeff Kinney",
+      "Link": "https://ia902902.us.archive.org/19/items/diaryofawimpykidbookseriesbyjeffkinney_202004/Diary%20of%20a%20wimpy%20kid%20book05%20the%20ugly%20truth.pdf",
+      "Category": "Comdey",
+      "Cover": "https://m.media-amazon.com/images/I/91n1R2TdyUL._SY522_.jpg"
+    },
+    {
+      "Name": "Boy, Tales of Childhood",
+      "Author": "Roald Dahl",
+      "Link": "http://www.tavisdupreez.com/uploads/5/8/9/4/58946467/roalddahl_boy.pdf",
+      "Category": "Comdey",
+      "Cover": "https://m.media-amazon.com/images/I/61YrdYpkI4L._SY522_.jpg"
+    }
+  ],
+  "Urdu": [
+    {
+      "Name": "Aish Dost",
+      "Author": "Prof Khadim Muhiuddin",
+      "Link": "https://ia902805.us.archive.org/18/items/aishdosturduprofkhadimalaudin/Aish%20Dost%20Urdu%20-%20Prof%20Khadim%20Alaudin.pdf",
+      "Category": "Fiction",
+      "Cover": "https://rekhta.pc.cdn.bitgravity.com/Images/EBooks/small_aish-dost-khadim-muhiuddin-ebooks.jpg"
+    },
+    {
+      "Name": "Badi Didi",
+      "Author": "Sharat Chandra",
+      "Link": "https://ia802802.us.archive.org/21/items/badididiurdusharatchandra/Badi%20Didi%20Urdu%20-%20Sharat%20Chandra.pdf",
+      "Category": "Fiction",
+      "Cover": "https://ia902802.us.archive.org/BookReader/BookReaderImages.php?zip=/21/items/badididiurdusharatchandra/Badi%20Didi%20Urdu%20-%20Sharat%20Chandra_jp2.zip&file=Badi%20Didi%20Urdu%20-%20Sharat%20Chandra_jp2/Badi%20Didi%20Urdu%20-%20Sharat%20Chandra_0000.jp2&id=badididiurdusharatchandra&scale=8&rotate=0"
+    },
+    {
+      "Name": "Nasheman",
+      "Author": "Abida Hijab Lakhnawi",
+      "Link": "https://ia902806.us.archive.org/4/items/nashemanurduabidahhijablakhnawi/Nasheman%20Urdu%20-%20Abidah%20Hijab%20Lakhnawi.pdf",
+      "Category": "Fiction",
+      "Cover": "https://ia802806.us.archive.org/BookReader/BookReaderImages.php?zip=/4/items/nashemanurduabidahhijablakhnawi/Nasheman%20Urdu%20-%20Abidah%20Hijab%20Lakhnawi_jp2.zip&file=Nasheman%20Urdu%20-%20Abidah%20Hijab%20Lakhnawi_jp2/Nasheman%20Urdu%20-%20Abidah%20Hijab%20Lakhnawi_0000.jp2&id=nashemanurduabidahhijablakhnawi&scale=8&rotate=0"
+    },
+    {
+      "Name": "Aag Ka Darya",
+      "Author": "Qurratulain Hyder",
+      "Link": "https://ia800406.us.archive.org/21/items/AagKaDaryaByQuratUlAinHairder/Aag%20Ka%20Darya%20By%20Qurat%20Ul%20Ain%20Hairder.pdf",
+      "Category": "Fiction",
+      "Cover": "https://goshaeadab.com/wp-content/uploads/2021/06/aag.jpg"
+    },
+    {
+      "Name": "Yazeed",
+      "Author": "Saadat Hassan Manto",
+      "Link": "https://ia802903.us.archive.org/35/items/yazeedurdusaadathassanmanto/Yazeed%20Urdu%20-%20Saadat%20Hassan%20Manto.pdf",
+      "Category": "Fiction",
+      "Cover": "https://rekhta.pc.cdn.bitgravity.com/Images/EBooks/small_yazeed-saadat-hasan-manto-ebooks.jpg"
+    },
+    {
+      "Name": "Kulliyat-e-Mir",
+      "Author": "Mir Taqi Mir",
+      "Link": "https://ia802702.us.archive.org/28/items/kulliyatimir/kulliyatimir.pdf",
+      "Category": "Poetry",
+      "Cover": "https://sangemeel.shop/cdn/shop/products/kulliyat-i-mir-556477-338570.jpg"
+    },
+    {
+      "Name": "Diwan-e-Ghalib",
+      "Author": "Mirza Asadullah Khan Ghalib",
+      "Link": "https://ia801701.us.archive.org/21/items/dli.ernet.243634/243634-3008%20Diwan%20E%20Ghalib.pdf",
+      "Category": "Poetry",
+      "Cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1409368995i/23124975.jpg"
+    },
+    {
+      "Name": "Iqbal Imam-e-Adab",
+      "Author": "Rais Ahmed Jafri",
+      "Link": "https://ia804505.us.archive.org/1/items/iqbaligb00jafauoft/iqbaligb00jafauoft.pdf",
+      "Category": "Poetry",
+      "Cover": "https://rekhta.pc.cdn.bitgravity.com/Images/EBooks/small_iqbal-imam-e-adab-rais-ahmad-jafri-ebooks.jpg"
+    },
+    {
+      "Name": "Kulliyat-e-Faiz",
+      "Author": "Faiz Ahmad Faiz",
+      "Link": "https://ia904709.us.archive.org/29/items/kulliyat-e-faiz-faiz-ahmad-faiz/kulliyat-e-faiz-faiz-ahmad-faiz-ebookslang%3Dur.pdf",
+      "Category": "Poetry",
+      "Cover": "https://rekhta.pc.cdn.bitgravity.com/Images/EBooks/small_kulliyat-e-faiz-faiz-ahmad-faiz-ebooks.jpg"
+    },
+    {
+      "Name": "Dastan-e-Amir Hamza",
+      "Author": "Folklore",
+      "Link": "https://ia601500.us.archive.org/13/items/01BadshahKaKhwab/01%20-%20Badshah_Ka_Khwab.pdf",
+      "Category": "Adventure",
+      "Cover": "https://ferozsons.com.pk/wp-content/uploads/2018/03/Badshah-Ka-Khawab.png"
+    }
+  ],
+  "Italian": [
+    {
+      "Name": "Pinocchio",
+      "Author": "Carlo Collodi ",
+      "Link": "http://www.giuliotortello.it/racconti/Pinocchio.pdf",
+      "Category": "Classics",
+      "Description": "A children's novel about a wooden puppet who longs to become a real boy. It explores themes of obedience, honesty, and the importance of education.",
+      "Cover": "https://m.media-amazon.com/images/I/61AjHmoSUzL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+      "Name": "Dracula",
+      "Author": "Bram Stoker",
+      "Link": "https://ia800201.us.archive.org/34/items/draculabr00stokuoft/draculabr00stokuoft.pdf",
+      "Category": "Classics",
+      "Description": "Dracula is an 1897 Gothic horror novel by Irish author Bram Stoker.Famous for introducing the character of the vampire Count Dracula, the novel tells the story of Dracula's attempt to move from Transylvania to England so he may find new blood and spread undead curse, and the battle between Dracula and a small group of men and women led by Professor Abraham Van Helsing.",
+      "Cover": "https://m.media-amazon.com/images/I/316QKUeAiUS._SY445_SX342_.jpg"
+    },
+    {
+      "Name": "Divina Commedia",
+      "Author": "Dante Alighieri ",
+      "Link": "https://ia601302.us.archive.org/35/items/ladivinacommedia00dant/ladivinacommedia00dant.pdf",
+      "Category": "Classics",
+      "Description": "The Divine Comedy tells of the poet Dante's travels through Hell, Purgatory and Paradise in search of salvation. Before he is redeemed by his love for the heavenly Beatrice, he learns the meaning of evil, sin, damnation and forgiveness through a series of unforgettable encounters.",
+      "Cover": "https://m.media-amazon.com/images/I/71QF0B+yZFL._SY466_.jpg"
+    },
+    {
+      "Name": "Orlando Furioso",
+      "Author": "Ludovico Ariosto",
+      "Link": "https://moodle2.units.it/pluginfile.php/441200/mod_resource/content/1/ARIOSTO-ORLANDO%20FURIOSO.pdf",
+      "Category": "Classics",
+      "Description": "A chivalric romance poem filled with adventure, love, and magic. It tells the story of Orlando, a knight who goes mad after his love interest Angelica falls for another man.",
+      "Cover": "https://pictures.abebooks.com/isbn/9788467033229-uk.jpg"
+    },
+    {
+      "Name": "I Promessi Sposi",
+      "Author": "Alessandro Manzoni",
+      "Link": "https://moodle2.units.it/pluginfile.php/441330/mod_resource/content/1/MANZONI-PROMESSI%20SPOSI.pdf",
+      "Category": "Classics",
+      "Description": "A historical novel set in 17th-century Italy during Spanish rule. It follows the struggles of two young lovers, Renzo and Lucia, to overcome obstacles and be together.",
+      "Cover": "https://www.newtoncompton.com/files/cache/bookimages/13594/i-promessi-sposi-x600.jpg"
+    },
+    {
+      "Name": "Io sono leggenda",
+      "Author": "Richard Matheson",
+      "Link": "https://ia600203.us.archive.org/20/items/vdocuments.mx_io-sono-leggenda/vdocuments.mx_io-sono-leggenda.pdf",
+      "Category": "Horror",
+      "Description": "A lone survivor wanders through the ruins of New York City, which is now overrun by vampires.",
+      "Cover": "https://m.media-amazon.com/images/I/516cHSYB2UL.jpg"
+    },
+    {
+      "Name": "La casa delle bambole",
+      "Author": "Ka-Tsetnik",
+      "Link": "https://ia600209.us.archive.org/1/items/paolo-rodari-gabriele-amorth-lultimo-esorcista.-la-mia-battaglia-contro-satana-2013-piemme-libgen.li/%28Oscar%20narrativa%29%20Ka-tzetnik%20135633%20-%20La%20casa%20delle%20bambole-Mondadori%20%281994%29.pdf",
+      "Category": "Horror",
+      "Description": "he friends are initially skeptical of the story, but they soon begin to experience strange and frightening things. They see the ghost of the young girl, and they hear her voice. They also start to have nightmares about her.\n\nThe friends are terrified, and they want to leave the cabin, but they are snowed in and cannot get away. They are trapped with the ghost, and they must find a way to survive.",
+      "Cover": "https://m.media-amazon.com/images/I/A1bwQxjFE3L._SY522_.jpg"
+    }
+  ],
+  "German": [
+    {
+      "Name": "Faust",
+      "Author": "Johann Wolfgang von Goethe",
+      "Link": "https://web.seducoahuila.gob.mx/biblioweb/upload/Faust%20(Aleman).pdf",
+      "Category": "Classics",
+      "Cover": "https://covers.storytel.com/jpg-640/9788726856668.cefe48e1-33d8-47f8-ad09-7a55f9eacae6?quality=70",
+      "Description": "A dramatic masterpiece exploring themes of ambition, morality, and the human condition."
+    },
+    {
+      "Name": "Effi Briest",
+      "Author": "Theodor Fontane",
+      "Link": "https://ia800904.us.archive.org/30/items/bub_gb_7dEnAAAAYAAJ/bub_gb_7dEnAAAAYAAJ.pdf",
+      "Category": "Classics",
+      "Cover": "https://m.media-amazon.com/images/I/81pUCsG8A6L._AC_UF1000,1000_QL80_.jpg",
+      "Description": "A realist novel exploring themes of societal expectations, gender roles, and the consequences of social ostracization."
+    },
+    {
+      "Name": "Simplicius Simplicissimus",
+      "Author": "Grimmelshausen",
+      "Link": "https://trace.tennessee.edu/cgi/viewcontent.cgi?referer=&httpsredir=1&article=1006&context=utk_newfound-ebooks",
+      "Category": "Classics",
+      "Cover": "https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_360,c_scale/jackets/9781847498786.jpg",
+      "Description": "A picaresque novel satirizing the Thirty Years' War in Germany."
+    },
+    {
+      "Name": "Buddenbrooks: Verfall einer Familie",
+      "Author": "Thomas Mann",
+      "Link": "https://www.hueber.de/media/36/Mann.pdf",
+      "Category": "Classics",
+      "Cover": "https://m.media-amazon.com/images/I/61Q3hlj20ZL._AC_UF1000,1000_QL80_.jpg",
+      "Description": "A multi-generational saga chronicling the rise and fall of a wealthy merchant family."
+    },
+    {
+      "Name": "Der Ring des Nibelungen",
+      "Author": "Richard Wagner",
+      "Link": "https://www.reclam.de/data/media/978-3-15-018628-2.pdf",
+      "Category": "Classics",
+      "Cover": "https://m.media-amazon.com/images/I/51KxppjMUeL._AC_UF894,1000_QL80_.jpg",
+      "Description": "A cycle of four epic operas based on Norse mythology and Germanic legends."
+    }
+  ]
+}
