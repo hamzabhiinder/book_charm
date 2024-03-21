@@ -53,9 +53,9 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
     if (firestoreData != null) {
       // Data exists in Firestore, save it to local storage
       await storage.setItem('wordPairs', firestoreData);
-      setState(() {
-        wordPairs = firestoreData;
-      });
+
+      wordPairs = firestoreData;
+      setState(() {});
     } else {
       // Data does not exist in Firestore, load it from local storage
       var storedData = storage.getItem('wordPairs');

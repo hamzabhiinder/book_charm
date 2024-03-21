@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:book_charm/screens/authentication/view/signup_screen.dart';
+import 'package:book_charm/screens/profile/view/widget/language_selector.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,8 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _logoAnimation;
   late Animation<double> _textAnimation;
@@ -54,7 +56,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     // Delay for 2 seconds and then navigate to the login screen
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HandleLogin()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => const HandleLogin()));
     });
   }
 
@@ -154,9 +157,10 @@ class _HandleLoginState extends State<HandleLogin> {
               final user = AuthService.firebase().currentUser;
               if (user != null) {
                 final sp = context.read<SignInProvider>();
+                final languageProvider = context.read<LanguageProvider>();
                 sp.getDataFromSharedPreferences();
-
-                log('user ${user.email}');
+                languageProvider.loadSelectedLanguage();
+                log('user ${user.email}  ${languageProvider.selectedLanguageName}');
                 return BottomNaigationScreen();
               } else {
                 return const AuthenticationScreen();

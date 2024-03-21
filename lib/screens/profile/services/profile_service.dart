@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +13,9 @@ class ProfileService {
   static void showBottomSheetWidget(BuildContext context) {
     final sp = context.read<SignInProvider>();
 
-    TextEditingController _nameController =
+    TextEditingController nameController =
         TextEditingController(); // Add a text controller for the text field
-    Future _updateNameOnFirebase(String newName) async {
+    Future updateNameOnFirebase(String newName) async {
       try {
         await FirebaseFirestore.instance
             .collection('users')
@@ -27,9 +29,8 @@ class ProfileService {
         sp.getDataFromSharedPreferences();
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('Name changed successfully!'),
-          
         ));
-        
+
         Navigator.of(context).pop(); // Close the bottom sheet
       } catch (e) {
         print('Error updating name: $e');
@@ -39,48 +40,58 @@ class ProfileService {
     showBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Change Name',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.shade200,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
               ),
-              SizedBox(height: 16),
-              TextField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: 'Name',
+            ),
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Change Name',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-              ),
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      _updateNameOnFirebase(_nameController.text);
-                    },
-                    child: const Text(
-                      'Change',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
-                    ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Name',
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Close the bottom sheet
-                    },
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        updateNameOnFirebase(nameController.text);
+                      },
+                      child: const Text(
+                        'Change',
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the bottom sheet
+                      },
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       },

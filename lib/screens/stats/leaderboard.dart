@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:book_charm/screens/stats/users_profiles.dart';
+import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -9,6 +13,7 @@ class LeaderBoardScreen extends StatefulWidget {
 class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
   late TextEditingController _searchController;
   List<Map<String, dynamic>> _userSnapshot = [];
+  bool _loading = false;
 
   @override
   void initState() {
@@ -18,6 +23,10 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
   }
 
   void _fetchUsers() async {
+    setState(() {
+      _loading = true;
+    });
+
     try {
       // Fetch users sorted by XP
       QuerySnapshot statsSnapshot =
@@ -39,19 +48,26 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
         String uid = userDoc.id;
         String name = (userDoc.data() as Map<String, dynamic>)['name'];
         int xp = xpData[uid] ?? 0; // Default to 0 if XP data is not found
+        String? imageUrl =
+            (userDoc.data() as Map<String, dynamic>)['image_url'];
         users.add({
           'uid': uid,
           'name': name,
           'xp': xp,
+          'image_url': imageUrl,
         });
       }
       users.sort((a, b) => b['xp'].compareTo(a['xp']));
 
       setState(() {
         _userSnapshot = users;
+        _loading = false;
       });
     } catch (error) {
       print('Error fetching users: $error');
+      setState(() {
+        _loading = false;
+      });
       // Handle error
     }
   }
@@ -60,7 +76,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User List'),
+        title: Text('Leaderboard'),
       ),
       body: Column(
         children: [
@@ -80,9 +96,11 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
               ),
             ),
           ),
-          Expanded(
-            child: _buildUserList(),
-          ),
+          _loading
+              ? CircularProgressIndicator() // Show loading indicator while fetching data
+              : Expanded(
+                  child: _buildUserList(),
+                ),
         ],
       ),
     );
@@ -94,13 +112,19 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
       String name = user['name'] ?? '';
       return name.toLowerCase().contains(_searchController.text.toLowerCase());
     }).toList();
-    print(filteredUsers);
+
     return ListView.builder(
       itemCount: filteredUsers.length,
       itemBuilder: (context, index) {
         var userData = filteredUsers[index];
 
         return ListTile(
+          onTap: () => nextScreen(context, UserProfilePage()),
+          leading: CircleAvatar(
+            // Display user profile picture
+            backgroundImage: NetworkImage(
+                '${userData['image_url'] ?? 'https://www.kindpng.com/picc/m/252-2524695_dummy-profile-image-jpg-hd-png-download.png'}'),
+          ),
           title: Text(userData['name'] ?? ''),
           subtitle: Text('XP: ${userData['xp'] ?? ''}'),
           // Implement more user details here

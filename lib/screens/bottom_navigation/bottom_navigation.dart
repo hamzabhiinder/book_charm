@@ -15,44 +15,30 @@ class BottomNaigationScreen extends StatefulWidget {
 
 class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
   int _selectedIndex = 0;
-  late PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: _selectedIndex);
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      _pageController.animateToPage(index,
-          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-    });
-  }
+  final List<Widget> screens = [
+    DashBoardScreen(),
+    DictionaryScreen(),
+    LibraryScreen(),
+    ExerciseScreen(),
+    ProfileScreen(),
+    LeaderBoardScreen(),
+    // DownloadedBooksScreen()
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        children: <Widget>[
-          // Add your pages here
-          DashBoardScreen(),
-          DictionaryScreen(),
-          LibraryScreen(),
-          ExerciseScreen(),
-          ProfileScreen(),
-          LeaderBoardScreen(),
-          // DownloadedBooksScreen()
-        ],
-        onPageChanged: (index) {
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: screens,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) {
           setState(() {
             _selectedIndex = index;
           });
         },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -79,12 +65,10 @@ class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
             label: 'Books',
           ),
         ],
-        currentIndex: _selectedIndex,
         selectedItemColor: const Color(0xffc599fb),
         unselectedItemColor: Colors.grey[600],
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        onTap: _onItemTapped,
       ),
     );
   }
