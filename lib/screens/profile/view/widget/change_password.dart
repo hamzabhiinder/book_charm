@@ -1,3 +1,4 @@
+import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -32,57 +33,66 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'Change Password',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _oldPasswordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: 'Old Password',
-                //border: OutlineInputBorder(),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey.shade100,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(8),
+            topRight: Radius.circular(8),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Change Password',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _newPasswordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: 'New Password',
-                // border: OutlineInputBorder(),
+              const SizedBox(height: 20),
+              TextField(
+                controller: _oldPasswordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Old Password',
+                  //border: OutlineInputBorder(),
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: _changePassword,
-                  child: const Text(
-                    'Change',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                  ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: _newPasswordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'New Password',
+                  // border: OutlineInputBorder(),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close the bottom sheet
-                  },
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(fontSize: 20, color: Colors.black),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: _changePassword,
+                    child: const Text(
+                      'Change',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the bottom sheet
+                    },
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

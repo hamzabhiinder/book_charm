@@ -19,12 +19,13 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   nameBottomSheet() {
-    ProfileService.showBottomSheet(context);
+    ProfileService.showBottomSheetWidget(context);
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    final sp = context.read<SignInProvider>();
+    final sp = context.watch<SignInProvider>();
 
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
@@ -140,10 +141,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     CustomListTile(
                       onTap: () {
-                        showModalBottomSheet(
+                        showBottomSheet(
                           context: context,
                           builder: (BuildContext context) {
-                            return ChangePasswordWidget(); // Show the ChangePasswordWidget
+                            return ChangePasswordWidget();
                           },
                         );
                       },

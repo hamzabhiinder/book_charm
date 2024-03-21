@@ -3,16 +3,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../providers/signin_provider.dart';
 
 class ProfileService {
-  static void showBottomSheet(BuildContext context) {
+  static void showBottomSheetWidget(BuildContext context) {
     final sp = context.read<SignInProvider>();
 
     TextEditingController _nameController =
         TextEditingController(); // Add a text controller for the text field
-    Future<void> _updateNameOnFirebase(String newName) async {
+    Future _updateNameOnFirebase(String newName) async {
       try {
         await FirebaseFirestore.instance
             .collection('users')
@@ -20,48 +21,62 @@ class ProfileService {
             .update({
           'name': newName,
         });
+        final sp = context.read<SignInProvider>();
+        final SharedPreferences s = await SharedPreferences.getInstance();
+        await s.setString('name', newName);
+        sp.getDataFromSharedPreferences();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Name changed successfully!'),
+          
+        ));
+        
+        Navigator.of(context).pop(); // Close the bottom sheet
       } catch (e) {
         print('Error updating name: $e');
       }
     }
 
-    showModalBottomSheet(
+    showBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return Container(
           padding: EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            //crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Add the text field for changing the name
+              const Text(
+                'Change Name',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 16),
               TextField(
                 controller: _nameController,
                 decoration: InputDecoration(
-                  labelText: 'Update Name',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
+                  labelText: 'Name',
                 ),
               ),
               SizedBox(height: 16),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Add the 'Change' button
-                  OutlinedButton(
+                  TextButton(
                     onPressed: () {
-                      Navigator.of(context).pop(); // Close the bottom sheet
                       _updateNameOnFirebase(_nameController.text);
                     },
-                    child: Text('Change'),
+                    child: const Text(
+                      'Change',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
                   ),
-                  // Add the 'Cancel' button
-                  OutlinedButton(
+                  TextButton(
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the bottom sheet
                     },
-                    child: Text('Cancel'),
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                    ),
                   ),
                 ],
               ),
