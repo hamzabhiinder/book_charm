@@ -17,11 +17,9 @@ class DownloadedBooksScreen extends StatefulWidget {
 class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
   final LocalStorage storage = LocalStorage('downloadedBooks');
   bool isLoading = true;
-  OverallStats? overallStats;
   @override
   void initState() {
     super.initState();
-    OverallStats.loadStatsData().then((value) => overallStats = value);
     Future.delayed(const Duration(milliseconds: 500), () {
       setState(() {
         isLoading = false;
