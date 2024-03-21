@@ -21,7 +21,7 @@ class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
     LibraryScreen(),
     ExerciseScreen(),
     ProfileScreen(),
-    LeaderBoardScreen(),
+
     // DownloadedBooksScreen()
   ];
 
@@ -60,10 +60,10 @@ class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
             icon: Icon(Icons.account_circle),
             label: 'Profile',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Books',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.account_circle),
+          //   label: 'Books',
+          // ),
         ],
         selectedItemColor: const Color(0xffc599fb),
         unselectedItemColor: Colors.grey[600],
