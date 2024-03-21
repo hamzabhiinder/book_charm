@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'package:localstorage/localstorage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:developer';
 
 class OverallStats {
   int xp = 0;
@@ -58,6 +61,20 @@ class OverallStats {
       ..lessonChanges = (json['lessonChanges'] as List<dynamic>).cast<int>();
   }
 
+  void addStatsDataToFirestore() {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      firestore.collection('Stats').doc(user.uid).set(toJson()).then((value) {
+        log('Sample data added to Firestore');
+      }).catchError((error) {
+        log('Failed to add sample data: $error');
+      });
+    } else {
+      log('User is not authenticated');
+    }
+  }
+
   static Future<OverallStats> loadFromLocalStorage() async {
     final LocalStorage storage = LocalStorage(localStorageKey);
     await storage.ready;
@@ -68,25 +85,48 @@ class OverallStats {
     return OverallStats(xp: 0, streak: 0, time: 0, lessonsCompleted: 0);
   }
 
+  static Future<OverallStats> loadStatsData() async {
+    OverallStats? statsFromFirestore;
+    OverallStats statsFromLocalStorage = await loadFromLocalStorage();
+
+    try {
+      FirebaseFirestore firestore = FirebaseFirestore.instance;
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        DocumentSnapshot snapshot =
+            await firestore.collection('Stats').doc(user.uid).get();
+        if (snapshot.exists) {
+          OverallStats statsFromServer =
+              OverallStats.fromJson(snapshot.data() as Map<String, dynamic>);
+
+          // Compare timestamps
+          if (statsFromLocalStorage.lastUpdated != null &&
+              statsFromServer.lastUpdated != null &&
+              statsFromLocalStorage.lastUpdated!
+                      .compareTo(statsFromServer.lastUpdated!) >
+                  0) {
+            statsFromFirestore =
+                statsFromLocalStorage; // Local data is more recent
+          } else {
+            statsFromFirestore = statsFromServer;
+          }
+        }
+      }
+    } catch (error) {
+      log('Failed to load stats data from Firestore: $error');
+    }
+    return statsFromFirestore ?? statsFromLocalStorage;
+  }
+
   Future<void> saveToLocalStorage() async {
     final LocalStorage storage = LocalStorage(localStorageKey);
     await storage.ready;
     await storage.setItem('overallStats', toJson());
-  }
-
-  Future<void> startTimer() async {
-    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
-      time++;
-      lastUpdated = DateTime.now();
-      saveToLocalStorage();
-    });
-  }
-
-  Future<void> stopTimer() async {
-    _timer?.cancel();
-    _timer = null;
-    lastUpdated = DateTime.now();
-    saveToLocalStorage();
+    try {
+      addStatsDataToFirestore();
+    } catch (e) {
+      log(e.toString());
+    }
   }
 
   Future<void> updateScore(int score) async {
@@ -94,6 +134,7 @@ class OverallStats {
     xpUpdates.add(DateTime.now());
     xpChanges.add(score);
     await updateStreak();
+
     await saveToLocalStorage();
   }
 

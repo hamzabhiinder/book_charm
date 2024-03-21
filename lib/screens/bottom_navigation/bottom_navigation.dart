@@ -5,6 +5,7 @@ import 'package:book_charm/screens/home/view/dictionary_screen.dart';
 import 'package:book_charm/screens/home/view/downloaded_books_screen.dart';
 import 'package:book_charm/screens/home/view/library_screen.dart';
 import 'package:book_charm/screens/profile/view/profile.dart';
+import 'package:book_charm/screens/stats/leaderboard.dart';
 import 'package:flutter/material.dart';
 
 class BottomNaigationScreen extends StatefulWidget {
@@ -13,45 +14,31 @@ class BottomNaigationScreen extends StatefulWidget {
 }
 
 class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
-  int _selectedIndex = 4;
-  late PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: _selectedIndex);
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      _pageController.animateToPage(index,
-          duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
-    });
-  }
+  int _selectedIndex = 0;
+  final List<Widget> screens = [
+    DashBoardScreen(),
+    DictionaryScreen(),
+    LibraryScreen(),
+    ExerciseScreen(),
+    ProfileScreen(),
+    LeaderBoardScreen(),
+    // DownloadedBooksScreen()
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        children: <Widget>[
-          // Add your pages here
-          DashBoardScreen(),
-          DictionaryScreen(),
-          LibraryScreen(),
-          ExerciseScreen(),
-          ProfileScreen(),
-
-          DownloadedBooksScreen()
-        ],
-        onPageChanged: (index) {
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: screens,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) {
           setState(() {
             _selectedIndex = index;
           });
         },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -78,12 +65,10 @@ class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
             label: 'Books',
           ),
         ],
-        currentIndex: _selectedIndex,
         selectedItemColor: const Color(0xffc599fb),
         unselectedItemColor: Colors.grey[600],
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        onTap: _onItemTapped,
       ),
     );
   }
