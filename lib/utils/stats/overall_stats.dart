@@ -33,12 +33,15 @@ class OverallStats {
       'streak': streak,
       'time': time,
       'lessonsCompleted': lessonsCompleted,
-      'lastUpdated': lastUpdated?.toIso8601String(), // Convert DateTime to String
+      'lastUpdated':
+          lastUpdated?.toIso8601String(), // Convert DateTime to String
       'xpUpdates': xpUpdates.map((date) => date.toIso8601String()).toList(),
       'xpChanges': xpChanges,
-      'streakUpdates': streakUpdates.map((date) => date.toIso8601String()).toList(),
+      'streakUpdates':
+          streakUpdates.map((date) => date.toIso8601String()).toList(),
       'streakChanges': streakChanges,
-      'lessonUpdates': lessonUpdates.map((date) => date.toIso8601String()).toList(),
+      'lessonUpdates':
+          lessonUpdates.map((date) => date.toIso8601String()).toList(),
       'lessonChanges': lessonChanges,
     };
   }
@@ -53,11 +56,17 @@ class OverallStats {
           ? DateTime.parse(json['lastUpdated'])
           : null, // Parse String to DateTime
     )
-      ..xpUpdates = (json['xpUpdates'] as List<dynamic>).map((date) => DateTime.parse(date)).toList()
+      ..xpUpdates = (json['xpUpdates'] as List<dynamic>)
+          .map((date) => DateTime.parse(date))
+          .toList()
       ..xpChanges = (json['xpChanges'] as List<dynamic>).cast<int>()
-      ..streakUpdates = (json['streakUpdates'] as List<dynamic>).map((date) => DateTime.parse(date)).toList()
+      ..streakUpdates = (json['streakUpdates'] as List<dynamic>)
+          .map((date) => DateTime.parse(date))
+          .toList()
       ..streakChanges = (json['streakChanges'] as List<dynamic>).cast<int>()
-      ..lessonUpdates = (json['lessonUpdates'] as List<dynamic>).map((date) => DateTime.parse(date)).toList()
+      ..lessonUpdates = (json['lessonUpdates'] as List<dynamic>)
+          .map((date) => DateTime.parse(date))
+          .toList()
       ..lessonChanges = (json['lessonChanges'] as List<dynamic>).cast<int>();
   }
 
@@ -87,8 +96,13 @@ class OverallStats {
 
   static Future<OverallStats> loadStatsData() async {
     OverallStats? statsFromFirestore;
-    OverallStats statsFromLocalStorage = await loadFromLocalStorage();
-
+    OverallStats? statsFromLocalStorage;
+    try {
+      statsFromLocalStorage = await loadFromLocalStorage();
+      print('Sucee stats from firestore data');
+    } catch (e) {
+      print('sucee failed stats from firestore data');
+    }
     try {
       FirebaseFirestore firestore = FirebaseFirestore.instance;
       User? user = FirebaseAuth.instance.currentUser;
@@ -100,9 +114,9 @@ class OverallStats {
               OverallStats.fromJson(snapshot.data() as Map<String, dynamic>);
 
           // Compare timestamps
-          if (statsFromLocalStorage.lastUpdated != null &&
+          if (statsFromLocalStorage?.lastUpdated != null &&
               statsFromServer.lastUpdated != null &&
-              statsFromLocalStorage.lastUpdated!
+              statsFromLocalStorage!.lastUpdated!
                       .compareTo(statsFromServer.lastUpdated!) >
                   0) {
             statsFromFirestore =
@@ -115,7 +129,9 @@ class OverallStats {
     } catch (error) {
       log('Failed to load stats data from Firestore: $error');
     }
-    return statsFromFirestore ?? statsFromLocalStorage;
+    return statsFromFirestore ??
+        statsFromLocalStorage ??
+        await loadFromLocalStorage();
   }
 
   Future<void> saveToLocalStorage() async {
@@ -145,7 +161,8 @@ class OverallStats {
       streak++;
       streakUpdates.add(now);
       streakChanges.add(1);
-    } else if (lastUpdated == null || lastUpdated!.difference(now).inDays < -1) {
+    } else if (lastUpdated == null ||
+        lastUpdated!.difference(now).inDays < -1) {
       // If last update was more than one day ago
       streak = 1;
       streakUpdates.add(now);
@@ -160,7 +177,7 @@ class OverallStats {
     xpUpdates.add(DateTime.now());
     xpChanges.add(10);
     lessonUpdates.add(DateTime.now());
-    lessonChanges.add(10);
+    lessonChanges.add(1);
     await updateStreak();
     await saveToLocalStorage();
   }
@@ -171,10 +188,12 @@ class OverallStats {
 
     switch (timeFrame) {
       case 'today':
-        startTime = DateTime(currentTime.year, currentTime.month, currentTime.day);
+        startTime =
+            DateTime(currentTime.year, currentTime.month, currentTime.day);
         break;
       case 'this week':
-        startTime = currentTime.subtract(Duration(days: currentTime.weekday - 1));
+        startTime =
+            currentTime.subtract(Duration(days: currentTime.weekday - 1));
         break;
       case 'all time':
         // Set start time to the earliest possible date
@@ -189,19 +208,22 @@ class OverallStats {
     int lessonChangesInSection = 0;
 
     for (int i = 0; i < xpUpdates.length; i++) {
-      if (xpUpdates[i].isAfter(startTime) && xpUpdates[i].isBefore(currentTime)) {
+      if (xpUpdates[i].isAfter(startTime) &&
+          xpUpdates[i].isBefore(currentTime)) {
         xpInSection += xpChanges[i];
       }
     }
 
     for (int i = 0; i < streakUpdates.length; i++) {
-      if (streakUpdates[i].isAfter(startTime) && streakUpdates[i].isBefore(currentTime)) {
+      if (streakUpdates[i].isAfter(startTime) &&
+          streakUpdates[i].isBefore(currentTime)) {
         streakChangesInSection += streakChanges[i];
       }
     }
 
     for (int i = 0; i < lessonUpdates.length; i++) {
-      if (lessonUpdates[i].isAfter(startTime) && lessonUpdates[i].isBefore(currentTime)) {
+      if (lessonUpdates[i].isAfter(startTime) &&
+          lessonUpdates[i].isBefore(currentTime)) {
         lessonChangesInSection += lessonChanges[i];
       }
     }

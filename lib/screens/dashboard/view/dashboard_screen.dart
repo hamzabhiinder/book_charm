@@ -28,9 +28,12 @@ class _DashBoardScreenState extends State<DashBoardScreen>
   @override
   void initState() {
     super.initState();
+    print("Sucees:");
     OverallStats.loadStatsData().then((value) {
-      print("Sucees: ${overallStats.toJson()}");
+      print("Sucees: ${value}");
+
       setState(() {
+        print("Sucees: ${overallStats}");
         overallStats = value;
       });
     });
