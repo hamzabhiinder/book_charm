@@ -53,6 +53,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => LanguageProvider()..loadSelectedLanguage(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => LibraryProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

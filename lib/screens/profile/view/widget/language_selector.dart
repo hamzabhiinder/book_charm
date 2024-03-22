@@ -46,7 +46,7 @@ class _LanguageListState extends State<LanguageList> {
             value: language,
             groupValue: selectedLanguage,
             onChanged: (value) {
-              languageProvider.setSelectedLanguage(value!);
+              languageProvider.setSelectedLanguage(value!,context);
               Navigator.pop(context); // Close the bottom sheet
               setState(() {});
             },
@@ -72,13 +72,15 @@ class LanguageProvider extends ChangeNotifier {
 
   Map<String, String> get languages => _languages;
 
-  void setSelectedLanguage(String name) async {
+  void setSelectedLanguage(String name, BuildContext context) async {
     final code = _languages[name]!;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('selectedLanguageName', name);
     await prefs.setString('selectedLanguageCode', code);
     _selectedLanguageName = name;
     _selectedLanguageCode = code;
+    Provider.of<LibraryProvider>(context, listen: false)
+        .loadJsonDataFunction(context);
     notifyListeners();
   }
 
