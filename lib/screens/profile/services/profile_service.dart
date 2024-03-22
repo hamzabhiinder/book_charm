@@ -10,11 +10,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../providers/signin_provider.dart';
 
 class ProfileService {
-  static void showBottomSheetWidget(BuildContext context) {
+  static void showBottomSheetWidget(BuildContext context,String oldName) {
     final sp = context.read<SignInProvider>();
 
     TextEditingController nameController =
-        TextEditingController(); // Add a text controller for the text field
+        TextEditingController(text: oldName); // Add a text controller for the text field
     Future updateNameOnFirebase(String newName) async {
       try {
         await FirebaseFirestore.instance

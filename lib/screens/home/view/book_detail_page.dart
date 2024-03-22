@@ -81,9 +81,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
     checkBookAvailability();
     super.initState();
   }
-
-  final String fileUrl =
-      'https://www.example.com/sample.pdf'; // Replace with your file URL
   String? _downloadMessage;
   Future<void> checkBookAvailability() async {
     final externalDir = await getExternalStorageDirectory();

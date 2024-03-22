@@ -1,10 +1,16 @@
+import 'package:book_charm/screens/home/view/library_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LanguageList extends StatelessWidget {
+class LanguageList extends StatefulWidget {
   const LanguageList({super.key});
 
+  @override
+  State<LanguageList> createState() => _LanguageListState();
+}
+
+class _LanguageListState extends State<LanguageList> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,7 +47,8 @@ class LanguageList extends StatelessWidget {
             groupValue: selectedLanguage,
             onChanged: (value) {
               languageProvider.setSelectedLanguage(value!);
-              // Navigator.pop(context); // Close the bottom sheet
+              Navigator.pop(context); // Close the bottom sheet
+              setState(() {});
             },
           ),
         );
@@ -60,6 +67,7 @@ class LanguageProvider extends ChangeNotifier {
   final Map<String, String> _languages = {
     'English': 'en',
     'French': 'fr',
+    'German': 'gr',
   };
 
   Map<String, String> get languages => _languages;
@@ -78,12 +86,12 @@ class LanguageProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getString('selectedLanguageName') == null ||
         prefs.getString('selectedLanguageName') == '') {
-      _selectedLanguageName = 'English';
-      _selectedLanguageCode = 'en';
-    } else {
-      _selectedLanguageName = prefs.getString('selectedLanguageName') ?? '';
-      _selectedLanguageCode = prefs.getString('selectedLanguageCode') ?? '';
+      await prefs.setString('selectedLanguageName', 'English');
+      await prefs.setString('selectedLanguageCode', 'en');
     }
+    _selectedLanguageName = prefs.getString('selectedLanguageName') ?? '';
+    _selectedLanguageCode = prefs.getString('selectedLanguageCode') ?? '';
+
     notifyListeners();
   }
 }

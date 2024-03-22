@@ -119,7 +119,14 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
         var userData = filteredUsers[index];
 
         return ListTile(
-          onTap: () => nextScreen(context, UserProfilePage()),
+          onTap: () => nextScreen(
+              context,
+              UserProfilePage(
+                image:
+                    '${userData['image_url'] ?? 'https://www.kindpng.com/picc/m/252-2524695_dummy-profile-image-jpg-hd-png-download.png'}',
+                name: userData['name'],
+                scoreXp: '${userData['xp'] ?? ''}',
+              )),
           leading: CircleAvatar(
             // Display user profile picture
             backgroundImage: NetworkImage(

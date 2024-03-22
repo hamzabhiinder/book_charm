@@ -20,7 +20,9 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   nameBottomSheet() {
-    ProfileService.showBottomSheetWidget(context);
+    final sp = context.read<SignInProvider>();
+
+    ProfileService.showBottomSheetWidget(context, sp.userModel?.name ?? '');
     setState(() {});
   }
 
@@ -48,7 +50,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               SizedBox(height: getResponsiveHeight(context, 10)),
               Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15), // Adjust the radius as needed
+                  borderRadius:
+                      BorderRadius.circular(15), // Adjust the radius as needed
                   border: Border.all(
                     color: Colors.transparent,
                     width: 2.0,
@@ -68,13 +71,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       child: Image.asset(
                         'assets/images/flame.png',
-                        width: getResponsiveWidth(context, 50), // Adjust the width as needed
-                        height: getResponsiveHeight(context, 50), // Adjust the height as needed
+                        width: getResponsiveWidth(
+                            context, 50), // Adjust the width as needed
+                        height: getResponsiveHeight(
+                            context, 50), // Adjust the height as needed
                       ),
                     ),
                     SizedBox(
-                        width:
-                            getResponsiveWidth(context, 10)), // Adjust the spacing between leading and title
+                        width: getResponsiveWidth(context,
+                            10)), // Adjust the spacing between leading and title
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -228,7 +233,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     CustomListTile(
                       onTap: () {
                         sp.userSignOut().then((value) {
-                          nextScreenReplace(context, const AuthenticationScreen());
+                          nextScreenReplace(
+                              context, const AuthenticationScreen());
                         });
                       },
                       title: 'Logout',
@@ -284,7 +290,8 @@ class CustomListTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(vertical: getResponsiveHeight(context, 2)),
+              padding: EdgeInsets.symmetric(
+                  vertical: getResponsiveHeight(context, 2)),
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 // border: Border.all(

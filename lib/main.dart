@@ -13,6 +13,7 @@ import 'package:book_charm/screens/exercise/view/exercise.dart';
 import 'package:book_charm/screens/games/book_reading_screen.dart';
 import 'package:book_charm/screens/home/view/downloaded_books_screen.dart';
 import 'package:book_charm/screens/home/view/home_screen.dart';
+import 'package:book_charm/screens/home/view/library_screen.dart';
 import 'package:book_charm/screens/pdf_viewer/pdf_viewer_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => LanguageProvider()..loadSelectedLanguage(),
-        )
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
