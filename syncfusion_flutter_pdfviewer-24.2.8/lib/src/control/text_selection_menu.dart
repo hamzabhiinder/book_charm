@@ -83,14 +83,13 @@ class _TextSelectionMenuState extends State<TextSelectionMenu> {
                   textDirection: widget.textDirection,
                   themeData: widget.themeData,
                 ),
-                // TextSelectionMenuItem(
-                //   title:
-                //       widget.localizations!.pdfTextSelectionMenuHighlightLabel,
-                //   mode: 'Highlight',
-                //   onSelected: widget.onSelected,
-                //   textDirection: widget.textDirection,
-                //   themeData: widget.themeData,
-                // ),
+                TextSelectionMenuItem(
+                  title: 'Translate',
+                  mode: 'translate',
+                  onSelected: widget.onSelected,
+                  textDirection: widget.textDirection,
+                  themeData: widget.themeData,
+                ),
                 TextSelectionMenuItem(
                   title:
                       widget.localizations!.pdfTextSelectionMenuUnderlineLabel,
@@ -161,6 +160,12 @@ class _TextSelectionMenuItemState extends State<TextSelectionMenuItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        if (widget.mode == 'translate') {
+          // print('translated');
+          widget.onSelected?.call('translate');
+// print(copiedText);
+          return;
+        }
         widget.onSelected?.call(widget.mode);
       },
       child: MouseRegion(
@@ -213,6 +218,14 @@ class _TextSelectionMenuItemState extends State<TextSelectionMenuItem> {
 
   Widget _getIcon(String mode) {
     if (mode == 'Copy') {
+      return Icon(
+        Icons.copy,
+        size: 16,
+        color: (widget.themeData!.colorScheme.brightness == Brightness.light)
+            ? Colors.black.withOpacity(0.87)
+            : Colors.white.withOpacity(0.87),
+      );
+    } else if (mode == 'translate') {
       return Icon(
         Icons.copy,
         size: 16,

@@ -4047,7 +4047,11 @@ class SfPdfViewerState extends State<SfPdfViewer> with WidgetsBindingObserver {
             themeData: _themeData,
             localizations: _localizations,
             onSelected: (String value) {
-              if (value != 'Copy') {
+              if (value == 'translate') {
+                print(
+                    'translating now ${_pdfPagesKey[_selectedTextPageNumber]?.currentState?.canvasRenderBox!.getSelectionDetails().copiedText}');
+                _pdfViewerController.clearSelection();
+              } else if (value != 'Copy') {
                 final PdfAnnotationMode annotationMode = value == 'Highlight'
                     ? PdfAnnotationMode.highlight
                     : value == 'Underline'
