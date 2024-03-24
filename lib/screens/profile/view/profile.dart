@@ -3,6 +3,7 @@ import 'package:book_charm/screens/profile/services/profile_service.dart';
 import 'package:book_charm/screens/profile/view/widget/change_password.dart';
 import 'package:book_charm/screens/profile/view/widget/language_selector.dart';
 import 'package:book_charm/screens/stats/leaderboard.dart';
+import 'package:book_charm/screens/stats/users_profiles.dart';
 import 'package:flutter/material.dart';
 
 import 'package:book_charm/screens/profile/view/widget/switch_button.dart';
@@ -48,66 +49,78 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               SizedBox(height: getResponsiveHeight(context, 10)),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.circular(15), // Adjust the radius as needed
-                  border: Border.all(
-                    color: Colors.transparent,
-                    width: 2.0,
+              InkWell(
+                onTap: () {
+                  nextScreen(
+                      context,
+                      UserProfilePage(
+                        image: sp.userModel?.imageUrl ??
+                            'https://www.kindpng.com/picc/m/252-2524695_dummy-profile-image-jpg-hd-png-download.png',
+                        name: sp.userModel?.name ?? "",
+                        isProfileUser: true,
+                      ));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                        15), // Adjust the radius as needed
+                    border: Border.all(
+                      color: Colors.transparent,
+                      width: 2.0,
+                    ),
+                    color: Colors.white,
                   ),
-                  color: Colors.white,
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: const Color.fromARGB(255, 188, 137, 250),
-                          width: 2.0,
-                        ),
-                      ),
-                      child: Image.asset(
-                        'assets/images/flame.png',
-                        width: getResponsiveWidth(
-                            context, 50), // Adjust the width as needed
-                        height: getResponsiveHeight(
-                            context, 50), // Adjust the height as needed
-                      ),
-                    ),
-                    SizedBox(
-                        width: getResponsiveWidth(context,
-                            10)), // Adjust the spacing between leading and title
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${sp.userModel?.name ?? "Name"}',
-                          style: TextStyle(
-                            fontSize: getResponsiveFontSize(context, 22),
-                            fontWeight: FontWeight.w500,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 188, 137, 250),
+                            width: 2.0,
                           ),
                         ),
-                        Text(
-                          'Edit personal details',
-                          style: TextStyle(
-                            fontSize: getResponsiveFontSize(context, 14),
-                            color: const Color(0xff686868),
-                            fontWeight: FontWeight.w400,
-                          ),
+                        child: Image.asset(
+                          'assets/images/flame.png',
+                          width: getResponsiveWidth(
+                              context, 50), // Adjust the width as needed
+                          height: getResponsiveHeight(
+                              context, 50), // Adjust the height as needed
                         ),
-                      ],
-                    ),
-                    const Spacer(), // This will push the trailing icon to the end
-                    const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: AppColors.primaryColor,
-                      size: 20,
-                      weight: 40,
-                    ),
-                  ],
+                      ),
+                      SizedBox(
+                          width: getResponsiveWidth(context,
+                              10)), // Adjust the spacing between leading and title
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${sp.userModel?.name ?? "Name"}',
+                            style: TextStyle(
+                              fontSize: getResponsiveFontSize(context, 22),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Text(
+                            'Edit personal details',
+                            style: TextStyle(
+                              fontSize: getResponsiveFontSize(context, 14),
+                              color: const Color(0xff686868),
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(), // This will push the trailing icon to the end
+                      const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: AppColors.primaryColor,
+                        size: 20,
+                        weight: 40,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: getResponsiveHeight(context, 25)),
