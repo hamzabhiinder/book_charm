@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
@@ -81,6 +82,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     checkBookAvailability();
     super.initState();
   }
+
   String? _downloadMessage;
   Future<void> checkBookAvailability() async {
     final externalDir = await getExternalStorageDirectory();

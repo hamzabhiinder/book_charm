@@ -127,6 +127,44 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
     Share.share(selectedText, subject: 'Shared Text');
   }
 
+  void _showContextMenu(
+      BuildContext context, PdfTextSelectionChangedDetails details) {
+    final OverlayState overlayState = Overlay.of(context);
+    _overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: details.globalSelectedRegion!.center.dy - 55,
+        left: details.globalSelectedRegion!.bottomLeft.dx,
+        child: ElevatedButton(
+          onPressed: () {
+            if (details.selectedText != null) {
+              translateAction(details.selectedText!);
+              Clipboard.setData(ClipboardData(text: details.selectedText!));
+              print('Text copied to clipboard: ${details.selectedText}');
+              _pdfViewerController.clearSelection();
+            }
+          },
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(2),
+            )),
+          ),
+          child: const Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.translate,
+                size: 15,
+              ),
+              SizedBox(width: 4),
+              Text('Translate'),
+            ],
+          ),
+        ),
+      ),
+    );
+    overlayState.insert(_overlayEntry!);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -197,13 +235,12 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
                       _overlayEntry = null;
                     } else if (details.selectedText != null &&
                         _overlayEntry == null) {
-                      //_showContextMenu(context, details);
+                      _showContextMenu(context, details);
                     }
                   },
                   key: _pdfViewerKey,
                   controller: _pdfViewerController,
-                )
-          ),
+                )),
     );
   }
 }
