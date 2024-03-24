@@ -20,28 +20,30 @@ class UserProfilePage extends StatelessWidget {
         title: Text('User Profile'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 80,
-              backgroundImage: NetworkImage(image ??
-                  'https://www.kindpng.com/picc/m/252-2524695_dummy-profile-image-jpg-hd-png-download.png'),
-            ),
-            SizedBox(height: 20),
-            Text(
-              name ?? 'User Name',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 40),
-            isProfileUser
-                ? Expanded(child: DownloadedBooksScreen())
-                : Text(
-                    'score ${scoreXp}',
-                    style: TextStyle(fontSize: 40),
-                  ),
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 80,
+                backgroundImage: NetworkImage(image ??
+                    'https://www.kindpng.com/picc/m/252-2524695_dummy-profile-image-jpg-hd-png-download.png'),
+              ),
+              SizedBox(height: 20),
+              Text(
+                name ?? 'User Name',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 40),
+              isProfileUser
+                  ? SizedBox(height: 500, child: DownloadedBooksScreen())
+                  : Text(
+                      'score ${scoreXp}',
+                      style: TextStyle(fontSize: 40),
+                    ),
+            ],
+          ),
         ),
       ),
     );
