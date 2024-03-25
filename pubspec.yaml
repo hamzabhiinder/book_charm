@@ -55,6 +55,9 @@ dependencies:
     path: syncfusion_flutter_pdfviewer-24.2.8
   # syncfusion_flutter_pdfviewer: ^24.2.8
   app_usage: ^3.0.1
+  firebase_storage: ^11.6.10
+  file_picker: ^8.0.0+1
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:

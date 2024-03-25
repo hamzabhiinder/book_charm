@@ -15,6 +15,7 @@ import 'package:book_charm/screens/home/view/dictionary_screen.dart';
 import 'package:book_charm/screens/home/view/downloaded_books_screen.dart';
 import 'package:book_charm/screens/home/view/home_screen.dart';
 import 'package:book_charm/screens/home/view/library_screen.dart';
+import 'package:book_charm/screens/home/widgets/upload_book.dart';
 import 'package:book_charm/screens/pdf_viewer/pdf_viewer_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -60,6 +61,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => DictionaryProvider(),
         ),
+       ChangeNotifierProvider(
+      create: (context) => UploadProvider(),)
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
