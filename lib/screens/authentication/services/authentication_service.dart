@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import '../../../providers/signin_provider.dart';
 import '../../bottom_navigation/bottom_navigation.dart';
+import '../../home/view/dictionary_screen.dart';
 import '../../home/view/home_screen.dart';
 
 class AuthServices {
@@ -142,8 +143,8 @@ class AuthServices {
         (value) async {
           await sp.saveDataToSharedPreferences();
           await sp.setSignIn();
-
-          nextScreenReplace(context, BottomNaigationScreen());
+          showSnackBar(context, "Successfully created");
+          // nextScreenReplace(context, BottomNaigationScreen());
         },
       );
       log("save data to Firestore");
@@ -158,8 +159,7 @@ class AuthServices {
     }
   }
 
-  static Future signinWithEmailAndPassword(
-      BuildContext context, String email, String password) async {
+  static Future signinWithEmailAndPassword(BuildContext context, String email, String password) async {
     final sp = context.read<SignInProvider>();
     final ip = context.read<InternetProvider>();
     await ip.checkInternetConnection();
@@ -181,6 +181,8 @@ class AuthServices {
         await sp.saveDataToSharedPreferences();
         await sp.setSignIn();
         sp.setSignInLoader(false);
+        context.read<DictionaryProvider>().loadDictionary();
+
         // getUserData ---> dictionary firebase, stats, my books overrite
         nextScreenReplace(context, BottomNaigationScreen());
         log("USER EXIST");

@@ -1,63 +1,34 @@
+
+import 'dart:async';
 import 'dart:developer';
 
+import 'package:book_charm/screens/profile/view/widget/language_selector.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:provider/provider.dart';
 
-class DictionaryScreen extends StatefulWidget {
-  const DictionaryScreen({super.key});
-
-  @override
-  State<DictionaryScreen> createState() => _DictionaryScreenState();
-}
-
-class _DictionaryScreenState extends State<DictionaryScreen> {
-  List<Map<String, dynamic>> wordPairs = [];
+class DictionaryProvider extends ChangeNotifier {
   final LocalStorage storage = LocalStorage('dictionary.json');
+  List<Map<String, dynamic>> _wordPairs = [];
+  List<Map<String, dynamic>> get wordPairs => _wordPairs;
 
-  Future<List<Map<String, dynamic>>?> getDictionaryDataFromFirestore() async {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    User? user = FirebaseAuth.instance.currentUser;
-
-    try {
-      DocumentSnapshot snapshot =
-          await firestore.collection('Dictionary').doc(user?.uid).get();
-
-      // Check if the document exists
-      if (snapshot.exists) {
-        // Extract data from the snapshot
-        Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-        List<Map<String, dynamic>> wordPairs =
-            List<Map<String, dynamic>>.from(data['fr']);
-        return wordPairs;
-      } else {
-        // Document does not exist
-        log('Document does not exist');
-        return [];
-      }
-    } catch (error) {
-      log('Error retrieving data from Firestore: $error');
-      return null;
-    }
+  DictionaryProvider() {
+    loadDictionary();
   }
 
-  Future<void> loadDictionary1() async {
+  Future<void> loadDictionary() async {
     await storage.ready;
     print('Storage is ready');
 
-    // Check if data exists in Firestore
     var firestoreData = await getDictionaryDataFromFirestore();
     print('Firestore data: $firestoreData');
 
     if (firestoreData != null) {
-      // Data exists in Firestore, save it to local storage
       await storage.setItem('wordPairs', firestoreData);
-
-      wordPairs = firestoreData;
-      setState(() {});
+      _wordPairs = firestoreData;
     } else {
-      // Data does not exist in Firestore, load it from local storage
       var storedData = storage.getItem('wordPairs');
       print('Stored data: $storedData');
 
@@ -69,7 +40,6 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
             if (item is Map<String, dynamic>) {
               Map<String, String> stringMap = {};
 
-              // Convert keys and values to strings
               item.forEach((key, value) {
                 stringMap[key] = value.toString();
               });
@@ -79,61 +49,49 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
               print('Error: Unexpected data format in dictionary.json');
             }
           }
-          setState(() {
-            wordPairs = castedData;
-          });
+          _wordPairs = castedData;
         } else {
           print('Error: Unexpected data format in dictionary.json');
         }
       }
     }
-    print('Updated wordPairs: $wordPairs');
+    print('Updated wordPairs: $_wordPairs');
+    notifyListeners();
   }
 
-  Future<void> loadDictionary() async {
-    await storage.ready;
-    print('Storage is ready');
+  Future<List<Map<String, dynamic>>?> getDictionaryDataFromFirestore() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser;
 
-    var storedData = storage.getItem('wordPairs');
-    print('Stored data: $storedData');
+    try {
+      DocumentSnapshot snapshot = await firestore.collection('Dictionary').doc(user?.uid).get();
 
-    if (storedData != null) {
-      if (storedData is List<dynamic>) {
-        List<Map<String, String>> castedData = [];
+      if (snapshot.exists) {
+        Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+        // List<Map<String, dynamic>> wordPairs = List<Map<String, dynamic>>.from(data['fr']);
+        List<Map<String, dynamic>> wordPairs;
 
-        for (var item in storedData) {
-          if (item is Map<String, dynamic>) {
-            Map<String, String> stringMap = {};
-
-            // Convert keys and values to strings
-            item.forEach((key, value) {
-              stringMap[key] = value.toString();
-            });
-
-            castedData.add(stringMap);
-          } else {
-            print('Error: Unexpected data format in dictionary.json');
-          }
+        if (data['en'] != null) {
+          wordPairs = List<Map<String, dynamic>>.from(data['en']);
+        } else {
+          wordPairs = [];
         }
-        setState(() {
-          wordPairs = castedData;
-        });
+        return wordPairs;
       } else {
-        print('Error: Unexpected data format in dictionary.json');
+        log('Document does not exist');
+        return [];
       }
+    } catch (error) {
+      log('Error retrieving data from Firestore: $error');
+      return null;
     }
-    print('Updated wordPairs: $wordPairs');
   }
 
   Future<void> deleteWordPair(int index) async {
     try {
-      // Get the word pair to delete from Firestore
-      Map<String, dynamic> pairToDelete = wordPairs[index];
+      Map<String, dynamic> pairToDelete = _wordPairs[index];
+      _wordPairs.removeAt(index);
 
-      // Remove the word pair from the local list
-      wordPairs.removeAt(index);
-
-      // Update the 'wordPairs' field in Firestore
       FirebaseFirestore firestore = FirebaseFirestore.instance;
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
@@ -142,35 +100,43 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
         });
       }
 
-      // Update the local storage
       await storage.ready;
-      await storage.setItem('wordPairs', wordPairs);
-      setState(() {});
+      await storage.setItem('wordPairs', _wordPairs);
+      notifyListeners();
     } catch (error) {
       print('Error deleting word pair: $error');
     }
   }
+}
 
-  @override
-  void initState() {
-    super.initState();
-    loadDictionary1();
-  }
+class DictionaryScreen extends StatelessWidget {
+  const DictionaryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    context.read<DictionaryProvider>().loadDictionary();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dictionary'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                context.read<DictionaryProvider>().loadDictionary();
+              },
+              icon: Icon(Icons.abc_outlined))
+        ],
       ),
-      body: wordPairs.isEmpty
-          ? const Center(
-              child: Text("No Dictionary "),
-            )
-          : ListView.builder(
-              itemCount: wordPairs.length,
+      body: Consumer<DictionaryProvider>(
+        builder: (context, provider, _) {
+          if (provider.wordPairs.isEmpty) {
+            return const Center(
+              child: Text("No Dictionary"),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: provider.wordPairs.length,
               itemBuilder: (context, index) {
-                final pair = wordPairs[index];
+                final pair = provider.wordPairs[index];
                 return ListTile(
                   title: Text(pair['meaning'] ?? ''),
                   subtitle: Text(pair['word'] ?? ''),
@@ -180,15 +146,17 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                       IconButton(
                         icon: const Icon(Icons.delete),
                         onPressed: () {
-                          log(' wordPairs ${wordPairs[0]}');
-                          deleteWordPair(index);
+                          provider.deleteWordPair(index);
                         },
                       ),
                     ],
                   ),
                 );
               },
-            ),
+            );
+          }
+        },
+      ),
     );
   }
 }
