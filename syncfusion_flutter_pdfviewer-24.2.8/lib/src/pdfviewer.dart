@@ -17,7 +17,11 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:translator/translator.dart';
+import 'package:localstorage/localstorage.dart';
+import 'dart:developer' as developer;
 
 import 'package:async/async.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -3687,9 +3691,43 @@ class SfPdfViewerState extends State<SfPdfViewer> with WidgetsBindingObserver {
 //Ameer Dummy Code
 
   final translator = GoogleTranslator(); // Create a translator instance
-
+  final LocalStorage storage = LocalStorage('dictionary.json');
   String selectedText = ''; // Initialize variable to store selected text
   String translatedText = ''; // Initialize variable to store translated text
+  List<Map<String, dynamic>> wordPairs = [];
+
+  void saveDictionary() {
+    storage.setItem('wordPairs', wordPairs);
+    print(wordPairs);
+  }
+
+  void addDictionaryDataToFirestore(String language, List<Map<String, dynamic>> wordPairs) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser;
+    // Add sample data to Firestore
+    firestore.collection('Dictionary').doc(user?.uid).set({
+      language: wordPairs,
+    }).then((value) {
+      developer.log('Sample data added to Firestore');
+    }).catchError((error) {
+      developer.log('Failed to add sample data: $error');
+    });
+  }
+
+  void addWordPair(String english, String spanish) {
+    if (!wordPairs
+        .any((pair) => pair['meaning'] == english.toLowerCase() && pair['word'] == spanish.toLowerCase())) {
+      setState(() {
+        wordPairs.add({'meaning': english.toLowerCase(), 'word': spanish.toLowerCase()});
+        //Add to Firebase
+
+        saveDictionary();
+        addDictionaryDataToFirestore('fr', wordPairs);
+      });
+    } else {
+      developer.log('Word pair already exists in the dictionary.');
+    }
+  }
 
   // Function to translate selected text
   Future<void> translateSelectedText(String? text) async {
@@ -3731,6 +3769,14 @@ class SfPdfViewerState extends State<SfPdfViewer> with WidgetsBindingObserver {
               Text('Translated Text: ', style: TextStyle(fontWeight: FontWeight.bold)),
               SizedBox(height: 8),
               Text(translatedText),
+              TextButton(
+                onPressed: () {
+                  addWordPair(selectedText, translatedText);
+                  developer.log('added to dictionary');
+                },
+                child: const Text('Add to dictionary'),
+              ),
+              SizedBox(height: 16),
             ],
           ),
         );
