@@ -46,7 +46,7 @@ class _LanguageListState extends State<LanguageList> {
             value: language,
             groupValue: selectedLanguage,
             onChanged: (value) {
-              languageProvider.setSelectedLanguage(value!,context);
+              languageProvider.setSelectedLanguage(value!, context);
               Navigator.pop(context); // Close the bottom sheet
               setState(() {});
             },
@@ -79,20 +79,21 @@ class LanguageProvider extends ChangeNotifier {
     await prefs.setString('selectedLanguageCode', code);
     _selectedLanguageName = name;
     _selectedLanguageCode = code;
-    Provider.of<LibraryProvider>(context, listen: false)
-        .loadJsonDataFunction(context);
+    Provider.of<LibraryProvider>(context, listen: false).loadJsonDataFunction(context);
     notifyListeners();
   }
 
   Future<void> loadSelectedLanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('selectedLanguageName') == null ||
-        prefs.getString('selectedLanguageName') == '') {
+    if (prefs.getString('selectedLanguageName') == null || prefs.getString('selectedLanguageName') == '') {
       await prefs.setString('selectedLanguageName', 'English');
       await prefs.setString('selectedLanguageCode', 'en');
+      _selectedLanguageName = 'English';
+      _selectedLanguageCode = 'en';
+    } else {
+      _selectedLanguageName = prefs.getString('selectedLanguageName') ?? '';
+      _selectedLanguageCode = prefs.getString('selectedLanguageCode') ?? '';
     }
-    _selectedLanguageName = prefs.getString('selectedLanguageName') ?? '';
-    _selectedLanguageCode = prefs.getString('selectedLanguageCode') ?? '';
 
     notifyListeners();
   }

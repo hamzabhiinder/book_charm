@@ -39,6 +39,8 @@ dependencies:
   uuid: ^4.1.0
   device_info_plus: ^9.0.2
   intl: '>=0.18.1 <0.20.0'
+  translator: ^1.0.0
+
 
   syncfusion_pdfviewer_platform_interface: ^24.2.8     
 
