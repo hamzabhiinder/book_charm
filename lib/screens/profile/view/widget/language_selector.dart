@@ -1,3 +1,4 @@
+import 'package:book_charm/screens/home/view/dictionary_screen.dart';
 import 'package:book_charm/screens/home/view/library_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -80,6 +81,8 @@ class LanguageProvider extends ChangeNotifier {
     _selectedLanguageName = name;
     _selectedLanguageCode = code;
     Provider.of<LibraryProvider>(context, listen: false).loadJsonDataFunction(context);
+    Provider.of<DictionaryProvider>(context, listen: false).loadDictionary(context);
+
     notifyListeners();
   }
 

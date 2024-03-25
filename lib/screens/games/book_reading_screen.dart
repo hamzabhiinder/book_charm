@@ -177,7 +177,7 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              context.read<DictionaryProvider>().loadDictionary();
+              context.read<DictionaryProvider>().loadDictionary(context);
               Navigator.pop(context);
             },
             icon: Icon(Icons.arrow_back)),

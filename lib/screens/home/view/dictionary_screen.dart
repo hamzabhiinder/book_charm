@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:developer';
 
@@ -14,15 +13,15 @@ class DictionaryProvider extends ChangeNotifier {
   List<Map<String, dynamic>> _wordPairs = [];
   List<Map<String, dynamic>> get wordPairs => _wordPairs;
 
-  DictionaryProvider() {
-    loadDictionary();
-  }
+  // DictionaryProvider() {
+  //   loadDictionary();
+  // }
 
-  Future<void> loadDictionary() async {
+  Future<void> loadDictionary(context) async {
     await storage.ready;
     print('Storage is ready');
 
-    var firestoreData = await getDictionaryDataFromFirestore();
+    var firestoreData = await getDictionaryDataFromFirestore(context);
     print('Firestore data: $firestoreData');
 
     if (firestoreData != null) {
@@ -59,10 +58,10 @@ class DictionaryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Map<String, dynamic>>?> getDictionaryDataFromFirestore() async {
+  Future<List<Map<String, dynamic>>?> getDictionaryDataFromFirestore(context) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
-
+    LanguageProvider lang = Provider.of<LanguageProvider>(context, listen: false);
     try {
       DocumentSnapshot snapshot = await firestore.collection('Dictionary').doc(user?.uid).get();
 
@@ -71,8 +70,8 @@ class DictionaryProvider extends ChangeNotifier {
         // List<Map<String, dynamic>> wordPairs = List<Map<String, dynamic>>.from(data['fr']);
         List<Map<String, dynamic>> wordPairs;
 
-        if (data['en'] != null) {
-          wordPairs = List<Map<String, dynamic>>.from(data['en']);
+        if (data[lang.selectedLanguageCode] != null) {
+          wordPairs = List<Map<String, dynamic>>.from(data[lang.selectedLanguageCode]);
         } else {
           wordPairs = [];
         }
@@ -114,14 +113,14 @@ class DictionaryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<DictionaryProvider>().loadDictionary();
+    context.read<DictionaryProvider>().loadDictionary(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dictionary'),
         actions: [
           IconButton(
               onPressed: () {
-                context.read<DictionaryProvider>().loadDictionary();
+                context.read<DictionaryProvider>().loadDictionary(context);
               },
               icon: Icon(Icons.abc_outlined))
         ],

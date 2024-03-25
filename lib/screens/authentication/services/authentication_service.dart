@@ -181,7 +181,7 @@ class AuthServices {
         await sp.saveDataToSharedPreferences();
         await sp.setSignIn();
         sp.setSignInLoader(false);
-        context.read<DictionaryProvider>().loadDictionary();
+        context.read<DictionaryProvider>().loadDictionary(context);
 
         // getUserData ---> dictionary firebase, stats, my books overrite
         nextScreenReplace(context, BottomNaigationScreen());
