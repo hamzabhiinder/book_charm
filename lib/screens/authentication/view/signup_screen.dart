@@ -15,7 +15,8 @@ class AuthenticationScreen extends StatefulWidget {
   _AuthenticationScreenState createState() => _AuthenticationScreenState();
 }
 
-class _AuthenticationScreenState extends State<AuthenticationScreen> with SingleTickerProviderStateMixin {
+class _AuthenticationScreenState extends State<AuthenticationScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -28,47 +29,53 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> with Single
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 15)),
-        child: Column(
-          children: [
-            SizedBox(
-              height: getResponsiveHeight(context, 50),
-            ),
-            Row(
-              // crossAxisAlignment: CrossAxisAlignment,
-              children: [
-                Image.asset(
-                  'assets/icons/logo1.png',
-                  width: getResponsiveWidth(context, 100),
-                  height: getResponsiveHeight(context, 100),
-                  color: Colors.black,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'BookCharm',
-                  style: TextStyle(fontSize: getResponsiveFontSize(context, 28), fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
-            TabBar(
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicatorColor: AppColors.primaryColor,
-              controller: _tabController,
-              tabs: const [
-                Tab(text: 'Register'),
-                Tab(text: 'Sign In'),
-              ],
-            ),
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
+        padding:
+            EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 15)),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: getResponsiveHeight(context, 50),
+              ),
+              Row(
+                // crossAxisAlignment: CrossAxisAlignment,
                 children: [
-                  RegisterTab(),
-                  SignInTab(),
+                  Image.asset(
+                    'assets/icons/logo1.png',
+                    width: getResponsiveWidth(context, 100),
+                    height: getResponsiveHeight(context, 100),
+                    color: Colors.black,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'BookCharm',
+                    style: TextStyle(
+                        fontSize: getResponsiveFontSize(context, 28),
+                        fontWeight: FontWeight.w500),
+                  ),
                 ],
               ),
-            ),
-          ],
+              TabBar(
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicatorColor: AppColors.primaryColor,
+                controller: _tabController,
+                tabs: const [
+                  Tab(text: 'Register'),
+                  Tab(text: 'Sign In'),
+                ],
+              ),
+              SizedBox(
+                height: getResponsiveHeight(context, 500),
+                child: TabBarView(
+                  controller: _tabController,
+                  children: [
+                    RegisterTab(),
+                    SignInTab(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -84,7 +91,8 @@ class RegisterTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 15)),
+      padding:
+          EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 15)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -154,7 +162,8 @@ class RegisterTab extends StatelessWidget {
 class SignInTab extends StatelessWidget {
   SignInTab({super.key});
 
-  final TextEditingController _email = TextEditingController(text: "hamzabhinder5@gmail.com");
+  final TextEditingController _email =
+      TextEditingController(text: "hamzabhinder5@gmail.com");
   final TextEditingController _password = TextEditingController(text: '123456');
   @override
   Widget build(BuildContext context) {

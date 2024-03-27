@@ -4,6 +4,7 @@ import 'package:book_charm/screens/profile/view/widget/change_password.dart';
 import 'package:book_charm/screens/profile/view/widget/language_selector.dart';
 import 'package:book_charm/screens/stats/leaderboard.dart';
 import 'package:book_charm/screens/stats/users_profiles.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:book_charm/screens/profile/view/widget/switch_button.dart';
@@ -245,10 +246,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     CustomListTile(
                       onTap: () {
-                        sp.userSignOut().then((value) {
-                          nextScreenReplace(
-                              context, const AuthenticationScreen());
-                        });
+                        FirebaseAuth.instance.signOut();
+                        sp.userSignOut();
+                        nextScreenReplace(
+                            context, const AuthenticationScreen());
                       },
                       title: 'Logout',
                       imagePath: 'assets/images/logout.png',
