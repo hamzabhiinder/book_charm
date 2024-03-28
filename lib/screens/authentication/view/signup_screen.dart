@@ -27,29 +27,36 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> with Single
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+          preferredSize: Size(MediaQuery.of(context).size.width * 1, getResponsiveHeight(context, 200)),
+          child: Column(
+            children: [
+              SizedBox(
+                height: getResponsiveHeight(context, 50),
+              ),
+              Row(
+                // crossAxisAlignment: CrossAxisAlignment,
+                children: [
+                  Image.asset(
+                    'assets/icons/logo1.png',
+                    width: getResponsiveWidth(context, 100),
+                    height: getResponsiveHeight(context, 100),
+                    color: Colors.black,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'BookCharm',
+                    style:
+                        TextStyle(fontSize: getResponsiveFontSize(context, 28), fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ],
+          )),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 15)),
         child: Column(
           children: [
-            SizedBox(
-              height: getResponsiveHeight(context, 50),
-            ),
-            Row(
-              // crossAxisAlignment: CrossAxisAlignment,
-              children: [
-                Image.asset(
-                  'assets/icons/logo1.png',
-                  width: getResponsiveWidth(context, 100),
-                  height: getResponsiveHeight(context, 100),
-                  color: Colors.black,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'BookCharm',
-                  style: TextStyle(fontSize: getResponsiveFontSize(context, 28), fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
             TabBar(
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorColor: AppColors.primaryColor,

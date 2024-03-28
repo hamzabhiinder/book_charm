@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           create: (_) => LanguageProvider()..loadSelectedLanguage(),
         ),
         ChangeNotifierProvider(
-          create: (_) => LibraryProvider(),
+          create: (_) => LibraryProvider()..loadJsonDataFunction(context),
         ),
         ChangeNotifierProvider(
           create: (_) => DictionaryProvider(),

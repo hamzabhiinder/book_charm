@@ -354,7 +354,7 @@ class LibraryProvider with ChangeNotifier {
   String selectedLanguageName = "German";
 
   Future loadJsonDataFunction(BuildContext context) async {
-    final language = Provider.of<LanguageProvider>(context, listen: false);
+    final language = Provider.of<LanguageProvider>(context);
     try {
       String jsonString =
           await rootBundle.loadString('assets/data/booksData.json');

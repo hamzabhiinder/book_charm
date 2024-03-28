@@ -157,7 +157,7 @@ class _HandleLoginState extends State<HandleLogin> {
               final user = AuthService.firebase().currentUser;
               if (user != null) {
                 final sp = context.read<SignInProvider>();
-                final languageProvider = context.read<LanguageProvider>();
+                final languageProvider =Provider.of<LanguageProvider>(context,listen: false);
                 sp.getDataFromSharedPreferences();
                 languageProvider.loadSelectedLanguage();
                 log('user ${user.email}  ${languageProvider.selectedLanguageName}');
