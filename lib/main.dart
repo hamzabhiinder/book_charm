@@ -47,61 +47,25 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  late Timer _timer;
-  late Stopwatch _stopwatch;
-  bool _isPaused = false;
   @override
   void initState() {
     super.initState();
-    _stopwatch = Stopwatch();
-    _timer = Timer.periodic(Duration(seconds: 50), (Timer t) {
-      if (!_isPaused) {
-        _saveScreenTime().then((value) => _stopwatch.reset());
-        setState(() {});
-      }
-    });
-    _stopwatch.start();
+    TimerUtils.startTimer();
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
     super.dispose();
-    _timer.cancel();
-    _stopwatch.stop();
-    _saveScreenTime();
     WidgetsBinding.instance.removeObserver(this);
-  }
-
-  void _pauseStopwatch() {
-    if (_stopwatch.isRunning) {
-      _stopwatch.stop();
-      _isPaused = true;
-    }
-  }
-
-  void _resumeStopwatch() {
-    if (!_stopwatch.isRunning) {
-      _stopwatch.start();
-      _isPaused = false;
-    }
-  }
-
-  Future<void> _saveScreenTime() async {
-    final screenTimes = await loadScreenTimes();
-    final String currentDate = getCurrentDateString();
-    final Duration currentDuration = screenTimes[currentDate] ?? Duration.zero;
-    final Duration newDuration = currentDuration + _stopwatch.elapsed;
-    screenTimes[currentDate] = newDuration;
-    saveScreenTimes(screenTimes);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
-      _pauseStopwatch();
+      TimerUtils.pauseTimer();
     } else if (state == AppLifecycleState.resumed) {
-      _resumeStopwatch();
+      TimerUtils.resumeTimer();
     }
   }
 
