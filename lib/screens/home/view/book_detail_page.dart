@@ -81,6 +81,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     checkBookAvailability();
     super.initState();
   }
+
   String? _downloadMessage;
   Future<void> checkBookAvailability() async {
     final externalDir = await getExternalStorageDirectory();
@@ -101,10 +102,11 @@ class _BookDetailPageState extends State<BookDetailPage> {
     log('isBookAvailable $isBookAvailable');
   }
 
-  Future<void> downloadPdfFile(
-      {required String url,
-      required String bookName,
-      required String authorName}) async {
+  Future<void> downloadPdfFile({
+    required String url,
+    required String bookName,
+    required String authorName,
+  }) async {
     setState(() {
       _downloadMessage = 'Downloading...';
     });
@@ -112,18 +114,82 @@ class _BookDetailPageState extends State<BookDetailPage> {
     final extDir = await getExternalStorageDirectory();
     final String dirPath = '${extDir?.path}/Download';
     await Directory(dirPath).create(recursive: true);
-    final String filePath =
-        '$dirPath/${bookName}_$authorName.pdf'; // Change the file name as needed
+    final String filePath = '$dirPath/${bookName}_$authorName.pdf';
 
-    final http.Response response = await http.get(Uri.parse(url));
+    final http.Client client = http.Client();
+    final http.Request request = http.Request('GET', Uri.parse(url));
+
+    final http.StreamedResponse response = await client.send(request);
     final File file = File(filePath);
-    await file.writeAsBytes(response.bodyBytes);
+    int totalBytes = response.contentLength ?? 0;
+    int downloadedBytes = 0;
 
-    setState(() {
-      _downloadMessage = 'Download complete. File saved to: $filePath';
-    });
-    log('Downloaded Successfully');
+    response.stream.listen(
+      (List<int> chunk) {
+        file.writeAsBytesSync(chunk, mode: FileMode.append);
+        downloadedBytes += chunk.length;
+        setState(() {
+          _downloadMessage =
+              'Downloading... ${(downloadedBytes / totalBytes * 100).toStringAsFixed(2)}%';
+          log('Downloading... ${(downloadedBytes / totalBytes * 100).toStringAsFixed(2)}%');
+        });
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Downloading"),
+              content: Row(
+                children: [
+                  Expanded(
+                      child: LinearProgressIndicator(
+                    value: (downloadedBytes / totalBytes),
+                  )),
+                  Text(
+                      "${(downloadedBytes / totalBytes * 100).toStringAsFixed(2)}%")
+                ],
+              ),
+            );
+          },
+        );
+      },
+      onDone: () {
+        setState(() {
+          _downloadMessage = 'Download complete. File saved to: $filePath';
+        });
+        log('Downloaded Successfully');
+      },
+      onError: (error) {
+        setState(() {
+          _downloadMessage = 'Error occurred while downloading file';
+        });
+        log('Error occurred while downloading file: $error');
+      },
+    );
   }
+
+  // Future<void> downloadPdfFile(
+  //     {required String url,
+  //     required String bookName,
+  //     required String authorName}) async {
+  //   setState(() {
+  //     _downloadMessage = 'Downloading...';
+  //   });
+
+  //   final extDir = await getExternalStorageDirectory();
+  //   final String dirPath = '${extDir?.path}/Download';
+  //   await Directory(dirPath).create(recursive: true);
+  //   final String filePath =
+  //       '$dirPath/${bookName}_$authorName.pdf'; // Change the file name as needed
+
+  //   final http.Response response = await http.get(Uri.parse(url));
+  //   final File file = File(filePath);
+  //   await file.writeAsBytes(response.bodyBytes);
+
+  //   setState(() {
+  //     _downloadMessage = 'Download complete. File saved to: $filePath';
+  //   });
+  //   log('Downloaded Successfully');
+  // }
 
   @override
   Widget build(BuildContext context) {

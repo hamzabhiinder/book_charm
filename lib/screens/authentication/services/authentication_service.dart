@@ -7,6 +7,7 @@ import 'package:book_charm/providers/internet_provider.dart';
 import 'package:book_charm/screens/authentication/services/auth1/auth_exception1.dart';
 import 'package:book_charm/screens/authentication/services/auth1/auth_sevices1.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
+import 'package:book_charm/utils/stats/time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -46,6 +47,8 @@ class AuthServices {
         await signInProvider.getUserDataFromFirestore(signInProvider.uid!).then(
           (value) async {
             await signInProvider.saveDataToSharedPreferences();
+            TimerUtils.loadScreenTimesFromFirebase(signInProvider.uid ?? '')
+                .then((value) => TimerUtils.saveScreenTimes(value));
             await signInProvider.setSignIn();
             log('user Exist data= $value');
 
@@ -58,6 +61,8 @@ class AuthServices {
         await signInProvider.saveDataToFirestore().then(
           (value) async {
             await signInProvider.saveDataToSharedPreferences();
+            TimerUtils.loadScreenTimesFromFirebase(signInProvider.uid ?? '')
+                .then((value) => TimerUtils.saveScreenTimes(value));
             await signInProvider.setSignIn();
 
             nextScreenReplace(context, BottomNaigationScreen());
@@ -95,6 +100,8 @@ class AuthServices {
         sp.getUserDataFromFirestore(sp.uid!).then(
           (value) async {
             await sp.saveDataToSharedPreferences();
+            TimerUtils.loadScreenTimesFromFirebase(sp.uid ?? '')
+                .then((value) => TimerUtils.saveScreenTimes(value));
             await sp.setSignIn();
 
             nextScreenReplace(context, BottomNaigationScreen());
@@ -106,8 +113,9 @@ class AuthServices {
         await sp.saveDataToFirestore().then(
           (value) async {
             await sp.saveDataToSharedPreferences();
+            TimerUtils.loadScreenTimesFromFirebase(sp.uid ?? '')
+                .then((value) => TimerUtils.saveScreenTimes(value));
             await sp.setSignIn();
-
             nextScreenReplace(context, BottomNaigationScreen());
           },
         );
@@ -159,7 +167,8 @@ class AuthServices {
     }
   }
 
-  static Future signinWithEmailAndPassword(BuildContext context, String email, String password) async {
+  static Future signinWithEmailAndPassword(
+      BuildContext context, String email, String password) async {
     final sp = context.read<SignInProvider>();
     final ip = context.read<InternetProvider>();
     await ip.checkInternetConnection();
@@ -180,9 +189,10 @@ class AuthServices {
       if (userExists) {
         await sp.saveDataToSharedPreferences();
         await sp.setSignIn();
-        sp.setSignInLoader(false);
         context.read<DictionaryProvider>().loadDictionary(context);
-
+        TimerUtils.loadScreenTimesFromFirebase(sp.uid ?? '')
+            .then((value) => TimerUtils.saveScreenTimes(value));
+        sp.setSignInLoader(false);
         // getUserData ---> dictionary firebase, stats, my books overrite
         nextScreenReplace(context, BottomNaigationScreen());
         log("USER EXIST");

@@ -1,5 +1,6 @@
 import 'package:book_charm/main.dart';
 import 'package:book_charm/screens/dashboard/services/dashboard_services.dart';
+import 'package:book_charm/screens/profile/view/profile.dart';
 import 'package:book_charm/utils/download/download_file.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:book_charm/utils/stats/overall_stats.dart';
@@ -86,8 +87,13 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                 child: AppBar(
                   backgroundColor: Colors.white,
                   toolbarHeight: kToolbarHeight - 10,
-                  leading: Image.asset(
-                    'assets/images/profile.png',
+                  leading: GestureDetector(
+                    onTap: () {
+                      nextScreen(context, ProfileScreen());
+                    },
+                    child: Image.asset(
+                      'assets/images/profile.png',
+                    ),
                   ),
                   title: Text(
                     "Welcome ${sp.userModel?.name ?? "user"}",
@@ -196,7 +202,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                                   url: 'assets/images/stopwatch.png',
                                   title: 'Time',
                                   subTitle:
-                                      ' ${formatDuration(TimerUtils.updatedTimes[getCurrentDateString()] ?? Duration.zero)}',
+                                      ' ${formatDuration(TimerUtils.updatedTimes[TimerUtils.getCurrentDateString()] ?? Duration.zero)}',
                                 );
                               },
                             ),
@@ -220,6 +226,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                           .calculateLastSectionStats(
                               'this week')['streakChangesInSection']
                           .toString(),
+                      // timeValue:TimerUtils.getCurrentDateString(),
                       timeValue:
                           formatDuration(TimerUtils.getDurationOfCurrentWeek()),
                       lessonValue: overallStats

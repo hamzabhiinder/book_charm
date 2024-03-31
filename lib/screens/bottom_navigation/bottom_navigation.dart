@@ -20,7 +20,8 @@ class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
     DictionaryScreen(),
     LibraryScreen(),
     ExerciseScreen(),
-    ProfileScreen(),
+    LeaderBoardScreen()
+    //ProfileScreen(),
 
     // DownloadedBooksScreen()
   ];
