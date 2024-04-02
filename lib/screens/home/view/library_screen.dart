@@ -56,11 +56,13 @@ class LibraryScreen extends StatelessWidget {
 
     return Consumer<LibraryProvider>(
       builder: (context, value, child) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: ListView.builder(
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
                 itemCount: libraryProvider.categories.length,
                 itemBuilder: (context, index) {
                   String category = libraryProvider.categories[index];
@@ -191,129 +193,139 @@ class LibraryScreen extends StatelessWidget {
                   );
                 },
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'UpComing Books',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'UpComing Books',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            FutureBuilder(
-              future: value.fetchBooks(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else {
-                  List<Map<String, dynamic>> books =
-                      snapshot.data as List<Map<String, dynamic>>;
-                  log("books ${books[0]['en']}");
-                  return SizedBox(
-                    height: getResponsiveHeight(context, 170),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: books[0]['fr'].length ?? 0,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        // return ListTile(
-                        //   title: Text(
-                        //       books[0]['en'][index]['Name'] ?? 'Unnamed Book'),
-                        //   subtitle: Text(books[0]['en'][index]['Author'] ??
-                        //       'Unknown Author'),
-                        //   // Add more fields as needed
-                        // );
-                        return GestureDetector(
-                          onTap: () {},
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: getResponsiveWidth(context, 10)),
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: getResponsiveWidth(
-                                  context, 100), // Set the width as needed
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    child: CachedNetworkImage(
-                                      height: getResponsiveHeight(context, 100),
-                                      width: getResponsiveWidth(context, 90),
-                                      fit: BoxFit.cover,
-                                      imageUrl: books[0]['fr'][index]
-                                                  ['CoverUrl'] ==
-                                              ""
-                                          ? 'https://m.media-amazon.com/images/I/A1bwQxjFE3L._SY522_.jpg'
-                                          : books[0]['fr'][index]['CoverUrl'],
-                                      errorWidget: (context, url, error) =>
-                                          ClipRRect(
+              SizedBox(
+                //height: 200,
+                child: FutureBuilder(
+                  future: value.fetchBooks(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else {
+                      List<Map<String, dynamic>> books =
+                          snapshot.data as List<Map<String, dynamic>>;
+                      log("books ${books[0]['en']}");
+                      return SizedBox(
+                        height: getResponsiveHeight(context, 170),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: books[0]['fr'].length ?? 0,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            // return ListTile(
+                            //   title: Text(
+                            //       books[0]['en'][index]['Name'] ?? 'Unnamed Book'),
+                            //   subtitle: Text(books[0]['en'][index]['Author'] ??
+                            //       'Unknown Author'),
+                            //   // Add more fields as needed
+                            // );
+                            return GestureDetector(
+                              onTap: () {},
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        getResponsiveWidth(context, 10)),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: getResponsiveWidth(
+                                      context, 100), // Set the width as needed
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ClipRRect(
                                         borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        child: Container(
-                                          width:
-                                              getResponsiveHeight(context, 100),
+                                            BorderRadius.circular(5.0),
+                                        child: CachedNetworkImage(
                                           height:
+                                              getResponsiveHeight(context, 100),
+                                          width:
                                               getResponsiveWidth(context, 90),
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey,
+                                          fit: BoxFit.cover,
+                                          imageUrl: books[0]['fr'][index]
+                                                      ['CoverUrl'] ==
+                                                  ""
+                                              ? 'https://m.media-amazon.com/images/I/A1bwQxjFE3L._SY522_.jpg'
+                                              : books[0]['fr'][index]
+                                                  ['CoverUrl'],
+                                          errorWidget: (context, url, error) =>
+                                              ClipRRect(
                                             borderRadius:
-                                                BorderRadius.circular(13),
-                                          ),
-                                          child: Icon(
-                                            Icons.error_outline,
-                                            size: 25,
-                                            color: Colors.red,
+                                                BorderRadius.circular(8.0),
+                                            child: Container(
+                                              width: getResponsiveHeight(
+                                                  context, 100),
+                                              height: getResponsiveWidth(
+                                                  context, 90),
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey,
+                                                borderRadius:
+                                                    BorderRadius.circular(13),
+                                              ),
+                                              child: Icon(
+                                                Icons.error_outline,
+                                                size: 25,
+                                                color: Colors.red,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                      height: getResponsiveHeight(context, 5)),
-                                  SizedBox(
-                                    width: getResponsiveWidth(context, 100),
-                                    child: Text(
-                                      books[0]['fr'][index]['Name'] ??
-                                          'Unnamed Book',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize:
-                                            getResponsiveFontSize(context, 12),
-                                        fontWeight: FontWeight.w600,
+                                      SizedBox(
+                                          height:
+                                              getResponsiveHeight(context, 5)),
+                                      SizedBox(
+                                        width: getResponsiveWidth(context, 100),
+                                        child: Text(
+                                          books[0]['fr'][index]['Name'] ??
+                                              'Unnamed Book',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: getResponsiveFontSize(
+                                                context, 12),
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: getResponsiveWidth(context, 100),
-                                    child: Text(
-                                      books[0]['fr'][index]['Author'] ??
-                                          'Author Book',
-                                      style: TextStyle(
-                                        color: Colors.grey.shade600,
-                                        fontSize:
-                                            getResponsiveFontSize(context, 11),
-                                        fontWeight: FontWeight.w400,
+                                      SizedBox(
+                                        width: getResponsiveWidth(context, 100),
+                                        child: Text(
+                                          books[0]['fr'][index]['Author'] ??
+                                              'Author Book',
+                                          style: TextStyle(
+                                            color: Colors.grey.shade600,
+                                            fontSize: getResponsiveFontSize(
+                                                context, 11),
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                }
-              },
-            ),
-          ],
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

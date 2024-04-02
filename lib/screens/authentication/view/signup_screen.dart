@@ -15,7 +15,8 @@ class AuthenticationScreen extends StatefulWidget {
   _AuthenticationScreenState createState() => _AuthenticationScreenState();
 }
 
-class _AuthenticationScreenState extends State<AuthenticationScreen> with SingleTickerProviderStateMixin {
+class _AuthenticationScreenState extends State<AuthenticationScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -91,7 +92,8 @@ class RegisterTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 15)),
+      padding:
+          EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 15)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -161,7 +163,8 @@ class RegisterTab extends StatelessWidget {
 class SignInTab extends StatelessWidget {
   SignInTab({super.key});
 
-  final TextEditingController _email = TextEditingController(text: "hamzabhinder5@gmail.com");
+  final TextEditingController _email =
+      TextEditingController(text: "hamzabhinder5@gmail.com");
   final TextEditingController _password = TextEditingController(text: '123456');
   @override
   Widget build(BuildContext context) {

@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DictionaryProvider extends ChangeNotifier {
   final LocalStorage storage = LocalStorage('dictionary.json');
@@ -58,12 +59,15 @@ class DictionaryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Map<String, dynamic>>?> getDictionaryDataFromFirestore(context) async {
+  Future<List<Map<String, dynamic>>?> getDictionaryDataFromFirestore(
+      context) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
-    LanguageProvider lang = Provider.of<LanguageProvider>(context, listen: false);
+    LanguageProvider lang =
+        Provider.of<LanguageProvider>(context, listen: false);
     try {
-      DocumentSnapshot snapshot = await firestore.collection('Dictionary').doc(user?.uid).get();
+      DocumentSnapshot snapshot =
+          await firestore.collection('Dictionary').doc(user?.uid).get();
 
       if (snapshot.exists) {
         Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
@@ -71,7 +75,8 @@ class DictionaryProvider extends ChangeNotifier {
         List<Map<String, dynamic>> wordPairs;
 
         if (data[lang.selectedLanguageCode] != null) {
-          wordPairs = List<Map<String, dynamic>>.from(data[lang.selectedLanguageCode]);
+          wordPairs =
+              List<Map<String, dynamic>>.from(data[lang.selectedLanguageCode]);
         } else {
           wordPairs = [];
         }
@@ -93,9 +98,11 @@ class DictionaryProvider extends ChangeNotifier {
 
       FirebaseFirestore firestore = FirebaseFirestore.instance;
       User? user = FirebaseAuth.instance.currentUser;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var lang = prefs.getString('selectedLanguageCode') ?? 'en';
       if (user != null) {
         await firestore.collection('Dictionary').doc(user.uid).update({
-          'fr': FieldValue.arrayRemove([pairToDelete])
+          '$lang': FieldValue.arrayRemove([pairToDelete])
         });
       }
 
@@ -118,11 +125,11 @@ class DictionaryScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Dictionary'),
         actions: [
-          IconButton(
-              onPressed: () {
-                context.read<DictionaryProvider>().loadDictionary(context);
-              },
-              icon: Icon(Icons.abc_outlined))
+          // IconButton(
+          //     onPressed: () {
+          //       context.read<DictionaryProvider>().loadDictionary(context);
+          //     },
+          //     icon: Icon(Icons.abc_outlined))
         ],
       ),
       body: Consumer<DictionaryProvider>(

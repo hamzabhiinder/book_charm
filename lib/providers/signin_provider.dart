@@ -50,7 +50,6 @@ class SignInProvider extends ChangeNotifier {
   UserModel? _userModel;
   UserModel? get userModel => _userModel;
 
-
   SignInProvider() {
     checkSignInUser();
   }
@@ -359,9 +358,10 @@ class SignInProvider extends ChangeNotifier {
 
   // signout
   Future userSignOut() async {
-    await firebaseAuth.signOut;
-    await googleSignIn.signOut();
-    await facebookAuth.logOut();
+    firebaseAuth.signOut;
+    googleSignIn.signOut();
+    facebookAuth.logOut();
+
     // clear all storage information
     clearStoredData();
     _isSignedIn = false;

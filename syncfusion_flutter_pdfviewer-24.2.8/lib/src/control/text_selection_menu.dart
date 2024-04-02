@@ -84,6 +84,14 @@ class _TextSelectionMenuState extends State<TextSelectionMenu> {
                   themeData: widget.themeData,
                 ),
                 TextSelectionMenuItem(
+                  title:
+                      widget.localizations!.pdfTextSelectionMenuHighlightLabel,
+                  mode: 'Highlight',
+                  onSelected: widget.onSelected,
+                  textDirection: widget.textDirection,
+                  themeData: widget.themeData,
+                ),
+                TextSelectionMenuItem(
                   title: 'Translate',
                   mode: 'translate',
                   onSelected: widget.onSelected,
@@ -106,14 +114,14 @@ class _TextSelectionMenuState extends State<TextSelectionMenu> {
                   textDirection: widget.textDirection,
                   themeData: widget.themeData,
                 ),
-                TextSelectionMenuItem(
-                  title:
-                      widget.localizations!.pdfTextSelectionMenuSquigglyLabel,
-                  mode: 'Squiggly',
-                  onSelected: widget.onSelected,
-                  textDirection: widget.textDirection,
-                  themeData: widget.themeData,
-                ),
+                // TextSelectionMenuItem(
+                //   title:
+                //       widget.localizations!.pdfTextSelectionMenuSquigglyLabel,
+                //   mode: 'Squiggly',
+                //   onSelected: widget.onSelected,
+                //   textDirection: widget.textDirection,
+                //   themeData: widget.themeData,
+                // ),
               ],
             ),
           ),

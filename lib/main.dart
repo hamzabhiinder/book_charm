@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
@@ -17,6 +18,8 @@ import 'package:book_charm/screens/home/view/home_screen.dart';
 import 'package:book_charm/screens/home/view/library_screen.dart';
 import 'package:book_charm/screens/home/widgets/upload_book.dart';
 import 'package:book_charm/screens/pdf_viewer/pdf_viewer_screen.dart';
+import 'package:book_charm/utils/stats/screenTime.dart';
+import 'package:book_charm/utils/stats/time_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +39,71 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  late Timer _timer;
+  late Stopwatch _stopwatch;
+  bool _isPaused = false;
+  @override
+  void initState() {
+    super.initState();
+    _stopwatch = Stopwatch();
+    _timer = Timer.periodic(Duration(seconds: 50), (Timer t) {
+      if (!_isPaused) {
+        _saveScreenTime().then((value) => _stopwatch.reset());
+        setState(() {});
+      }
+    });
+    _stopwatch.start();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
+    _stopwatch.stop();
+    _saveScreenTime();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  void _pauseStopwatch() {
+    if (_stopwatch.isRunning) {
+      _stopwatch.stop();
+      _isPaused = true;
+    }
+  }
+
+  void _resumeStopwatch() {
+    if (!_stopwatch.isRunning) {
+      _stopwatch.start();
+      _isPaused = false;
+    }
+  }
+
+  Future<void> _saveScreenTime() async {
+    final screenTimes = await loadScreenTimes();
+    final String currentDate = getCurrentDateString();
+    final Duration currentDuration = screenTimes[currentDate] ?? Duration.zero;
+    final Duration newDuration = currentDuration + _stopwatch.elapsed;
+    screenTimes[currentDate] = newDuration;
+    saveScreenTimes(screenTimes);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      _pauseStopwatch();
+    } else if (state == AppLifecycleState.resumed) {
+      _resumeStopwatch();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +127,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => DictionaryProvider(),
         ),
-       ChangeNotifierProvider(
-      create: (context) => UploadProvider(),)
+        ChangeNotifierProvider(
+          create: (context) => UploadProvider(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
