@@ -150,26 +150,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       trailingIcon: Icons.arrow_forward_ios,
                       trailingIconColor: AppColors.primaryColor,
                     ),
-                    CustomListTile(
-                      title: 'Change Email',
-                      imagePath: 'assets/images/email.png',
-                      trailingIcon: Icons.arrow_forward_ios,
-                      trailingIconColor: AppColors.primaryColor,
-                    ),
-                    CustomListTile(
-                      onTap: () {
-                        showBottomSheet(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return ChangePasswordWidget();
-                          },
-                        );
-                      },
-                      title: 'Change Password',
-                      imagePath: 'assets/images/pass.png',
-                      trailingIcon: Icons.arrow_forward_ios,
-                      trailingIconColor: AppColors.primaryColor,
-                    ),
+                    // CustomListTile(
+                    //   title: 'Change Email',
+                    //   imagePath: 'assets/images/email.png',
+                    //   trailingIcon: Icons.arrow_forward_ios,
+                    //   trailingIconColor: AppColors.primaryColor,
+                    // ),
+                    sp.provider == "SIMPLE"
+                        ? CustomListTile(
+                            onTap: () {
+                              showBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ChangePasswordWidget();
+                                },
+                              );
+                            },
+                            title: 'Change Password',
+                            imagePath: 'assets/images/pass.png',
+                            trailingIcon: Icons.arrow_forward_ios,
+                            trailingIconColor: AppColors.primaryColor,
+                          )
+                        : Container(),
                   ],
                 ),
               ),

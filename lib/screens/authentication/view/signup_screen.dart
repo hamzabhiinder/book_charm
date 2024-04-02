@@ -190,15 +190,17 @@ class SignInTab extends StatelessWidget {
               return RoundElevatedButton(
                 loading: value.isSignedInLoading,
                 width: MediaQuery.of(context).size.width * 0.6,
-                borderRadius: 15,
+              borderRadius: 15,
                 title: 'SIGN IN',
-                onPress: () {
-                  AuthServices.signinWithEmailAndPassword(
-                    context,
-                    _email.text,
-                    _password.text,
-                  );
-                },
+                onPress: value.isSignedInLoading
+                    ? null
+                    : () {
+                        AuthServices.signinWithEmailAndPassword(
+                          context,
+                          _email.text,
+                          _password.text,
+                        );
+                      },
               );
             },
           ),

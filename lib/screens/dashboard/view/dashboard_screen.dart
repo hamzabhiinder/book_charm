@@ -1,8 +1,10 @@
 import 'package:book_charm/main.dart';
 import 'package:book_charm/screens/dashboard/services/dashboard_services.dart';
+import 'package:book_charm/screens/profile/view/profile.dart';
 import 'package:book_charm/utils/download/download_file.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:book_charm/utils/stats/overall_stats.dart';
+import 'package:book_charm/utils/stats/time_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -85,8 +87,13 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                 child: AppBar(
                   backgroundColor: Colors.white,
                   toolbarHeight: kToolbarHeight - 10,
-                  leading: Image.asset(
-                    'assets/images/profile.png',
+                  leading: GestureDetector(
+                    onTap: () {
+                      nextScreen(context, ProfileScreen());
+                    },
+                    child: Image.asset(
+                      'assets/images/profile.png',
+                    ),
                   ),
                   title: Text(
                     "Welcome ${sp.userModel?.name ?? "user"}",
@@ -195,7 +202,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                                   url: 'assets/images/stopwatch.png',
                                   title: 'Time',
                                   subTitle:
-                                      ' ${formatDuration(value.getTimeSpentInApp())}',
+                                      ' ${formatDuration(TimerUtils.updatedTimes[TimerUtils.getCurrentDateString()] ?? Duration.zero)}',
                                 );
                               },
                             ),
@@ -219,7 +226,9 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                           .calculateLastSectionStats(
                               'this week')['streakChangesInSection']
                           .toString(),
-                      timeValue: '0',
+                      // timeValue:TimerUtils.getCurrentDateString(),
+                      timeValue:
+                          formatDuration(TimerUtils.getDurationOfCurrentWeek()),
                       lessonValue: overallStats
                           .calculateLastSectionStats(
                               'this week')['lessonChangesInSection']
@@ -235,7 +244,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                           .calculateLastSectionStats(
                               'all time')['streakChangesInSection']
                           .toString(),
-                      timeValue: '0',
+                      timeValue: formatDuration(TimerUtils.getTotalDuration()),
                       lessonValue: overallStats
                           .calculateLastSectionStats(
                               'all time')['lessonChangesInSection']

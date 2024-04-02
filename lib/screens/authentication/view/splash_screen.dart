@@ -139,7 +139,7 @@ class _HandleLoginState extends State<HandleLogin> {
   Future<bool> isUserSignedIn() async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-
+      log('_HandleLoginState  check');
       return user != null;
     } catch (e) {
       return false;
