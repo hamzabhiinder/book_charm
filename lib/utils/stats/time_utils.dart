@@ -10,6 +10,25 @@ class TimerUtils {
   static late Stopwatch _stopwatch;
   static bool _isPaused = false;
   static Map<String, Duration> updatedTimes = {};
+  static List<double> calculateDurationOfPastSevenDays() {
+    List<double> durations = [];
+    DateTime today = DateTime.now();
+    DateTime sevenDaysAgo = today.subtract(const Duration(days: 6));
+    log('drt: ${updatedTimes.toString()}');
+    for (int i = 0; i < 7; i++) {
+      String date =
+          "${sevenDaysAgo.year}-${sevenDaysAgo.month.toString().padLeft(2, '0')}-${sevenDaysAgo.day.toString().padLeft(2, '0')}";
+      log('drt: ${date.toString()}');
+      if (updatedTimes.containsKey(date)) {
+        durations.add(updatedTimes[date]!.inMinutes.toDouble() / 10);
+      } else {
+        durations.add(0);
+      }
+      sevenDaysAgo = sevenDaysAgo.add(const Duration(days: 1));
+    }
+    log('drt: ${durations.toString()}');
+    return durations;
+  }
 
   static Future<void> startTimer() async {
     final user = FirebaseAuth.instance.currentUser;

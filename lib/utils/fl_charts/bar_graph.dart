@@ -15,13 +15,13 @@ class MyBarGraph extends StatelessWidget {
   Widget build(BuildContext context) {
     // Initialize Bar Data structure
     BarData myBarData = BarData(
-      sunAmount: monthlySummary[0],
-      monAmount: monthlySummary[1],
-      tuesAmount: monthlySummary[2],
-      wedAmount: monthlySummary[3],
-      thursAmount: monthlySummary[4],
-      friAmount: monthlySummary[5],
-      satAmount: monthlySummary[6],
+      sunAmount: monthlySummary.length > 0 ? monthlySummary[0] : 0,
+      monAmount: monthlySummary.length > 1 ? monthlySummary[1] : 0,
+      tuesAmount: monthlySummary.length > 2 ? monthlySummary[2] : 0,
+      wedAmount: monthlySummary.length > 3 ? monthlySummary[3] : 0,
+      thursAmount: monthlySummary.length > 4 ? monthlySummary[4] : 0,
+      friAmount: monthlySummary.length > 5 ? monthlySummary[5] : 0,
+      satAmount: monthlySummary.length > 6 ? monthlySummary[6] : 0,
     );
     myBarData.initialize();
     const style = TextStyle(
@@ -40,7 +40,6 @@ class MyBarGraph extends StatelessWidget {
               const AxisTitles(sideTitles: SideTitles(showTitles: false)),
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
-              
               showTitles: true,
               getTitlesWidget: (value, title) {
                 switch (value.toInt()) {

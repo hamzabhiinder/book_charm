@@ -1,6 +1,7 @@
 import 'package:book_charm/screens/games/flip_cards_screen.dart';
 import 'package:book_charm/screens/games/mcqs_screen.dart';
 import 'package:book_charm/screens/games/word_matching_screen.dart';
+import 'package:book_charm/utils/stats/time_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -101,16 +102,18 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                               padding: EdgeInsets.only(
                                   left: getResponsiveWidth(context, 10)),
                               height: getResponsiveHeight(context, 130),
-                              child: const MyBarGraph(
-                                monthlySummary: <double>[
-                                  5,
-                                  4,
-                                  4,
-                                  4,
-                                  4,
-                                  4,
-                                  4,
-                                ],
+                              child: MyBarGraph(
+                                monthlySummary: TimerUtils
+                                    .calculateDurationOfPastSevenDays(),
+                                // monthlySummary: >[
+                                //   5,
+                                //   4,
+                                //   4,
+                                //   4,
+                                //   4,
+                                //   4,
+                                //   4,
+                                // ],
                               ),
                             ),
                           ],
