@@ -76,18 +76,50 @@ class TimerUtils {
     saveScreenTimes(screenTimes);
 
     final user = FirebaseAuth.instance.currentUser;
+    // if (user != null) {
+    //   final userId = user.uid;
+    //   final userDocSnapshot = await userDoc.get();
+    //   try {
+    //     await FirebaseFirestore.instance
+    //         .collection('timers')
+    //         .doc(userId)
+    //         .update({
+    //       'screen_times.$currentDate': newDuration.inMilliseconds,
+    //     });
+    //     print('Screen time data updated in Firebase for user: $userId');
+    //   } catch (e) {
+    //     print('Error updating screen time data in Firebase: $e');
+    //   }
+    // }
+
     if (user != null) {
       final userId = user.uid;
-      try {
-        await FirebaseFirestore.instance
-            .collection('timers')
-            .doc(userId)
-            .update({
-          'screen_times.$currentDate': newDuration.inMilliseconds,
-        });
-        print('Screen time data updated in Firebase for user: $userId');
-      } catch (e) {
-        print('Error updating screen time data in Firebase: $e');
+
+      // Check if the user's document exists in the timers collection
+      final userDoc =
+          FirebaseFirestore.instance.collection('timers').doc(userId);
+      final userDocSnapshot = await userDoc.get();
+
+      if (userDocSnapshot.exists) {
+        // Update the existing document with the new screen time data
+        try {
+          await userDoc.update({
+            'screen_times.$currentDate': newDuration.inMilliseconds,
+          });
+          print('Screen time data updated in Firebase for user: $userId');
+        } catch (e) {
+          print('Error updating screen time data in Firebase: $e');
+        }
+      } else {
+        // Create a new document for the user with the initial screen time data
+        try {
+          await userDoc.set({
+            'screen_times': {currentDate: newDuration.inMilliseconds},
+          });
+          print('New document created in timers collection for user: $userId');
+        } catch (e) {
+          print('Error creating new document in timers collection: $e');
+        }
       }
     }
   }

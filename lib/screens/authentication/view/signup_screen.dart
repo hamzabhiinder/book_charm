@@ -113,17 +113,34 @@ class RegisterTab extends StatelessWidget {
             obscureText: true,
           ),
           const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              AuthServices.signupWithEmailAndPassword(
-                context,
-                _nameController.text,
-                _email.text,
-                _password.text,
-              );
-            },
-            child: const Text('Register'),
-          ),
+           Consumer<SignInProvider>(builder: (context, value, child) {
+              return RoundElevatedButton(
+                  loading: value.isSignedInLoading,
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  borderRadius: 25,
+                  title: 'REGISTER',
+                  onPress: value.isSignedInLoading
+                      ? () {}
+                      : () {
+                          AuthServices.signupWithEmailAndPassword(
+                            context,
+                            _nameController.text,
+                            _email.text,
+                            _password.text,
+                          );
+                        });
+            }),
+          // ElevatedButton(
+          //   onPressed: () {
+          //     AuthServices.signupWithEmailAndPassword(
+          //       context,
+          //       _nameController.text,
+          //       _email.text,
+          //       _password.text,
+          //     );
+          //   },
+          //   child: const Text('Register'),
+          // ),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

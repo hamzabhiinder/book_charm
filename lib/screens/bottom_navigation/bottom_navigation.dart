@@ -58,8 +58,8 @@ class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
             label: 'Exercises',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profile',
+            icon: Icon(Icons.leaderboard),
+            label: 'Leader Board',
           ),
           // BottomNavigationBarItem(
           //   icon: Icon(Icons.account_circle),
