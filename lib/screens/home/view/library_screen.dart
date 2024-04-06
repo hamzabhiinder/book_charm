@@ -210,14 +210,21 @@ class LibraryScreen extends StatelessWidget {
                     } else if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else {
+                      // List<Map<String, dynamic>> books =s
+                      //     snapshot.data as List<Map<String, dynamic>>;
                       List<Map<String, dynamic>> books =
-                          snapshot.data as List<Map<String, dynamic>>;
-                      log("books ${books[0]['en']}");
+                          (snapshot.data as List<Map<String, dynamic>>)
+                              .where((book) => book['isPublished'] == true)
+                              .toList();
+
                       return SizedBox(
                         height: getResponsiveHeight(context, 170),
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: books[0]['fr'].length ?? 0,
+                          itemCount: (books.isNotEmpty &&
+                                  books[0][lang.selectedLanguageCode] != null)
+                              ? books[0][lang.selectedLanguageCode].length ?? 0
+                              : 0,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             // return ListTile(
@@ -250,12 +257,14 @@ class LibraryScreen extends StatelessWidget {
                                           width:
                                               getResponsiveWidth(context, 90),
                                           fit: BoxFit.cover,
-                                          imageUrl: books[0]['fr'][index]
-                                                      ['CoverUrl'] ==
+                                          imageUrl: books[0][lang
+                                                          .selectedLanguageCode]
+                                                      [index]['CoverUrl'] ==
                                                   ""
                                               ? 'https://m.media-amazon.com/images/I/A1bwQxjFE3L._SY522_.jpg'
-                                              : books[0]['fr'][index]
-                                                  ['CoverUrl'],
+                                              : books[0][
+                                                      lang.selectedLanguageCode]
+                                                  [index]['CoverUrl'],
                                           errorWidget: (context, url, error) =>
                                               ClipRRect(
                                             borderRadius:
@@ -285,7 +294,8 @@ class LibraryScreen extends StatelessWidget {
                                       SizedBox(
                                         width: getResponsiveWidth(context, 100),
                                         child: Text(
-                                          books[0]['fr'][index]['Name'] ??
+                                          books[0][lang.selectedLanguageCode]
+                                                  [index]['Name'] ??
                                               'Unnamed Book',
                                           style: TextStyle(
                                             color: Colors.black,
@@ -300,7 +310,8 @@ class LibraryScreen extends StatelessWidget {
                                       SizedBox(
                                         width: getResponsiveWidth(context, 100),
                                         child: Text(
-                                          books[0]['fr'][index]['Author'] ??
+                                          books[0]['${lang.selectedLanguageCode}']
+                                                  [index]['Author'] ??
                                               'Author Book',
                                           style: TextStyle(
                                             color: Colors.grey.shade600,
