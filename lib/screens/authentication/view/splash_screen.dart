@@ -71,7 +71,9 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.black,
+        decoration: BoxDecoration(
+            image:
+                DecorationImage(image: AssetImage('assets/images/splash.png'))),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -88,11 +90,13 @@ class _SplashScreenState extends State<SplashScreen>
                       curve: const Interval(0, 0.5, curve: Curves.easeIn),
                     ),
                   ),
-                  child: Image.asset(
-                    'assets/icons/logo1.png',
-                    width: 120,
-                    height: 120,
-                    color: AppColors.secondaryColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Image.asset(
+                      'assets/icons/looka_transparent.png',
+                      // width: 180,
+                      // height: 180,
+                    ),
                   ),
                 ),
               ),
@@ -109,15 +113,15 @@ class _SplashScreenState extends State<SplashScreen>
                       curve: const Interval(0.5, 1, curve: Curves.easeIn),
                     ),
                   ),
-                  child: const Text(
-                    'BOOK CHARM',
-                    style: TextStyle(
-                      fontSize: 24,
-                      letterSpacing: 2,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.secondaryColor,
-                    ),
-                  ),
+                  // child: const Text(
+                  //   'BOOK CHARM',
+                  //   style: TextStyle(
+                  //     fontSize: 24,
+                  //     letterSpacing: 2,
+                  //     fontWeight: FontWeight.bold,
+                  //     color: AppColors.secondaryColor,
+                  //   ),
+                  // ),
                 ),
               ),
             ],

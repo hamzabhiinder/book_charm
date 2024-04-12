@@ -186,6 +186,8 @@ class AuthServices {
 
       await sp.signInWithEmailAndPassword(context, email, password);
       final userExists = await sp.checkUserExists();
+      sp.setSignInLoader(false);
+
       if (userExists) {
         await sp.saveDataToSharedPreferences();
         await sp.setSignIn();
@@ -198,6 +200,8 @@ class AuthServices {
         log("USER EXIST");
       }
     } catch (e) {
+      sp.setSignInLoader(false);
+
       log("e ERor Auteh Sec$e");
       sp.setSignInLoader(false);
     }

@@ -249,9 +249,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     CustomListTile(
                       onTap: () {
                         FirebaseAuth.instance.signOut();
-                        sp.userSignOut();
-                        nextScreenReplace(
-                            context, const AuthenticationScreen());
+                        sp.userSignOut().then((value) => nextScreenReplace(
+                            context, const AuthenticationScreen()));
                       },
                       title: 'Logout',
                       imagePath: 'assets/images/logout.png',

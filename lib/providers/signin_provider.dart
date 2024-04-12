@@ -226,6 +226,7 @@ class SignInProvider extends ChangeNotifier {
       await getUserDataFromFirestore(result.user?.uid);
       // saving the values
     } on FirebaseAuthException catch (e) {
+      log("FirebaseAuthException ${e.message}");
       switch (e.code) {
         case "user-not-found":
           showSnackBar(context, "User Not Found");
@@ -237,6 +238,9 @@ class SignInProvider extends ChangeNotifier {
 
         case "invalid-email":
           showSnackBar(context, "Invalid Email");
+          break;
+        case "invalid-credential":
+          showSnackBar(context, "Invalid Email & Password");
           break;
 
         default:
