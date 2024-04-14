@@ -155,12 +155,12 @@ class RegisterTab extends StatelessWidget {
                                 // Toggle password visibility
                                 showPassword.value = !isPasswordVisible;
                               },
-                              icon: isPasswordVisible
+                              icon: !isPasswordVisible
                                   ? Image.asset('assets/icons/hide.png',
                                       height: 20)
                                   : Image.asset('assets/icons/view.png',
                                       height: 20))),
-                      obscureText: isPasswordVisible,
+                      obscureText: !isPasswordVisible,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your password';
@@ -237,121 +237,121 @@ class SignInTab extends StatelessWidget {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+
   ValueNotifier<bool> showPassword = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.deny(RegExp(r' '))
-                  ],
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    // A simple email regex validation
-                    if (!RegExp(r"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(value)) {
-                      return 'Please enter a valid email address';
-                    }
-                    return null;
-                  },
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: _emailController,
+                decoration: const InputDecoration(
+                  labelText: 'Email',
                 ),
-                const SizedBox(height: 12),
-                ValueListenableBuilder<bool>(
-                  valueListenable: showPassword,
-                  builder: (context, isPasswordVisible, child) {
-                    return TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                          labelText: 'Password',
-                          suffixIcon: IconButton(
-                              onPressed: () {
-                                // Toggle password visibility
-                                showPassword.value = !isPasswordVisible;
-                              },
-                              icon: isPasswordVisible
-                                  ? Image.asset('assets/icons/hide.png',
-                                      height: 20)
-                                  : Image.asset('assets/icons/view.png',
-                                      height: 20))),
-                      obscureText: isPasswordVisible,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        if (value.length < 6) {
-                          return 'Password should be at least 6 characters';
-                        }
-                        return null;
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(height: 60),
-                Consumer<SignInProvider>(
-                  builder: (context, value, child) {
-                    return RoundElevatedButton(
-                      loading: value.isSignedInLoading,
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      borderRadius: 15,
-                      title: 'SIGN IN',
-                      onPress: value.isSignedInLoading
-                          ? null
-                          : () {
+                keyboardType: TextInputType.emailAddress,
+                inputFormatters: [
+                  FilteringTextInputFormatter.deny(RegExp(r' '))
+                ],
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  // A simple email regex validation
+                  if (!RegExp(r"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                      .hasMatch(value)) {
+                    return 'Please enter a valid email address';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12),
+              ValueListenableBuilder<bool>(
+                valueListenable: showPassword,
+                builder: (context, isPasswordVisible, child) {
+                  return TextFormField(
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                        labelText: 'Password',
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              // Toggle password visibility
+                              showPassword.value = !isPasswordVisible;
+                            },
+                            icon: !isPasswordVisible
+                                ? Image.asset('assets/icons/hide.png',
+                                    height: 20)
+                                : Image.asset('assets/icons/view.png',
+                                    height: 20))),
+                    obscureText: !isPasswordVisible,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      if (value.length < 6) {
+                        return 'Password should be at least 6 characters';
+                      }
+                      return null;
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 60),
+              Consumer<SignInProvider>(
+                builder: (context, value, child) {
+                  return RoundElevatedButton(
+                    loading: value.isSignedInLoading,
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    borderRadius: 15,
+                    title: 'SIGN IN',
+                    onPress: value.isSignedInLoading
+                        ? null
+                        : () {
+                            if (formKey.currentState?.validate() ?? false) {
+                              FocusManager.instance.primaryFocus?.unfocus();
                               AuthServices.signinWithEmailAndPassword(
                                 context,
                                 _emailController.text,
                                 _passwordController.text,
                               );
-                            },
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () async {
-                        AuthServices.handleFacebookAuth(context);
-                      },
-                      child: const Image(
-                        image: AssetImage('assets/icons/facebook_icon.png'),
-                        height: 40,
-                      ),
+                            }
+                          },
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      AuthServices.handleFacebookAuth(context);
+                    },
+                    child: const Image(
+                      image: AssetImage('assets/icons/facebook_icon.png'),
+                      height: 40,
                     ),
-                    const SizedBox(width: 20),
-                    GestureDetector(
-                      onTap: () async {
-                        AuthServices.handleGoogleSignIn(context);
-                      },
-                      child: const Image(
-                        image: AssetImage('assets/icons/google_icon.png'),
-                        height: 50,
-                      ),
+                  ),
+                  const SizedBox(width: 20),
+                  GestureDetector(
+                    onTap: () async {
+                      AuthServices.handleGoogleSignIn(context);
+                    },
+                    child: const Image(
+                      image: AssetImage('assets/icons/google_icon.png'),
+                      height: 50,
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

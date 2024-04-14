@@ -176,16 +176,25 @@ class UploadProvider extends ChangeNotifier {
   File? coverImageFile;
   bool isUploading = false;
   bool pdfSelected = false;
-
-  Future<void> uploadPDF() async {
-    if (pdfFile == null) {
-      throw 'PDF file not selected';
+// Function to upload PDF and cover image to Firebase Storage and update Firestore
+  Future<void> uploadPDF(BuildContext context) async {
+    // Check for necessary inputs
+    if (pdfFile == null ||
+        nameController.text.isEmpty ||
+        authorController.text.isEmpty ||
+        categoryController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('All fields and a PDF file are required.')),
+      );
+      return;
     }
 
+    // Start the upload process
     isUploading = true;
     notifyListeners();
 
     try {
+      // Upload PDF to Firebase Storage
       Reference pdfStorageReference = FirebaseStorage.instance
           .ref()
           .child('pdfs/${DateTime.now().millisecondsSinceEpoch}.pdf');
@@ -193,9 +202,10 @@ class UploadProvider extends ChangeNotifier {
       TaskSnapshot pdfTaskSnapshot =
           await pdfUploadTask.whenComplete(() => null);
 
+      // Get the PDF file URL
       String pdfUrl = await pdfStorageReference.getDownloadURL();
 
-      // Uploading cover image
+      // Optional: Upload cover image to Firebase Storage
       String? coverUrl;
       if (coverImageFile != null) {
         Reference coverStorageReference = FirebaseStorage.instance
@@ -206,18 +216,19 @@ class UploadProvider extends ChangeNotifier {
         TaskSnapshot coverTaskSnapshot =
             await coverUploadTask.whenComplete(() => null);
 
+        // Get the cover image file URL
         coverUrl = await coverStorageReference.getDownloadURL();
       }
 
-      // Determine language key based on some condition
-      String languageKey = 'fr'; // Example: If English, set it to 'en'
+      // Determine language key based on your criteria (adjust as needed)
+      String languageKey = 'en'; // Change to your actual language key logic
 
-      // Store data in Firestore
+      // Add book data to Firestore
       await FirebaseFirestore.instance
           .collection('books')
           .doc('upload_book')
-          .update({
-        '$languageKey': FieldValue.arrayUnion([
+          .set({
+        languageKey: FieldValue.arrayUnion([
           {
             'Name': nameController.text,
             'Author': authorController.text,
@@ -225,26 +236,103 @@ class UploadProvider extends ChangeNotifier {
             'PdfUrl': pdfUrl,
             'CoverUrl': coverUrl ?? '',
             'isPublished': false,
-          }
+          },
         ]),
-      });
+      }, SetOptions(merge: true)); // Use merge option to retain existing data
 
+      // Reset controllers and file selections after successful upload
       nameController.clear();
       authorController.clear();
       categoryController.clear();
-
       pdfFile = null;
       coverImageFile = null;
-      isUploading = false;
       pdfSelected = false;
-      notifyListeners();
-    } catch (e) {
       isUploading = false;
-      pdfSelected = true;
       notifyListeners();
-      throw 'Failed to upload PDF: $e';
+
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('PDF and cover image uploaded successfully.')),
+      );
+    } catch (e) {
+      // Handle errors during upload process
+      isUploading = false;
+      notifyListeners();
+
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to upload PDF: $e')),
+      );
     }
   }
+
+  // Future<void> uploadPDF() async {
+  //   if (pdfFile == null) {
+  //     throw 'PDF file not selected';
+  //   }
+
+  //   isUploading = true;
+  //   notifyListeners();
+
+  //   try {
+  //     Reference pdfStorageReference = FirebaseStorage.instance
+  //         .ref()
+  //         .child('pdfs/${DateTime.now().millisecondsSinceEpoch}.pdf');
+  //     UploadTask pdfUploadTask = pdfStorageReference.putFile(pdfFile!);
+  //     TaskSnapshot pdfTaskSnapshot =
+  //         await pdfUploadTask.whenComplete(() => null);
+
+  //     String pdfUrl = await pdfStorageReference.getDownloadURL();
+
+  //     // Uploading cover image
+  //     String? coverUrl;
+  //     if (coverImageFile != null) {
+  //       Reference coverStorageReference = FirebaseStorage.instance
+  //           .ref()
+  //           .child('covers/${DateTime.now().millisecondsSinceEpoch}.jpg');
+  //       UploadTask coverUploadTask =
+  //           coverStorageReference.putFile(coverImageFile!);
+  //       TaskSnapshot coverTaskSnapshot =
+  //           await coverUploadTask.whenComplete(() => null);
+
+  //       coverUrl = await coverStorageReference.getDownloadURL();
+  //     }
+
+  //     // Determine language key based on some condition
+  //     String languageKey = 'fr'; // Example: If English, set it to 'en'
+
+  //     // Store data in Firestore
+  //     await FirebaseFirestore.instance
+  //         .collection('books')
+  //         .doc('upload_book')
+  //         .set({
+  //       languageKey: FieldValue.arrayUnion([
+  //         {
+  //           'Name': nameController.text,
+  //           'Author': authorController.text,
+  //           'Category': categoryController.text,
+  //           'PdfUrl': pdfUrl,
+  //           'CoverUrl': coverUrl ?? '',
+  //           'isPublished': false,
+  //         },
+  //       ]),
+  //     }, SetOptions(merge: true));
+  //     nameController.clear();
+  //     authorController.clear();
+  //     categoryController.clear();
+
+  //     pdfFile = null;
+  //     coverImageFile = null;
+  //     isUploading = false;
+  //     pdfSelected = false;
+  //     notifyListeners();
+  //   } catch (e) {
+  //     isUploading = false;
+  //     pdfSelected = true;
+  //     notifyListeners();
+  //     throw 'Failed to upload PDF: $e';
+  //   }
+  // }
 
   Future<void> pickPDF() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -275,6 +363,9 @@ class UploadProvider extends ChangeNotifier {
 }
 
 class UploadPage extends StatelessWidget {
+  // Create a form key to manage the form
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -286,108 +377,140 @@ class UploadPage extends StatelessWidget {
           padding: EdgeInsets.all(20.0),
           child: Consumer<UploadProvider>(
             builder: (context, provider, _) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  TextFormField(
-                    controller: provider.nameController,
-                    decoration: InputDecoration(
-                      labelText: 'Book Name',
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                      hintText: 'Enter book name',
-                      hintStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(height: 10.0),
-                  TextFormField(
-                    controller: provider.authorController,
-                    decoration: InputDecoration(
-                      labelText: 'Author Name',
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                      hintText: 'Enter author name',
-                      hintStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(height: 10.0),
-                  TextFormField(
-                    controller: provider.categoryController,
-                    decoration: InputDecoration(
-                      labelText: 'Category',
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                      hintText: 'Enter category',
-                      hintStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(height: 10.0),
-                  // ElevatedButton(
-                  //   onPressed: provider.pickPDF,
-                  //   child: Text('Select PDF'),
-                  // ),
-                  // SizedBox(height: 10.0),
-                  // if (provider.pdfSelected)
-                  //   Text('PDF selected: ${provider.pdfFile!.path}'),
-                  // SizedBox(height: 20.0),
-                  TextFormField(
-                    controller: TextEditingController(
-                        text: provider.pdfSelected
-                            ? provider.pdfFile!.path.split('/').last
-                            : ""),
-                    readOnly: true, // Make the text field read-only
-                    decoration: InputDecoration(
-                      labelText: 'Select PDF',
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.file_upload), // Icon for file upload
-                        onPressed:
-                            provider.pickPDF, // Method to open file picker
+              return Form(
+                key: _formKey, // Assign the form key
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Book Name TextField
+                    TextFormField(
+                      controller: provider.nameController,
+                      decoration: InputDecoration(
+                        labelText: 'Book Name',
+                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        hintText: 'Enter book name',
+                        hintStyle: TextStyle(color: Colors.grey),
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Book name is required.';
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                  SizedBox(height: 10.0),
+                    SizedBox(height: 10.0),
 
-                  TextFormField(
-                    controller: TextEditingController(
+                    // Author Name TextField
+                    TextFormField(
+                      controller: provider.authorController,
+                      decoration: InputDecoration(
+                        labelText: 'Author Name',
+                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        hintText: 'Enter author name',
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Author name is required.';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10.0),
+
+                    // Category TextField
+                    TextFormField(
+                      controller: provider.categoryController,
+                      decoration: InputDecoration(
+                        labelText: 'Category',
+                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        hintText: 'Enter category',
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Category is required.';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10.0),
+
+                    // PDF Selection
+                    TextFormField(
+                      controller: TextEditingController(
+                          text: provider.pdfFile?.path.split('/').last ?? ''),
+                      readOnly: true, // Make the text field read-only
+                      decoration: InputDecoration(
+                        labelText: 'Select PDF',
+                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.file_upload), // Icon for file upload
+                          onPressed:
+                              provider.pickPDF, // Method to open file picker
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select a PDF file.';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10.0),
+
+                    // Cover Image Selection
+                    TextFormField(
+                      controller: TextEditingController(
                         text: provider.coverImageFile != null
                             ? provider.coverImageFile!.path.split('/').last
-                            : ""),
-                    readOnly: true, // Make the text field read-only
-                    decoration: InputDecoration(
-                      labelText: 'Select Cover Image (Optional)',
-                      border: OutlineInputBorder(),
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.image), // Icon for image picker
-                        onPressed: provider
-                            .pickCoverImage, // Method to open image picker
+                            : "",
                       ),
+                      readOnly: true, // Make the text field read-only
+                      decoration: InputDecoration(
+                        labelText: 'Select Cover Image (Optional)',
+                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.image), // Icon for image picker
+                          onPressed: provider
+                              .pickCoverImage, // Method to open image picker
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please select  Cover Image.';
+                        }
+                        return null;
+                      },
                     ),
-                  ),
+                    SizedBox(height: 20.0),
 
-                  // ElevatedButton(
-                  //   onPressed: provider.pickCoverImage,
-                  //   child: Text('Select Cover Image (Optional)'),
-                  // ),
-                  // SizedBox(height: 10.0),
-                  // if (provider.coverImageFile != null)
-                  //   Text(
-                  //       'Cover Image selected: ${provider.coverImageFile!.path}'),
-                  SizedBox(height: 20.0),
-                  ElevatedButton(
-                    onPressed: provider.isUploading ? null : provider.uploadPDF,
-                    child: provider.isUploading
-                        ? CircularProgressIndicator()
-                        : Text('Upload PDF'),
-                  ),
-                ],
+                    // Upload PDF button
+                    ElevatedButton(
+                      onPressed: provider.isUploading
+                          ? null
+                          : () {
+                              // Validate form fields before uploading
+                              if (_formKey.currentState!.validate()) {
+                                provider.uploadPDF(context);
+                              }
+                            },
+                      child: provider.isUploading
+                          ? CircularProgressIndicator()
+                          : Text('Upload PDF'),
+                    ),
+                  ],
+                ),
               );
             },
           ),

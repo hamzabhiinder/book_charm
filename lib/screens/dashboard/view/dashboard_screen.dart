@@ -1,5 +1,7 @@
 import 'package:book_charm/main.dart';
 import 'package:book_charm/screens/dashboard/services/dashboard_services.dart';
+import 'package:book_charm/screens/home/view/library_screen.dart';
+import 'package:book_charm/screens/home/widgets/upload_book.dart';
 import 'package:book_charm/screens/profile/view/profile.dart';
 import 'package:book_charm/utils/download/download_file.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
@@ -182,14 +184,18 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                                       RoundedRectangleBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(8))))),
-                              onPressed: () {},
+                              onPressed: () {
+                                nextScreen(context, UploadPage());
+                              },
                               child: Text("Upload")),
                         ),
                         SizedBox(width: 20),
                         Expanded(
                           flex: 2,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              nextScreen(context, LibraryScreen());
+                            },
                             child: Text("Library"),
                             style: ButtonStyle(
                                 shape: MaterialStateProperty.all(

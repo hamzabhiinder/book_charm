@@ -183,22 +183,25 @@ class AuthServices {
     try {
       // await AuthService.firebase().logIn(email: email, password: password);
       sp.setSignInLoader(true);
-
-      await sp.signInWithEmailAndPassword(context, email, password);
-      final userExists = await sp.checkUserExists();
-      sp.setSignInLoader(false);
-
-      if (userExists) {
-        await sp.saveDataToSharedPreferences();
-        await sp.setSignIn();
-        context.read<DictionaryProvider>().loadDictionary(context);
-        TimerUtils.loadScreenTimesFromFirebase(sp.uid ?? '')
-            .then((value) => TimerUtils.saveScreenTimes(value));
+      final result =
+          await sp.signInWithEmailAndPassword(context, email, password);
+      if (result) {
+        final userExists = await sp.checkUserExists();
         sp.setSignInLoader(false);
-        // getUserData ---> dictionary firebase, stats, my books overrite
-        nextScreenReplace(context, BottomNaigationScreen());
-        log("USER EXIST");
+
+        if (userExists) {
+          await sp.saveDataToSharedPreferences();
+          await sp.setSignIn();
+          context.read<DictionaryProvider>().loadDictionary(context);
+          TimerUtils.loadScreenTimesFromFirebase(sp.uid ?? '')
+              .then((value) => TimerUtils.saveScreenTimes(value));
+          sp.setSignInLoader(false);
+          // getUserData ---> dictionary firebase, stats, my books overrite
+          nextScreenReplace(context, BottomNaigationScreen());
+          log("USER EXIST");
+        }
       }
+      sp.setSignInLoader(false);
     } catch (e) {
       sp.setSignInLoader(false);
 
