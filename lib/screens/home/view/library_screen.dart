@@ -212,18 +212,18 @@ class LibraryScreen extends StatelessWidget {
                     } else {
                       // List<Map<String, dynamic>> books =s
                       //     snapshot.data as List<Map<String, dynamic>>;
-                      List<Map<String, dynamic>> books =
-                          (snapshot.data as List<Map<String, dynamic>>)
+                      List<dynamic> books =
+                          (snapshot.data?[lang.selectedLanguageCode ?? 'en']
+                                  as List<dynamic>)
                               .where((book) => book['isPublished'] == true)
                               .toList();
-
+                      log('books ${books.toList()}');
                       return SizedBox(
                         height: getResponsiveHeight(context, 170),
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: (books.isNotEmpty &&
-                                  books[0][lang.selectedLanguageCode] != null)
-                              ? books[0][lang.selectedLanguageCode].length ?? 0
+                          itemCount: (books.isNotEmpty && books != null)
+                              ? books.length ?? 0
                               : 0,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
@@ -257,14 +257,10 @@ class LibraryScreen extends StatelessWidget {
                                           width:
                                               getResponsiveWidth(context, 90),
                                           fit: BoxFit.cover,
-                                          imageUrl: books[0][lang
-                                                          .selectedLanguageCode]
-                                                      [index]['CoverUrl'] ==
+                                          imageUrl: books[index]['CoverUrl'] ==
                                                   ""
                                               ? 'https://m.media-amazon.com/images/I/A1bwQxjFE3L._SY522_.jpg'
-                                              : books[0][
-                                                      lang.selectedLanguageCode]
-                                                  [index]['CoverUrl'],
+                                              : books[index]['CoverUrl'],
                                           errorWidget: (context, url, error) =>
                                               ClipRRect(
                                             borderRadius:
@@ -294,8 +290,7 @@ class LibraryScreen extends StatelessWidget {
                                       SizedBox(
                                         width: getResponsiveWidth(context, 100),
                                         child: Text(
-                                          books[0][lang.selectedLanguageCode]
-                                                  [index]['Name'] ??
+                                          books[index]['Name'] ??
                                               'Unnamed Book',
                                           style: TextStyle(
                                             color: Colors.black,
@@ -310,8 +305,7 @@ class LibraryScreen extends StatelessWidget {
                                       SizedBox(
                                         width: getResponsiveWidth(context, 100),
                                         child: Text(
-                                          books[0]['${lang.selectedLanguageCode}']
-                                                  [index]['Author'] ??
+                                          books[index]['Author'] ??
                                               'Author Book',
                                           style: TextStyle(
                                             color: Colors.grey.shade600,
@@ -394,7 +388,7 @@ class LibraryProvider with ChangeNotifier {
   }
 
   DocumentSnapshot<Map<String, dynamic>>? querySnapshot;
-  Future<List<Map<String, dynamic>>> fetchBooks() async {
+  Future<Map<String, dynamic>> fetchBooks() async {
     try {
       querySnapshot = await FirebaseFirestore.instance
           .collection('books')
@@ -402,11 +396,11 @@ class LibraryProvider with ChangeNotifier {
           .get();
 
       print("${querySnapshot?.data()?.entries ?? ''}");
-      return [querySnapshot?.data() ?? {}];
+      return querySnapshot?.data() ?? {};
     } catch (e) {
       // Handle errors
       print('Error fetching books: $e');
-      return [];
+      return {};
     }
   }
 }

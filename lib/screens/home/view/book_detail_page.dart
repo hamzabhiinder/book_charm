@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:book_charm/screens/games/book_reading_screen.dart';
+import 'package:book_charm/screens/profile/view/widget/language_selector.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/widgets.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import '../../../utils/download/download_file.dart';
 
 class BookDetailPage extends StatefulWidget {
@@ -45,7 +47,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     bool isBookAlreadyAdded = downloadedBooks.any((book) =>
         book['bookName'] == widget.bookName &&
         book['authorName'] == widget.authorName);
-
+    final lang = Provider.of<LanguageProvider>(context, listen: false);
     if (!isBookAlreadyAdded) {
       downloadedBooks.add({
         'bookName': widget.bookName,
@@ -53,23 +55,25 @@ class _BookDetailPageState extends State<BookDetailPage> {
         'filePath': '${widget.bookName}_${widget.authorName}.pdf',
         'url': widget.url,
         'downloadUrl': widget.downloadUrl,
+        'language': lang.selectedLanguageCode,
       });
 
       storage.setItem('books', downloadedBooks);
 
       log('${downloadedBooks.length} updated the books list');
-      addBooksDataToFirestore(downloadedBooks);
+      addBooksDataToFirestore(downloadedBooks, lang);
     }
   }
 
-  void addBooksDataToFirestore(List<dynamic> downloadedBooks) {
+  void addBooksDataToFirestore(List<dynamic> downloadedBooks, lang) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
     // Add sample data to Firestore
+
     firestore
         .collection('MyBooks')
         .doc(user?.uid)
-        .set({"myBooks": downloadedBooks}).then((value) {
+        .set({"${lang.selectedLanguageCode}": downloadedBooks}).then((value) {
       log('Sample data added to Firestore');
     }).catchError((error) {
       log('Failed to add sample data: $error');

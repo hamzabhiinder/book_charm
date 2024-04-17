@@ -160,6 +160,7 @@
 //   }
 // }
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -236,6 +237,7 @@ class UploadProvider extends ChangeNotifier {
             'PdfUrl': pdfUrl,
             'CoverUrl': coverUrl ?? '',
             'isPublished': false,
+            'userID': FirebaseAuth.instance.currentUser?.uid
           },
         ]),
       }, SetOptions(merge: true)); // Use merge option to retain existing data

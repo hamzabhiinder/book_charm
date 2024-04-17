@@ -5,6 +5,7 @@ import 'package:book_charm/screens/profile/view/widget/language_selector.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -143,19 +144,47 @@ class DictionaryScreen extends StatelessWidget {
               itemCount: provider.wordPairs.length,
               itemBuilder: (context, index) {
                 final pair = provider.wordPairs[index];
-                return ListTile(
-                  title: Text(pair['meaning'] ?? ''),
-                  subtitle: Text(pair['word'] ?? ''),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
+                return Slidable(
+                  startActionPane: ActionPane(
+                    openThreshold: .1,
+                    closeThreshold: .1,
+                    motion: BehindMotion(),
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () {
-                          provider.deleteWordPair(index);
-                        },
+                      SlidableAction(
+                        flex: 1,
+                        onPressed: (c) {},
+                        backgroundColor: Color(0xFFFE4A49),
+                        foregroundColor: Colors.white,
+                        icon: Icons.share,
+                        padding: EdgeInsets.only(),
                       ),
                     ],
+                  ),
+                  endActionPane: ActionPane(
+                    motion: BehindMotion(),
+                    children: [
+                      SlidableAction(
+                        onPressed: (c) {},
+                        backgroundColor: Color(0xFFFE4A49),
+                        foregroundColor: Colors.white,
+                        icon: Icons.delete,
+                      ),
+                    ],
+                  ),
+                  child: ListTile(
+                    title: Text(pair['meaning'] ?? ''),
+                    subtitle: Text(pair['word'] ?? ''),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            provider.deleteWordPair(index);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

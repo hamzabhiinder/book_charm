@@ -1,5 +1,6 @@
 import 'package:book_charm/main.dart';
 import 'package:book_charm/screens/dashboard/services/dashboard_services.dart';
+import 'package:book_charm/screens/home/view/downloaded_books_screen.dart';
 import 'package:book_charm/screens/home/view/library_screen.dart';
 import 'package:book_charm/screens/home/widgets/upload_book.dart';
 import 'package:book_charm/screens/profile/view/profile.dart';
@@ -316,8 +317,9 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   ],
                 ),
               ),
+              DownloadedBooksScreen()
 
-              const Padding(
+              /*   const Padding(
                 padding: EdgeInsets.only(left: 15),
                 child: Text(
                   "Recommendations",
@@ -343,6 +345,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   );
                 },
               ),
+           */
             ],
           ),
         ),
