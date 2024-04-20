@@ -48,7 +48,8 @@ class _McqsScreenState extends State<McqsScreen> {
           }
         }
         setState(() {
-          wordPairs = castedData;
+          wordPairs =
+              castedData.where((pair) => pair['islearned'] != 'true').toList();
         });
       } else {
         print('Error: Unexpected data format in dictionary.json');

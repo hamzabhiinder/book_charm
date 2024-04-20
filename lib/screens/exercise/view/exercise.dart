@@ -209,7 +209,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             ),
             SizedBox(height: getResponsiveWidth(context, 15)),
             ReusableContainer(
-              title: 'Fill in the blanks',
+              title: 'MCQs Quiz',
               imagePath: 'assets/images/ic_fill.png',
               onTap: () {
                 nextScreen(context, const McqsScreen());
