@@ -20,7 +20,7 @@ class TimerUtils {
           "${sevenDaysAgo.year}-${sevenDaysAgo.month.toString().padLeft(2, '0')}-${sevenDaysAgo.day.toString().padLeft(2, '0')}";
       log('drt: ${date.toString()}');
       if (updatedTimes.containsKey(date)) {
-        durations.add(updatedTimes[date]!.inMinutes.toDouble() / 10);
+        durations.add(updatedTimes[date]!.inMinutes.toDouble() / 60);
       } else {
         durations.add(0);
       }

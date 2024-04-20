@@ -90,7 +90,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                             ),
                             SizedBox(height: getResponsiveWidth(context, 10)),
                             Text(
-                              'Average Time in \nSeconds',
+                              'Average Time in \nHours',
                               style: TextStyle(
                                 fontSize: getResponsiveFontSize(context, 15),
                                 color: Colors.grey.shade600,

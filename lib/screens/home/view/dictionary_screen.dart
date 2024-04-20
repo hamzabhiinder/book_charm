@@ -18,6 +18,29 @@ class DictionaryProvider extends ChangeNotifier {
   // DictionaryProvider() {
   //   loadDictionary();
   // }
+  void updateLocalStorage(List<Map<String, dynamic>> data) async {
+    await storage.ready;
+    await storage.setItem('wordPairs', data);
+  }
+
+  Future<void> updateFirestoreData(
+      List<Map<String, dynamic>> data, BuildContext context) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser;
+    LanguageProvider lang =
+        Provider.of<LanguageProvider>(context, listen: false);
+
+    try {
+      await firestore
+          .collection('Dictionary')
+          .doc(user?.uid)
+          .set({lang.selectedLanguageCode: data}, SetOptions(merge: true));
+
+      print('Firestore data updated successfully.');
+    } catch (error) {
+      print('Error updating Firestore data: $error');
+    }
+  }
 
   Future<void> loadDictionary(context) async {
     await storage.ready;
@@ -58,6 +81,54 @@ class DictionaryProvider extends ChangeNotifier {
     }
     print('Updated wordPairs: $_wordPairs');
     notifyListeners();
+  }
+
+  void addDictionaryDataToFirestore(
+      String language, List<Map<String, dynamic>> wordPairs) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser;
+
+    // 'Dictionary' collection se document ko get karen
+    DocumentReference docRef =
+        firestore.collection('Dictionary').doc(user?.uid);
+
+    docRef.get().then((doc) {
+      if (doc.exists) {
+        // Agar document maujood hai to uski data ko update karen
+        Map<String, dynamic>? docData = doc.data() as Map<String, dynamic>;
+        if (docData != null) {
+          Map<String, dynamic> data = Map.from(docData);
+          data[language] = wordPairs;
+          docRef.update(data).then((value) {
+            log('Data updated successfully');
+          }).catchError((error) {
+            log('Failed to update data: $error');
+          });
+        }
+      } else {
+        // Agar document nahi maujood hai to nayi data set karen
+        Map<String, dynamic> data = {language: wordPairs};
+        docRef.set(data).then((value) {
+          log('Data added successfully');
+        }).catchError((error) {
+          log('Failed to add data: $error');
+        });
+      }
+    }).catchError((error) {
+      log('Error fetching document: $error');
+    });
+  }
+
+  Future<void> markWordAsLearned(
+      Map<String, dynamic> pair, BuildContext context) async {
+    try {
+      pair['islearned'] = true;
+      await updateFirestoreData(wordPairs, context)
+          .then((value) => updateLocalStorage(wordPairs));
+      log('$wordPairs');
+    } catch (e) {
+      log('$e');
+    }
   }
 
   Future<List<Map<String, dynamic>>?> getDictionaryDataFromFirestore(
@@ -116,12 +187,17 @@ class DictionaryProvider extends ChangeNotifier {
   }
 }
 
-class DictionaryScreen extends StatelessWidget {
+class DictionaryScreen extends StatefulWidget {
   const DictionaryScreen({Key? key}) : super(key: key);
 
   @override
+  State<DictionaryScreen> createState() => _DictionaryScreenState();
+}
+
+class _DictionaryScreenState extends State<DictionaryScreen> {
+  @override
   Widget build(BuildContext context) {
-    context.read<DictionaryProvider>().loadDictionary(context);
+    context.read<DictionaryProvider>().loadDictionary(context).then((e) {});
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dictionary'),
@@ -140,34 +216,44 @@ class DictionaryScreen extends StatelessWidget {
               child: Text("No Dictionary"),
             );
           } else {
+            var dictionary_words =
+                provider.wordPairs.where((pair) => pair['islearned'] != 'true');
             return ListView.builder(
-              itemCount: provider.wordPairs.length,
+              itemCount: dictionary_words.length,
               itemBuilder: (context, index) {
-                final pair = provider.wordPairs[index];
+                final List<Map<String, dynamic>> unlearnedWordPairs =
+                    dictionary_words.toList();
+                final pair = unlearnedWordPairs[index];
                 return Slidable(
-                  startActionPane: ActionPane(
-                    openThreshold: .1,
-                    closeThreshold: .1,
-                    motion: BehindMotion(),
-                    children: [
-                      SlidableAction(
-                        flex: 1,
-                        onPressed: (c) {},
-                        backgroundColor: Color(0xFFFE4A49),
-                        foregroundColor: Colors.white,
-                        icon: Icons.share,
-                        padding: EdgeInsets.only(),
-                      ),
-                    ],
-                  ),
+                  // startActionPane: ActionPane(
+                  //   openThreshold: .1,
+                  //   closeThreshold: .1,
+                  //   motion: BehindMotion(),
+                  //   children: [
+                  //     SlidableAction(
+                  //       // flex: 1,
+                  //       onPressed: (c) {},
+                  //       backgroundColor: Color.fromARGB(253, 73, 100, 255),
+                  //       foregroundColor: Colors.white,
+                  //       icon: Icons.share,
+                  //       padding: EdgeInsets.only(),
+                  //     ),
+                  //   ],
+                  // ),
                   endActionPane: ActionPane(
                     motion: BehindMotion(),
                     children: [
                       SlidableAction(
-                        onPressed: (c) {},
-                        backgroundColor: Color(0xFFFE4A49),
+                        onPressed: (c) {
+                          print('learned');
+                          provider
+                              .markWordAsLearned(pair, context)
+                              .then((value) => setState(() {}));
+                        },
+                        backgroundColor: Color.fromARGB(255, 197, 153, 251),
                         foregroundColor: Colors.white,
-                        icon: Icons.delete,
+                        // icon: Icons.delete,
+                        label: "Mark as Learned",
                       ),
                     ],
                   ),
