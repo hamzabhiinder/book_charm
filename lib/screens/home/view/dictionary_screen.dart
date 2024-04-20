@@ -123,6 +123,9 @@ class DictionaryProvider extends ChangeNotifier {
       Map<String, dynamic> pair, BuildContext context) async {
     try {
       pair['islearned'] = true;
+      DateTime now = DateTime.now();
+      String formattedDateTime = now.toIso8601String();
+      pair['learnedTime'] = formattedDateTime;
       await updateFirestoreData(wordPairs, context)
           .then((value) => updateLocalStorage(wordPairs));
       log('$wordPairs');

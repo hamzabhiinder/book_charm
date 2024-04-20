@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:book_charm/screens/games/flip_cards_screen.dart';
 import 'package:book_charm/screens/games/mcqs_screen.dart';
 import 'package:book_charm/screens/games/word_matching_screen.dart';
@@ -5,6 +7,7 @@ import 'package:book_charm/utils/stats/time_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:localstorage/localstorage.dart';
 
 import '../../../utils/fl_charts/bar_graph.dart';
 import '../../../utils/show_snackBar.dart';
@@ -17,6 +20,64 @@ class ExerciseScreen extends StatefulWidget {
 }
 
 class _ExerciseScreenState extends State<ExerciseScreen> {
+  List<Map<String, String>> wordPairs = [];
+  int wordsLearnedToday = 0;
+  int dailyGoals = 10;
+  final LocalStorage storage = LocalStorage('dictionary.json');
+  Future<void> loadDictionary() async {
+    await storage.ready;
+    print('Storage is ready');
+
+    var storedData = storage.getItem('wordPairs');
+    print('Stored data: $storedData');
+
+    if (storedData != null) {
+      if (storedData is List<dynamic>) {
+        List<Map<String, String>> castedData = [];
+
+        for (var item in storedData) {
+          if (item is Map<String, dynamic>) {
+            Map<String, String> stringMap = {};
+
+            // Convert keys and values to strings
+            item.forEach((key, value) {
+              stringMap[key] = value.toString();
+            });
+
+            castedData.add(stringMap);
+          } else {
+            print('Error: Unexpected data format in dictionary.json');
+          }
+        }
+        setState(() {
+          wordPairs =
+              castedData.where((pair) => pair['islearned'] == 'true').toList();
+        });
+      } else {
+        print('Error: Unexpected data format in dictionary.json');
+      }
+    }
+    print('Updated wordPairs: $wordPairs');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadDictionary().then((value) {
+      setState(() {
+        DateTime currentDate = DateTime.now().toUtc();
+        wordsLearnedToday = wordPairs.where((pair) {
+          DateTime learnedTime = DateTime.parse(
+              pair['learnedTime'] ?? DateTime.now().toIso8601String());
+          return learnedTime.year == currentDate.year &&
+              learnedTime.month == currentDate.month &&
+              learnedTime.day == currentDate.day;
+        }).length;
+        log('todayWords $wordsLearnedToday $wordPairs');
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -154,7 +215,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      '10 \nWord',
+                                      '$dailyGoals \nWord',
                                       style: TextStyle(
                                         fontSize:
                                             getResponsiveFontSize(context, 22),
@@ -182,7 +243,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                               ),
                               SizedBox(height: getResponsiveWidth(context, 5)),
                               Text(
-                                '0',
+                                wordsLearnedToday.toString(),
                                 style: TextStyle(
                                   fontSize: getResponsiveFontSize(context, 24),
                                   color: Colors.grey.shade700,
