@@ -67,8 +67,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
       setState(() {
         DateTime currentDate = DateTime.now().toUtc();
         wordsLearnedToday = wordPairs.where((pair) {
-          DateTime learnedTime = DateTime.parse(
-              pair['learnedTime'] ?? DateTime.now().toIso8601String());
+          DateTime learnedTime = DateTime.parse(pair['learnedTime'] ??
+              DateTime.parse('2024-01-01').toIso8601String());
           return learnedTime.year == currentDate.year &&
               learnedTime.month == currentDate.month &&
               learnedTime.day == currentDate.day;

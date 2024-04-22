@@ -122,7 +122,10 @@ class DictionaryProvider extends ChangeNotifier {
   Future<void> markWordAsLearned(
       Map<String, dynamic> pair, BuildContext context) async {
     try {
-      pair['islearned'] = true;
+     
+        pair['islearned'] = 'true';
+    notifyListeners();
+     
       DateTime now = DateTime.now();
       String formattedDateTime = now.toIso8601String();
       pair['learnedTime'] = formattedDateTime;

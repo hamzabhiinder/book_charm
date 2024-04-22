@@ -317,7 +317,8 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   ],
                 ),
               ),
-              DownloadedBooksScreen()
+              DownloadedBooksScreen(),
+              Text('sjfjakf'),
 
               /*   const Padding(
                 padding: EdgeInsets.only(left: 15),

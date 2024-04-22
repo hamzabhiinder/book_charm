@@ -6,6 +6,9 @@ import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:book_charm/utils/stats/overall_stats.dart';
 import 'package:book_charm/utils/stats/stats_ui.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
@@ -32,14 +35,29 @@ class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     List<dynamic> books = storage.getItem('books') ?? [];
     final lang = Provider.of<LanguageProvider>(context);
+
     List<dynamic> filteredBooks = books
         .where(
           (element) => element['language'] == lang.selectedLanguageCode,
         )
         .toList();
     log('$filteredBooks');
+    FirebaseFirestore.instance
+        .collection('MyBooks')
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .get()
+        .then((snapshot) {
+      if (snapshot.exists) {
+        Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+
+        log('datas $data');
+        
+      }
+    });
+
     return ListView.builder(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
