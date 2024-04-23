@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:book_charm/providers/signin_provider.dart';
 import 'package:book_charm/screens/profile/services/profile_service.dart';
 import 'package:book_charm/screens/profile/view/widget/change_password.dart';
@@ -250,12 +252,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     // ),
                     CustomListTile(
                       onTap: () async {
-                        await FirebaseAuth.instance.signOut();
-                        sp.userSignOut().then((value) =>
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (c) => AuthenticationScreen())));
+                        // FirebaseAuth.instance.signOut();
+                        sp.userSignOut(context);
                       },
                       title: 'Logout',
                       imagePath: 'assets/images/logout.png',

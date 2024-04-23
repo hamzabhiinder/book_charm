@@ -1,46 +1,46 @@
-import 'package:book_charm/screens/authentication/services/auth1/auth_user.dart';
+// import 'package:book_charm/screens/authentication/services/auth1/auth_user.dart';
 
-import 'auth_providor.dart';
-import 'firebase_auth_provider1.dart';
+// import 'auth_providor.dart';
+// import 'firebase_auth_provider1.dart';
 
-class AuthService implements AuthProvider {
-  final FirebaseAuthProvider provider;
-  const AuthService(this.provider);
+// class AuthService implements AuthProvider {
+//   final FirebaseAuthProvider provider;
+//   const AuthService(this.provider);
 
-  factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
+//   factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
 
-  @override
-  Future<AuthUser> createUser({
-    required String email,
-    required String password,
-  }) =>
-      provider.createUser(
-        email: email,
-        password: password,
-      );
+//   @override
+//   Future<AuthUser> createUser({
+//     required String email,
+//     required String password,
+//   }) =>
+//       provider.createUser(
+//         email: email,
+//         password: password,
+//       );
 
-  @override
-  AuthUser? get currentUser => provider.currentUser;
+//   @override
+//   AuthUser? get currentUser => provider.currentUser;
 
-  @override
-  Future<AuthUser> logIn({
-    required String email,
-    required String password,
-  }) =>
-      provider.logIn(
-        email: email,
-        password: password,
-      );
-  @override
-  Future<void> logOut() => provider.logOut();
+//   @override
+//   Future<AuthUser> logIn({
+//     required String email,
+//     required String password,
+//   }) =>
+//       provider.logIn(
+//         email: email,
+//         password: password,
+//       );
+//   @override
+//   Future<void> logOut() => provider.logOut();
 
-  @override
-  Future<void> sendEmailVerification() => provider.sendEmailVerification();
+//   @override
+//   Future<void> sendEmailVerification() => provider.sendEmailVerification();
 
-  @override
-  Future<void> initialize() => provider.initialize();
+//   @override
+//   Future<void> initialize() => provider.initialize();
 
-  @override
-  Future<void> sendPasswordReset({required String toEmail}) =>
-      provider.sendPasswordReset(toEmail: toEmail);
-}
+//   @override
+//   Future<void> sendPasswordReset({required String toEmail}) =>
+//       provider.sendPasswordReset(toEmail: toEmail);
+// }

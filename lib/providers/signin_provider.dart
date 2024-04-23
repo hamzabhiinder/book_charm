@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/authentication/services/auth1/auth_exception1.dart';
+import '../screens/authentication/view/signup_screen.dart';
 import '../utils/show_snackBar.dart';
 
 class SignInProvider extends ChangeNotifier {
@@ -369,11 +370,12 @@ class SignInProvider extends ChangeNotifier {
   }
 
   // signout
-  Future userSignOut() async {
-    firebaseAuth.signOut();
-    googleSignIn.signOut();
-    facebookAuth.logOut();
+  Future userSignOut(context) async {
+    await firebaseAuth.signOut();
+    await googleSignIn.signOut();
+    await facebookAuth.logOut();
 
+    nextScreenReplace(context, AuthenticationScreen());
     // clear all storage information
     clearStoredData();
     _isSignedIn = false;

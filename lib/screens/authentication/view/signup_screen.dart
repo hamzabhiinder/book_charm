@@ -1,5 +1,6 @@
 import 'package:book_charm/providers/signin_provider.dart';
 import 'package:book_charm/screens/authentication/services/authentication_service.dart';
+import 'package:book_charm/screens/authentication/view/forgot_password.dart';
 import 'package:book_charm/utils/round_button.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,7 +36,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         toolbarHeight: 80,
         title: Row(
           // crossAxisAlignment: CrossAxisAlignment,
@@ -303,7 +306,15 @@ class SignInTab extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 60),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: TextButton(
+                    onPressed: () {
+                      nextScreen(context, ForgotPasswordScreen());
+                    },
+                    child: Text("Forgot Password?")),
+              ),
+              const SizedBox(height: 10),
               Consumer<SignInProvider>(
                 builder: (context, value, child) {
                   return RoundElevatedButton(

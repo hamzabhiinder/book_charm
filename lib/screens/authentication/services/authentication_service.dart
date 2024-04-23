@@ -8,6 +8,7 @@ import 'package:book_charm/screens/authentication/services/auth1/auth_exception1
 import 'package:book_charm/screens/authentication/services/auth1/auth_sevices1.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:book_charm/utils/stats/time_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -147,7 +148,7 @@ class AuthServices {
               email: email,
               provider: "SIMPLE",
               image: '',
-              uid: AuthService.firebase().currentUser?.id)
+              uid: FirebaseAuth.instance.currentUser?.uid)
           .then(
         (value) async {
           await sp.saveDataToSharedPreferences();
@@ -213,6 +214,24 @@ class AuthServices {
 
       log("e ERor Auteh Sec$e");
       sp.setSignInLoader(false);
+    }
+  }
+
+  static Future sendPasswordReset({required String toEmail}) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: toEmail);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-email') {
+        throw 'invalid- email';
+      } else if (e.code == 'user-not-found') {
+        throw UserNotFoundAuthException();
+      } else {
+        throw GenericAuthException();
+      }
+    } catch (e) {
+      // Catching other exceptions including unexpected ones
+      log("Unexpected error occurred: $e");
+      throw GenericAuthException();
     }
   }
 }
