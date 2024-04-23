@@ -217,15 +217,15 @@ class _RegisterTabState extends State<RegisterTab> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () async {
-                      AuthServices.handleFacebookAuth(context);
-                    },
-                    child: const Image(
-                      image: AssetImage('assets/icons/facebook_icon.png'),
-                      height: 40,
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () async {
+                  //     AuthServices.handleFacebookAuth(context);
+                  //   },
+                  //   child: const Image(
+                  //     image: AssetImage('assets/icons/facebook_icon.png'),
+                  //     height: 40,
+                  //   ),
+                  // ),
                   const SizedBox(width: 20),
                   GestureDetector(
                     onTap: () async {
@@ -360,15 +360,15 @@ class _SignInTabState extends State<SignInTab> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () async {
-                      AuthServices.handleFacebookAuth(context);
-                    },
-                    child: const Image(
-                      image: AssetImage('assets/icons/facebook_icon.png'),
-                      height: 40,
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () async {
+                  //     AuthServices.handleFacebookAuth(context);
+                  //   },
+                  //   child: const Image(
+                  //     image: AssetImage('assets/icons/facebook_icon.png'),
+                  //     height: 40,
+                  //   ),
+                  // ),
                   const SizedBox(width: 20),
                   GestureDetector(
                     onTap: () async {
