@@ -24,6 +24,8 @@ class BookDetailPage extends StatefulWidget {
   final String? downloadUrl;
   final String description;
   bool isNetworkImage;
+
+  String category;
   BookDetailPage({
     required this.url,
     required this.bookName,
@@ -31,6 +33,7 @@ class BookDetailPage extends StatefulWidget {
     this.isNetworkImage = false,
     this.downloadUrl,
     required this.description,
+    this.category = '',
   });
 
   @override
@@ -60,6 +63,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
         'downloadUrl': widget.downloadUrl,
         'language': lang.selectedLanguageCode,
         'description': widget.description,
+        'category': widget.category,
       });
 
       storage.setItem('books', downloadedBooks);
@@ -258,11 +262,12 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 ),
                 const SizedBox(height: 16.0),
                 // Chips about the book
-                const Wrap(
+                Wrap(
                   spacing: 8.0,
                   children: [
-                    Chip(label: Text('Fiction')),
-                    Chip(label: Text('Romance')),
+                    if (widget.category.length > 2)
+                      Chip(label: Text(widget.category)),
+                    // Chip(label: Text('Romance')),
                     // Add more chips as needed
                   ],
                 ),

@@ -122,13 +122,25 @@ class DictionaryProvider extends ChangeNotifier {
   Future<void> markWordAsLearned(
       Map<String, dynamic> pair, BuildContext context) async {
     try {
-     
-        pair['islearned'] = 'true';
-    notifyListeners();
-     
+      pair['islearned'] = 'true';
+      notifyListeners();
+
       DateTime now = DateTime.now();
       String formattedDateTime = now.toIso8601String();
       pair['learnedTime'] = formattedDateTime;
+      await updateFirestoreData(wordPairs, context)
+          .then((value) => updateLocalStorage(wordPairs));
+      log('$wordPairs');
+    } catch (e) {
+      log('$e');
+    }
+  }
+
+  Future<void> markWordAsUnLearned(
+      Map<String, dynamic> pair, BuildContext context) async {
+    try {
+      pair['islearned'] = 'false';
+      notifyListeners();
       await updateFirestoreData(wordPairs, context)
           .then((value) => updateLocalStorage(wordPairs));
       log('$wordPairs');
@@ -224,62 +236,125 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
           } else {
             var dictionary_words =
                 provider.wordPairs.where((pair) => pair['islearned'] != 'true');
-            return ListView.builder(
-              itemCount: dictionary_words.length,
-              itemBuilder: (context, index) {
-                final List<Map<String, dynamic>> unlearnedWordPairs =
-                    dictionary_words.toList();
-                final pair = unlearnedWordPairs[index];
-                return Slidable(
-                  // startActionPane: ActionPane(
-                  //   openThreshold: .1,
-                  //   closeThreshold: .1,
-                  //   motion: BehindMotion(),
-                  //   children: [
-                  //     SlidableAction(
-                  //       // flex: 1,
-                  //       onPressed: (c) {},
-                  //       backgroundColor: Color.fromARGB(253, 73, 100, 255),
-                  //       foregroundColor: Colors.white,
-                  //       icon: Icons.share,
-                  //       padding: EdgeInsets.only(),
-                  //     ),
-                  //   ],
-                  // ),
-                  endActionPane: ActionPane(
-                    motion: BehindMotion(),
-                    children: [
-                      SlidableAction(
-                        onPressed: (c) {
-                          print('learned');
-                          provider
-                              .markWordAsLearned(pair, context)
-                              .then((value) => setState(() {}));
-                        },
-                        backgroundColor: Color.fromARGB(255, 197, 153, 251),
-                        foregroundColor: Colors.white,
-                        // icon: Icons.delete,
-                        label: "Mark as Learned",
+            var learned_words =
+                provider.wordPairs.where((pair) => pair['islearned'] == 'true');
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 16.0),
+                    child: Text(
+                      'Learning',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        // Add any other styles you want
                       ),
-                    ],
-                  ),
-                  child: ListTile(
-                    title: Text(pair['meaning'] ?? ''),
-                    subtitle: Text(pair['word'] ?? ''),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () {
-                            provider.deleteWordPair(index);
-                          },
-                        ),
-                      ],
                     ),
                   ),
-                );
-              },
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: dictionary_words.length,
+                    itemBuilder: (context, index) {
+                      final List<Map<String, dynamic>> unlearnedWordPairs =
+                          dictionary_words.toList();
+                      final pair = unlearnedWordPairs[index];
+                      return Slidable(
+                        endActionPane: ActionPane(
+                          motion: BehindMotion(),
+                          children: [
+                            SlidableAction(
+                              onPressed: (c) {
+                                print('learned');
+                                provider
+                                    .markWordAsLearned(pair, context)
+                                    .then((value) => setState(() {}));
+                              },
+                              backgroundColor:
+                                  Color.fromARGB(255, 197, 153, 251),
+                              foregroundColor: Colors.white,
+                              // icon: Icons.delete,
+                              label: "Mark as Learned",
+                            ),
+                          ],
+                        ),
+                        child: ListTile(
+                          title: Text(pair['meaning'] ?? ''),
+                          subtitle: Text(pair['word'] ?? ''),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  provider.deleteWordPair(index);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 16.0),
+                    child: Text(
+                      'Learned',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        // Add any other styles you want
+                      ),
+                    ),
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: learned_words.length,
+                    itemBuilder: (context, index) {
+                      final List<Map<String, dynamic>> unlearnedWordPairs =
+                          learned_words.toList();
+                      final pair = unlearnedWordPairs[index];
+                      return Slidable(
+                        endActionPane: ActionPane(
+                          motion: BehindMotion(),
+                          children: [
+                            SlidableAction(
+                              onPressed: (c) {
+                                print('learned');
+                                provider
+                                    .markWordAsUnLearned(pair, context)
+                                    .then((value) => setState(() {}));
+                              },
+                              backgroundColor: Color.fromARGB(255, 253, 57, 51),
+                              foregroundColor: Colors.white,
+                              // icon: Icons.delete,
+                              label: "Unmark as learned",
+                            ),
+                          ],
+                        ),
+                        child: ListTile(
+                          title: Text(pair['meaning'] ?? ''),
+                          subtitle: Text(pair['word'] ?? ''),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.delete),
+                                onPressed: () {
+                                  provider.deleteWordPair(index);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
             );
           }
         },
