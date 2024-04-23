@@ -4201,6 +4201,7 @@ class SfPdfViewerState extends State<SfPdfViewer> with WidgetsBindingObserver {
                       developer.log('added to dictionary');
 
                       Navigator.pop(context);
+                      Navigator.pop(context);
                     });
                   } catch (e) {
                     developer.log('added to failed $e');

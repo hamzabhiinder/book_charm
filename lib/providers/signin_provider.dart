@@ -375,7 +375,14 @@ class SignInProvider extends ChangeNotifier {
     await googleSignIn.signOut();
     await facebookAuth.logOut();
 
-    nextScreenReplace(context, AuthenticationScreen());
+    // nextScreenReplace(context, AuthenticationScreen());
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              AuthenticationScreen()), // Replace TargetScreen with your target screen
+      (route) => false,
+    );
     // clear all storage information
     clearStoredData();
     _isSignedIn = false;

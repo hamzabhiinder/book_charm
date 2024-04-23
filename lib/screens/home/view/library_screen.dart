@@ -6,6 +6,7 @@ import 'package:book_charm/screens/profile/view/widget/language_selector.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:provider/provider.dart';
@@ -100,6 +101,8 @@ class LibraryScreen extends StatelessWidget {
                             String description =
                                 books[bookIndex]['Description'].toString() ??
                                     '';
+                            String category =
+                                books[bookIndex]['Category'].toString() ?? '';
                             return GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(_buildPageRoute(
@@ -107,7 +110,8 @@ class LibraryScreen extends StatelessWidget {
                                     bookName,
                                     authorName,
                                     downloadUrl,
-                                    description));
+                                    description,
+                                    category));
                               },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
@@ -247,11 +251,13 @@ class LibraryScreen extends StatelessWidget {
                             return GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(_buildPageRoute(
-                                    books[index]['CoverUrl'] ?? '',
-                                    books[index]['Name'] ?? '',
-                                    books[index]['Author'] ?? '',
-                                    books[index]['Link'] ?? '',
-                                    books[index]['Description'] ?? ''));
+                                  books[index]['CoverUrl'] ?? '',
+                                  books[index]['Name'] ?? '',
+                                  books[index]['Author'] ?? '',
+                                  books[index]['Link'] ?? '',
+                                  books[index]['Description'] ?? '',
+                                  books[index]['Category'] ?? '',
+                                ));
                               },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
@@ -354,7 +360,7 @@ class LibraryScreen extends StatelessWidget {
   }
 
   PageRouteBuilder _buildPageRoute(
-      imageUrl, bookName, authorName, downloadUrl, description) {
+      imageUrl, bookName, authorName, downloadUrl, description, category) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return BookDetailPage(
@@ -364,6 +370,7 @@ class LibraryScreen extends StatelessWidget {
           isNetworkImage: true,
           downloadUrl: downloadUrl,
           description: description,
+          category: category,
         );
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
