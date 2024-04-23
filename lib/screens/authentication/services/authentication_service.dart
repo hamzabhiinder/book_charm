@@ -155,10 +155,11 @@ class AuthServices {
           await sp.setSignIn();
           sp.setSignInLoader(false);
           showSnackBar(context, "Successfully created");
-          // nextScreenReplace(context, BottomNaigationScreen());
+
+          log("save data to Firestore");
+          nextScreenReplace(context, BottomNaigationScreen());
         },
       );
-      log("save data to Firestore");
     } on WeakPasswordAuthException {
       sp.setSignInLoader(false);
       showSnackBar(context, "Weak Password");

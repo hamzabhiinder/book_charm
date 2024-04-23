@@ -321,10 +321,11 @@ class SignInProvider extends ChangeNotifier {
 
   Future saveDataToSharedPreferences() async {
     final SharedPreferences s = await SharedPreferences.getInstance();
-    await s.setString('name', _name ?? '');
-    await s.setString('email', _email ?? '');
-    await s.setString('uid', _uid!);
-    await s.setString('image_url', _imageUrl!);
+    log('$_name , $_email, $_uid $_imageUrl ');
+    await s.setString('name', _name.toString());
+    await s.setString('email', _email.toString());
+    await s.setString('uid', _uid.toString());
+    await s.setString('image_url', _imageUrl.toString());
     await s.setString('provider', _provider!);
     _userModel = UserModel(
       email: _email ?? '',

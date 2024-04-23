@@ -159,9 +159,9 @@ class _HandleLoginState extends State<HandleLogin> {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              final sp = context.read<SignInProvider>();
-              final user = sp.firebaseAuth.currentUser;
+              final user = FirebaseAuth.instance.currentUser;
               if (user != null) {
+                final sp = context.read<SignInProvider>();
                 final languageProvider = context.read<LanguageProvider>();
                 sp.getDataFromSharedPreferences();
                 languageProvider.loadSelectedLanguage();
