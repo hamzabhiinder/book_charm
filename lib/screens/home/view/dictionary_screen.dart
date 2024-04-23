@@ -281,8 +281,8 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                           ],
                         ),
                         child: ListTile(
-                          title: Text(pair['meaning'] ?? ''),
-                          subtitle: Text(pair['word'] ?? ''),
+                          title: Text(pair['meaning'].toString().trim()),
+                          subtitle: Text(pair['word'].toString().trim()),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -336,8 +336,8 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                           ],
                         ),
                         child: ListTile(
-                          title: Text(pair['meaning'] ?? ''),
-                          subtitle: Text(pair['word'] ?? ''),
+                          title: Text(pair['meaning'].toString().trim()),
+                          subtitle: Text(pair['word'].toString().trim()),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
