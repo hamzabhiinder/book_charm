@@ -27,12 +27,12 @@ class LibraryScreen extends StatelessWidget {
         backgroundColor: Colors.grey.shade50,
         title: Text('Library Screen'),
         actions: [
-          IconButton(
-              onPressed: () {
-                Provider.of<LibraryProvider>(context, listen: false)
-                    .fetchBooks();
-              },
-              icon: Icon(Icons.book))
+          // IconButton(
+          //     onPressed: () {
+          //       Provider.of<LibraryProvider>(context, listen: false)
+          //           .fetchBooks();
+          //     },
+          //     icon: Icon(Icons.book))
         ],
       ),
       body: FutureBuilder(
