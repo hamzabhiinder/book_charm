@@ -131,15 +131,16 @@ class AuthServices {
       BuildContext context, String name, String email, String password) async {
     final sp = context.read<SignInProvider>();
     final ip = context.read<InternetProvider>();
+    log('email & pass ${email + password}');
     await ip.checkInternetConnection();
-
     if (!ip.hasInternet) {
       showSnackBar(context, "Check your Internet connection");
       return;
     }
 
     try {
-      await AuthService.firebase().createUser(email: email, password: password);
+      sp.setSignInLoader(true);
+      await sp.signUpWithEmailAndPassword(name, email, password);
       await sp
           .saveDataToFirestore(
               name: name,
@@ -151,18 +152,23 @@ class AuthServices {
         (value) async {
           await sp.saveDataToSharedPreferences();
           await sp.setSignIn();
+          sp.setSignInLoader(false);
           showSnackBar(context, "Successfully created");
           // nextScreenReplace(context, BottomNaigationScreen());
         },
       );
       log("save data to Firestore");
     } on WeakPasswordAuthException {
+      sp.setSignInLoader(false);
       showSnackBar(context, "Weak Password");
     } on EmailAlreadyInUseAuthException {
+      sp.setSignInLoader(false);
       showSnackBar(context, "Email is already in use");
     } on InvalidEmailAuthException {
+      sp.setSignInLoader(false);
       showSnackBar(context, " invalid- email");
     } on GenericAuthException {
+      sp.setSignInLoader(false);
       showSnackBar(context, "Failed To Registration");
     }
   }
