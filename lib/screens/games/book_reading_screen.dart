@@ -188,7 +188,7 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
             },
             icon: Icon(Icons.arrow_back)),
         title: Text(widget.bookName),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.save))],
+       // actions: [IconButton(onPressed: () {}, icon: Icon(Icons.save))],
       ),
       body: GestureDetector(
           onTap: () {
