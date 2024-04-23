@@ -87,146 +87,158 @@ class _AuthenticationScreenState extends State<AuthenticationScreen>
   }
 }
 
-class RegisterTab extends StatelessWidget {
+class RegisterTab extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   RegisterTab({super.key, required this.formKey});
 
+  @override
+  State<RegisterTab> createState() => _RegisterTabState();
+}
+
+class _RegisterTabState extends State<RegisterTab> {
   final TextEditingController _nameController = TextEditingController();
+
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
   ValueNotifier<bool> showPassword = ValueNotifier<bool>(false);
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset:
-          true, // Ensures that the content moves up when the keyboard appears
-      body: SingleChildScrollView(
-        child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 15)),
-          child: Form(
-            key: formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextFormField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Name',
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
-                    }
-                    return null;
-                  },
+    return SingleChildScrollView(
+      child: Padding(
+        padding:
+            EdgeInsets.symmetric(horizontal: getResponsiveWidth(context, 15)),
+        child: Form(
+          key: widget.formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Name',
                 ),
-                const SizedBox(height: 12),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.deny(RegExp(r' '))
-                  ],
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    // Simple email regex validation
-                    if (!RegExp(r"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$")
-                        .hasMatch(value)) {
-                      return 'Please enter a valid email address';
-                    }
-                    return null;
-                  },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12),
+              TextFormField(
+                controller: _emailController,
+                decoration: const InputDecoration(
+                  labelText: 'Email',
                 ),
-                const SizedBox(height: 12),
-                ValueListenableBuilder<bool>(
-                  valueListenable: showPassword,
-                  builder: (context, isPasswordVisible, child) {
-                    return TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                          labelText: 'Password',
-                          suffixIcon: IconButton(
-                              onPressed: () {
-                                // Toggle password visibility
-                                showPassword.value = !isPasswordVisible;
-                              },
-                              icon: !isPasswordVisible
-                                  ? Image.asset('assets/icons/hide.png',
-                                      height: 20)
-                                  : Image.asset('assets/icons/view.png',
-                                      height: 20))),
-                      obscureText: !isPasswordVisible,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        if (value.length < 6) {
-                          return 'Password should be at least 6 characters';
-                        }
-                        return null;
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                Consumer<SignInProvider>(
-                  builder: (context, value, child) {
-                    return RoundElevatedButton(
-                      loading: value.isSignedInLoading,
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      borderRadius: 25,
-                      title: 'REGISTER',
-                      onPress: value.isSignedInLoading
-                          ? () {}
-                          : () {
-                              if (formKey.currentState?.validate() ?? false) {
-                                // Form is valid; proceed with registration
-                                AuthServices.signupWithEmailAndPassword(
-                                  context,
-                                  _nameController.text,
-                                  _emailController.text,
-                                  _passwordController.text,
-                                );
-                              }
+                keyboardType: TextInputType.emailAddress,
+                inputFormatters: [
+                  FilteringTextInputFormatter.deny(RegExp(r' '))
+                ],
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  // Simple email regex validation
+                  if (!RegExp(r"^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$")
+                      .hasMatch(value)) {
+                    return 'Please enter a valid email address';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 12),
+              ValueListenableBuilder<bool>(
+                valueListenable: showPassword,
+                builder: (context, isPasswordVisible, child) {
+                  return TextFormField(
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                        labelText: 'Password',
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              // Toggle password visibility
+                              showPassword.value = !isPasswordVisible;
                             },
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () async {
-                        AuthServices.handleFacebookAuth(context);
-                      },
-                      child: const Image(
-                        image: AssetImage('assets/icons/facebook_icon.png'),
-                        height: 40,
-                      ),
+                            icon: !isPasswordVisible
+                                ? Image.asset('assets/icons/hide.png',
+                                    height: 20)
+                                : Image.asset('assets/icons/view.png',
+                                    height: 20))),
+                    obscureText: !isPasswordVisible,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      if (value.length < 6) {
+                        return 'Password should be at least 6 characters';
+                      }
+                      return null;
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              Consumer<SignInProvider>(
+                builder: (context, value, child) {
+                  return RoundElevatedButton(
+                    loading: value.isSignedInLoading,
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    borderRadius: 25,
+                    title: 'REGISTER',
+                    onPress: value.isSignedInLoading
+                        ? () {}
+                        : () {
+                            if (widget.formKey.currentState?.validate() ??
+                                false) {
+                              // Form is valid; proceed with registration
+                              AuthServices.signupWithEmailAndPassword(
+                                context,
+                                _nameController.text,
+                                _emailController.text,
+                                _passwordController.text,
+                              );
+                            }
+                          },
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      AuthServices.handleFacebookAuth(context);
+                    },
+                    child: const Image(
+                      image: AssetImage('assets/icons/facebook_icon.png'),
+                      height: 40,
                     ),
-                    const SizedBox(width: 20),
-                    GestureDetector(
-                      onTap: () async {
-                        AuthServices.handleGoogleSignIn(context);
-                      },
-                      child: const Image(
-                        image: AssetImage('assets/icons/google_icon.png'),
-                        height: 50,
-                      ),
+                  ),
+                  const SizedBox(width: 20),
+                  GestureDetector(
+                    onTap: () async {
+                      AuthServices.handleGoogleSignIn(context);
+                    },
+                    child: const Image(
+                      image: AssetImage('assets/icons/google_icon.png'),
+                      height: 50,
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -234,11 +246,17 @@ class RegisterTab extends StatelessWidget {
   }
 }
 
-class SignInTab extends StatelessWidget {
+class SignInTab extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   SignInTab({super.key, required this.formKey});
 
+  @override
+  State<SignInTab> createState() => _SignInTabState();
+}
+
+class _SignInTabState extends State<SignInTab> {
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
 
   ValueNotifier<bool> showPassword = ValueNotifier<bool>(false);
@@ -249,7 +267,7 @@ class SignInTab extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: formKey,
+          key: widget.formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -325,7 +343,8 @@ class SignInTab extends StatelessWidget {
                     onPress: value.isSignedInLoading
                         ? null
                         : () {
-                            if (formKey.currentState?.validate() ?? false) {
+                            if (widget.formKey.currentState?.validate() ??
+                                false) {
                               FocusManager.instance.primaryFocus?.unfocus();
                               AuthServices.signinWithEmailAndPassword(
                                 context,
