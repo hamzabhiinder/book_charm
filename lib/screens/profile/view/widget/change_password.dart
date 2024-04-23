@@ -56,15 +56,15 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
-                TextField(
-                  controller: _oldPasswordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Old Password',
-                    //border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 20),
+                // TextField(
+                //   controller: _oldPasswordController,
+                //   obscureText: true,
+                //   decoration: const InputDecoration(
+                //     labelText: 'Old Password',
+                //     //border: OutlineInputBorder(),
+                //   ),
+                // ),
+                // const SizedBox(height: 20),
                 TextField(
                   controller: _newPasswordController,
                   obscureText: true,

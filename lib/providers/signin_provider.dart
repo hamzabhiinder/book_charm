@@ -320,7 +320,7 @@ class SignInProvider extends ChangeNotifier {
 
   Future saveDataToSharedPreferences() async {
     final SharedPreferences s = await SharedPreferences.getInstance();
-    await s.setString('name', _name!);
+    await s.setString('name', _name ?? '');
     await s.setString('email', _email!);
     await s.setString('uid', _uid!);
     await s.setString('image_url', _imageUrl!);

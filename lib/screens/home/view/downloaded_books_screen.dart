@@ -35,7 +35,6 @@ class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     List<dynamic> books = storage.getItem('books') ?? [];
     final lang = Provider.of<LanguageProvider>(context);
 
@@ -54,7 +53,6 @@ class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
         Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
 
         log('datas $data');
-        
       }
     });
 
@@ -68,34 +66,7 @@ class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
           bookName: filteredBooks[index]['bookName'],
           authorName: filteredBooks[index]['authorName'],
           isNetworkImage: filteredBooks[index]['url'][0] == 'a' ? false : true,
-        );
-      },
-    );
-  }
-
-  PageRouteBuilder _buildPageRoute(
-      imageUrl, bookName, authorName, downloadUrl) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return BookDetailPage(
-          url: imageUrl,
-          bookName: bookName,
-          authorName: authorName,
-          isNetworkImage: true,
-          downloadUrl: downloadUrl,
-        );
-      },
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0.0, 1.0);
-        const end = Offset.zero;
-        const curve = Curves.easeInOut;
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        var offsetAnimation = animation.drive(tween);
-
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
+          description: filteredBooks[index]['description'] ?? '',
         );
       },
     );

@@ -169,6 +169,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../profile/view/widget/language_selector.dart';
+import '../view/library_screen.dart';
+
 class UploadProvider extends ChangeNotifier {
   TextEditingController nameController = TextEditingController();
   TextEditingController authorController = TextEditingController();
@@ -222,14 +225,16 @@ class UploadProvider extends ChangeNotifier {
       }
 
       // Determine language key based on your criteria (adjust as needed)
-      String languageKey = 'en'; // Change to your actual language key logic
+      // Change to your actual language key logic
+      LanguageProvider languageKey =
+          Provider.of<LanguageProvider>(context, listen: false);
 
       // Add book data to Firestore
       await FirebaseFirestore.instance
           .collection('books')
           .doc('upload_book')
           .set({
-        languageKey: FieldValue.arrayUnion([
+        languageKey.selectedLanguageCode: FieldValue.arrayUnion([
           {
             'Name': nameController.text,
             'Author': authorController.text,
@@ -251,7 +256,8 @@ class UploadProvider extends ChangeNotifier {
       pdfSelected = false;
       isUploading = false;
       notifyListeners();
-
+      Provider.of<LibraryProvider>(context, listen: false)
+          .loadJsonDataFunction(context);
       // Show success message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('PDF and cover image uploaded successfully.')),
@@ -478,7 +484,7 @@ class UploadPage extends StatelessWidget {
                       ),
                       readOnly: true, // Make the text field read-only
                       decoration: InputDecoration(
-                        labelText: 'Select Cover Image (Optional)',
+                        labelText: 'Select Cover Image',
                         border: OutlineInputBorder(),
                         filled: true,
                         fillColor: Colors.grey[200],

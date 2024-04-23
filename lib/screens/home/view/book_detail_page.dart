@@ -8,6 +8,7 @@ import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:localstorage/localstorage.dart';
@@ -21,6 +22,7 @@ class BookDetailPage extends StatefulWidget {
   final String bookName;
   final String authorName;
   final String? downloadUrl;
+  final String description;
   bool isNetworkImage;
   BookDetailPage({
     required this.url,
@@ -28,6 +30,7 @@ class BookDetailPage extends StatefulWidget {
     required this.authorName,
     this.isNetworkImage = false,
     this.downloadUrl,
+    required this.description,
   });
 
   @override
@@ -56,6 +59,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
         'url': widget.url,
         'downloadUrl': widget.downloadUrl,
         'language': lang.selectedLanguageCode,
+        'description': widget.description,
       });
 
       storage.setItem('books', downloadedBooks);
@@ -264,10 +268,14 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 ),
                 const SizedBox(height: 16.0),
                 // Book details, description, etc.
-                const Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-                  'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                  style: TextStyle(fontSize: 16.0),
+                SizedBox(
+                  height: 70.0,
+                  child: SingleChildScrollView(
+                    child: Text(
+                      widget.description,
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 16.0),
 

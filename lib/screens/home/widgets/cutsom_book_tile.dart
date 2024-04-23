@@ -9,13 +9,13 @@ class CustomBookTile extends StatelessWidget {
   final String authorName;
 
   var isNetworkImage;
-
-  CustomBookTile({
-    required this.imageUrl,
-    required this.bookName,
-    required this.authorName,
-    this.isNetworkImage = false,
-  });
+  String description;
+  CustomBookTile(
+      {required this.imageUrl,
+      required this.bookName,
+      required this.authorName,
+      this.isNetworkImage = false,
+      this.description = 'safasdf'});
 
   @override
   Widget build(BuildContext context) {
@@ -105,10 +105,12 @@ class CustomBookTile extends StatelessWidget {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return BookDetailPage(
-            url: imageUrl,
-            bookName: bookName,
-            authorName: authorName,
-            isNetworkImage: isNetworkImage);
+          url: imageUrl,
+          bookName: bookName,
+          authorName: authorName,
+          isNetworkImage: isNetworkImage,
+          description: description,
+        );
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);

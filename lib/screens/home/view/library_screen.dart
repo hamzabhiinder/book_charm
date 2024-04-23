@@ -97,13 +97,17 @@ class LibraryScreen extends StatelessWidget {
                                 books[bookIndex]['Author'].toString() ?? '';
                             String downloadUrl =
                                 books[bookIndex]['Link'].toString() ?? '';
+                            String description =
+                                books[bookIndex]['Description'].toString() ??
+                                    '';
                             return GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(_buildPageRoute(
                                     imageUrl,
                                     bookName,
                                     authorName,
-                                    downloadUrl));
+                                    downloadUrl,
+                                    description));
                               },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
@@ -212,12 +216,18 @@ class LibraryScreen extends StatelessWidget {
                     } else {
                       // List<Map<String, dynamic>> books =s
                       //     snapshot.data as List<Map<String, dynamic>>;
+                      // log('booksss ${snapshot.data}');
+
                       List<dynamic> books =
-                          (snapshot.data?[lang.selectedLanguageCode ?? 'en']
-                                  as List<dynamic>)
-                              .where((book) => book['isPublished'] == true)
+                          ((snapshot.data?[lang.selectedLanguageCode ?? 'en'] ??
+                                  []) as List<dynamic>)
+                              // .where((book) => book['isPublished'] == false)
                               .toList();
-                      log('books ${books.toList()}');
+
+                      // log('books ${books.toList()}');
+                      if (books.isEmpty) {
+                        return const Text('No new books uploaded');
+                      }
                       return SizedBox(
                         height: getResponsiveHeight(context, 170),
                         child: ListView.builder(
@@ -235,7 +245,14 @@ class LibraryScreen extends StatelessWidget {
                             //   // Add more fields as needed
                             // );
                             return GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(_buildPageRoute(
+                                    books[index]['CoverUrl'] ?? '',
+                                    books[index]['Name'] ?? '',
+                                    books[index]['Author'] ?? '',
+                                    books[index]['Link'] ?? '',
+                                    books[index]['Description'] ?? ''));
+                              },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal:
@@ -337,7 +354,7 @@ class LibraryScreen extends StatelessWidget {
   }
 
   PageRouteBuilder _buildPageRoute(
-      imageUrl, bookName, authorName, downloadUrl) {
+      imageUrl, bookName, authorName, downloadUrl, description) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return BookDetailPage(
@@ -346,6 +363,7 @@ class LibraryScreen extends StatelessWidget {
           authorName: authorName,
           isNetworkImage: true,
           downloadUrl: downloadUrl,
+          description: description,
         );
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {

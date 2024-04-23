@@ -159,12 +159,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     sp.provider == "SIMPLE"
                         ? CustomListTile(
                             onTap: () {
-                              showBottomSheet(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return ChangePasswordWidget();
-                                },
-                              );
+                              ProfileService.showPasswordWidget(context);
+                              // showModalBottomSheet(
+                              //   isScrollControlled: true,
+                              //   context: context,
+                              //   builder: (BuildContext context) {
+                              //     return ChangePasswordWidget();
+                              //   },
+                              // );
                             },
                             title: 'Change Password',
                             imagePath: 'assets/images/pass.png',
@@ -240,17 +242,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       trailingIcon: Icons.arrow_forward_ios,
                       trailingIconColor: AppColors.primaryColor,
                     ),
-                    const CustomListTile(
-                      title: 'Help',
-                      imagePath: 'assets/images/help.png',
-                      trailingIcon: Icons.arrow_forward_ios,
-                      trailingIconColor: AppColors.primaryColor,
-                    ),
+                    // const CustomListTile(
+                    //   title: 'Help',
+                    //   imagePath: 'assets/images/help.png',
+                    //   trailingIcon: Icons.arrow_forward_ios,
+                    //   trailingIconColor: AppColors.primaryColor,
+                    // ),
                     CustomListTile(
-                      onTap: () {
-                        FirebaseAuth.instance.signOut();
-                        sp.userSignOut().then((value) => nextScreenReplace(
-                            context, const AuthenticationScreen()));
+                      onTap: () async {
+                        await FirebaseAuth.instance.signOut();
+                        sp.userSignOut().then((value) =>
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (c) => AuthenticationScreen())));
                       },
                       title: 'Logout',
                       imagePath: 'assets/images/logout.png',

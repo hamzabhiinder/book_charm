@@ -86,25 +86,25 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: kToolbarHeight - 18),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: getResponsiveWidth(context, 18)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Image.asset(
-                    'assets/images/profile.png',
-                    width: getResponsiveWidth(context, 40),
-                    height: getResponsiveHeight(context, 40),
-                  ),
-                  Image.asset(
-                    'assets/images/search.png',
-                    width: getResponsiveWidth(context, 40),
-                    height: getResponsiveHeight(context, 40),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(
+            //       horizontal: getResponsiveWidth(context, 18)),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Image.asset(
+            //         'assets/images/profile.png',
+            //         width: getResponsiveWidth(context, 40),
+            //         height: getResponsiveHeight(context, 40),
+            //       ),
+            //       Image.asset(
+            //         'assets/images/search.png',
+            //         width: getResponsiveWidth(context, 40),
+            //         height: getResponsiveHeight(context, 40),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             SizedBox(height: getResponsiveHeight(context, 15)),
             Padding(
               padding: EdgeInsets.symmetric(
@@ -259,14 +259,17 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               ),
             ),
             SizedBox(height: getResponsiveWidth(context, 20)),
-            Text(
-              'Free Trainings',
-              style: TextStyle(
-                fontSize: getResponsiveFontSize(context, 22),
-                color: const Color(0xff686868),
-                fontWeight: FontWeight.w500,
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(
+                'Free Trainings',
+                style: TextStyle(
+                  fontSize: getResponsiveFontSize(context, 22),
+                  color: const Color(0xff686868),
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
             SizedBox(height: getResponsiveWidth(context, 15)),
             ReusableContainer(
