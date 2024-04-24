@@ -19,7 +19,9 @@ import '../../home/widgets/custom_container.dart';
 import '../../home/widgets/cutsom_book_tile.dart';
 
 class DashBoardScreen extends StatefulWidget {
-  const DashBoardScreen({super.key});
+  final OverallStats? overallStats; // Add widget.overallStats as a parameter
+
+  const DashBoardScreen({Key? key, this.overallStats}) : super(key: key);
 
   @override
   State<DashBoardScreen> createState() => _DashBoardScreenState();
@@ -29,20 +31,12 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _selectedIndex = 0;
-  OverallStats overallStats =
-      OverallStats(xp: 0, streak: 0, time: 0, lessonsCompleted: 0);
+
   @override
   void initState() {
     super.initState();
     print("Sucees:");
-    OverallStats.loadStatsData().then((value) {
-      print("Sucees: ${value}");
 
-      setState(() {
-        print("Sucees: ${overallStats}");
-        overallStats = value;
-      });
-    });
     _tabController = TabController(length: 3, vsync: this);
   }
 
@@ -220,103 +214,107 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                 ],
                 onTap: (index) => _onItemTapped(index),
               ),
-              SizedBox(
-                height: 300,
-                child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: _tabController,
-                  children: [
-                    // Your existing TabBarView content
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            CustomContainer(
-                              url: 'assets/images/star.png',
-                              title: 'XP',
-                              subTitle: overallStats
-                                  .calculateLastSectionStats(
-                                      'today')['xpInSection']
-                                  .toString(),
-                            ),
-                            CustomContainer(
-                              url: 'assets/images/flame.png',
-                              title: 'Streak',
-                              subTitle: overallStats
-                                  .calculateLastSectionStats(
-                                      'today')['streakChangesInSection']
-                                  .toString(),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Consumer<TimeTrackerService>(
-                              builder: (context, value, child) {
-                                return CustomContainer(
-                                  url: 'assets/images/stopwatch.png',
-                                  title: 'Time',
-                                  subTitle:
-                                      ' ${formatDuration(TimerUtils.updatedTimes[TimerUtils.getCurrentDateString()] ?? Duration.zero)}',
-                                );
-                              },
-                            ),
-                            CustomContainer(
-                              url: 'assets/images/learning.png',
-                              title: 'Lesson',
-                              subTitle: overallStats
-                                  .calculateLastSectionStats(
-                                      'today')['lessonChangesInSection']
-                                  .toString(),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    ReusableColumn(
-                      xpValue: overallStats
-                          .calculateLastSectionStats('this week')['xpInSection']
-                          .toString(),
-                      streakValue: overallStats
-                          .calculateLastSectionStats(
-                              'this week')['streakChangesInSection']
-                          .toString(),
-                      // timeValue:TimerUtils.getCurrentDateString(),
-                      timeValue:
-                          formatDuration(TimerUtils.getDurationOfCurrentWeek()),
-                      lessonValue: overallStats
-                          .calculateLastSectionStats(
-                              'this week')['lessonChangesInSection']
-                          .toString(),
-                    ),
-                    //For all time
+              if (widget.overallStats != null)
+                SizedBox(
+                  height: 300,
+                  child: TabBarView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    controller: _tabController,
+                    children: [
+                      // Your existing TabBarView content
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              CustomContainer(
+                                url: 'assets/images/star.png',
+                                title: 'XP',
+                                subTitle: widget.overallStats!
+                                    .calculateLastSectionStats(
+                                        'today')['xpInSection']
+                                    .toString(),
+                              ),
+                              CustomContainer(
+                                url: 'assets/images/flame.png',
+                                title: 'Streak',
+                                subTitle: widget.overallStats!
+                                    .calculateLastSectionStats(
+                                        'today')['streakChangesInSection']
+                                    .toString(),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Consumer<TimeTrackerService>(
+                                builder: (context, value, child) {
+                                  return CustomContainer(
+                                    url: 'assets/images/stopwatch.png',
+                                    title: 'Time',
+                                    subTitle:
+                                        ' ${formatDuration(TimerUtils.updatedTimes[TimerUtils.getCurrentDateString()] ?? Duration.zero)}',
+                                  );
+                                },
+                              ),
+                              CustomContainer(
+                                url: 'assets/images/learning.png',
+                                title: 'Lesson',
+                                subTitle: widget.overallStats!
+                                    .calculateLastSectionStats(
+                                        'today')['lessonChangesInSection']
+                                    .toString(),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      ReusableColumn(
+                        xpValue: widget.overallStats!
+                            .calculateLastSectionStats(
+                                'this week')['xpInSection']
+                            .toString(),
+                        streakValue: widget.overallStats!
+                            .calculateLastSectionStats(
+                                'this week')['streakChangesInSection']
+                            .toString(),
+                        // timeValue:TimerUtils.getCurrentDateString(),
+                        timeValue: formatDuration(
+                            TimerUtils.getDurationOfCurrentWeek()),
+                        lessonValue: widget.overallStats!
+                            .calculateLastSectionStats(
+                                'this week')['lessonChangesInSection']
+                            .toString(),
+                      ),
+                      //For all time
 
-                    ReusableColumn(
-                      xpValue: overallStats
-                          .calculateLastSectionStats('all time')['xpInSection']
-                          .toString(),
-                      streakValue: overallStats
-                          .calculateLastSectionStats(
-                              'all time')['streakChangesInSection']
-                          .toString(),
-                      timeValue: formatDuration(TimerUtils.getTotalDuration()),
-                      lessonValue: overallStats
-                          .calculateLastSectionStats(
-                              'all time')['lessonChangesInSection']
-                          .toString(),
-                    ),
-                  ],
+                      ReusableColumn(
+                        xpValue: widget.overallStats!
+                            .calculateLastSectionStats(
+                                'all time')['xpInSection']
+                            .toString(),
+                        streakValue: widget.overallStats!
+                            .calculateLastSectionStats(
+                                'all time')['streakChangesInSection']
+                            .toString(),
+                        timeValue:
+                            formatDuration(TimerUtils.getTotalDuration()),
+                        lessonValue: widget.overallStats!
+                            .calculateLastSectionStats(
+                                'all time')['lessonChangesInSection']
+                            .toString(),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
               DownloadedBooksScreen(),
 
               /*   const Padding(

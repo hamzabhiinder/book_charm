@@ -179,31 +179,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: getResponsiveHeight(context, 25)),
-              const Text(
-                'Notifications',
-                style: TextStyle(
-                  color: Color(0xff686868),
-                  fontSize: 20,
-                  // fontWeight: FontWeight.w400,
-                ),
-              ),
-              const SizedBox(height: 10),
-              CustomListTile(
-                title: 'Notifications',
-                imagePath: 'assets/images/notification.png',
-                trailingIcon: Icons.arrow_forward_ios,
-                trailingIconColor: AppColors.primaryColor,
-                trailingWidget: Center(
-                  child: WhiteSwitch(
-                    value: true,
-                    onChanged: (value) {
-                      // Handle switch state change
-                      print('Switch value: $value');
-                    },
-                  ),
-                ),
-              ),
+              // SizedBox(height: getResponsiveHeight(context, 25)),
+              // const Text(
+              //   'Notifications',
+              //   style: TextStyle(
+              //     color: Color(0xff686868),
+              //     fontSize: 20,
+              //     // fontWeight: FontWeight.w400,
+              //   ),
+              // ),
+              // const SizedBox(height: 10),
+              // CustomListTile(
+              //   title: 'Notifications',
+              //   imagePath: 'assets/images/notification.png',
+              //   trailingIcon: Icons.arrow_forward_ios,
+              //   trailingIconColor: AppColors.primaryColor,
+              //   trailingWidget: Center(
+              //     child: WhiteSwitch(
+              //       value: true,
+              //       onChanged: (value) {
+              //         // Handle switch state change
+              //         print('Switch value: $value');
+              //       },
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: getResponsiveHeight(context, 25)),
               const Text(
                 'Regional',

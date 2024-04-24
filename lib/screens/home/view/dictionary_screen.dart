@@ -214,6 +214,24 @@ class DictionaryScreen extends StatefulWidget {
 
 class _DictionaryScreenState extends State<DictionaryScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Call your function here
+    log('dict update');
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    log('dict update');
+  }
+
+  @override
   Widget build(BuildContext context) {
     context.read<DictionaryProvider>().loadDictionary(context).then((e) {});
     return Scaffold(

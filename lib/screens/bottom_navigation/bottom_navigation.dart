@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:book_charm/screens/dashboard/services/dashboard_services.dart';
 import 'package:book_charm/screens/exercise/view/exercise.dart';
 import 'package:book_charm/screens/dashboard/view/dashboard_screen.dart';
@@ -7,7 +9,9 @@ import 'package:book_charm/screens/home/view/library_screen.dart';
 import 'package:book_charm/screens/profile/view/profile.dart';
 import 'package:book_charm/screens/stats/leaderboard.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
+import 'package:book_charm/utils/stats/overall_stats.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BottomNaigationScreen extends StatefulWidget {
   @override
@@ -16,16 +20,29 @@ class BottomNaigationScreen extends StatefulWidget {
 
 class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
   int _selectedIndex = 0;
-  final List<Widget> screens = [
-    DashBoardScreen(),
-    DictionaryScreen(),
-    LibraryScreen(),
-    ExerciseScreen(),
-    LeaderBoardScreen()
-    //ProfileScreen(),
+  late OverallStats overallStats; // Declare overallStats here
 
-    // DownloadedBooksScreen()
-  ];
+  late List<Widget> screens; // Declare screens here
+
+  @override
+  void initState() {
+    super.initState();
+    overallStats = OverallStats(xp: 0, streak: 0, time: 0, lessonsCompleted: 0);
+    OverallStats.loadStatsData().then((value) {
+      setState(() {
+        print("Sucees: ${value}");
+        overallStats = value;
+        screens[0] = DashBoardScreen(overallStats: overallStats);
+      });
+    });
+    screens = [
+      DashBoardScreen(overallStats: overallStats),
+      DictionaryScreen(),
+      LibraryScreen(),
+      ExerciseScreen(),
+      LeaderBoardScreen(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +56,25 @@ class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
         selectedIconTheme: IconThemeData(color: AppColors.primaryColor),
         unselectedIconTheme: IconThemeData(color: AppColors.secondaryColor),
         onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
+          if (index == 1)
+            context.read<DictionaryProvider>().loadDictionary(context);
+
+          if (index == 0) {
+            print("Sucees: ${index}");
+
+            OverallStats.loadStatsData().then((value) {
+              setState(() {
+                print("Sucees: ${value}");
+                overallStats = value;
+                screens[0] = DashBoardScreen(overallStats: overallStats);
+                _selectedIndex = index;
+              });
+            });
+          } else {
+            setState(() {
+              _selectedIndex = index;
+            });
+          }
         },
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(

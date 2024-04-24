@@ -106,9 +106,10 @@ class _McqsScreenState extends State<McqsScreen> {
     options.add(currentWordPair!['word']!);
 
     // Generate two more random options
-    while (options.length < 3 && wordPairs.length > 3) {
+    while (options.length < 3 && wordPairs.length >= 3) {
       final randomOption =
           wordPairs[Random().nextInt(wordPairs.length)]['word']!;
+
       if (!options.contains(randomOption)) {
         options.add(randomOption);
       }
@@ -203,7 +204,7 @@ class _McqsScreenState extends State<McqsScreen> {
               style: const TextStyle(fontSize: 18),
             ),
             Text(
-              'What is the meaning of "${currentWordPair!['meaning']}" in Spanish?',
+              'What is the meaning of "${currentWordPair!['meaning']}"?',
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
