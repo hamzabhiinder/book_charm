@@ -25,12 +25,10 @@ class DashBoardScreen extends StatefulWidget {
   State<DashBoardScreen> createState() => _DashBoardScreenState();
 }
 
-class _DashBoardScreenState extends State<DashBoardScreen>
-    with SingleTickerProviderStateMixin {
+class _DashBoardScreenState extends State<DashBoardScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _selectedIndex = 0;
-  OverallStats overallStats =
-      OverallStats(xp: 0, streak: 0, time: 0, lessonsCompleted: 0);
+  OverallStats overallStats = OverallStats(xp: 0, streak: 0, time: 0, lessonsCompleted: 0);
   @override
   void initState() {
     super.initState();
@@ -124,27 +122,22 @@ class _DashBoardScreenState extends State<DashBoardScreen>
               //   ),
               // ),
               Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                decoration: BoxDecoration(
-                    color: AppColors.secondaryColor,
-                    borderRadius: BorderRadius.circular(12)),
+                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                decoration:
+                    BoxDecoration(color: AppColors.secondaryColor, borderRadius: BorderRadius.circular(12)),
                 child: const Column(
                   children: [
                     Text(
                       "\'Whoever guide someone to goodness,he\'ll get the reward similar to it\'",
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
                     ),
                     Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
                         "Sahih AlMuslim 1893 (a)",
                         textAlign: TextAlign.end,
-                        style: TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.w500),
+                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
                       ),
                     ),
                   ],
@@ -152,27 +145,22 @@ class _DashBoardScreenState extends State<DashBoardScreen>
               ),
               const SizedBox(height: 15), // Adjust the spacing as needed
               Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                decoration: BoxDecoration(
-                    color: AppColors.secondaryColor,
-                    borderRadius: BorderRadius.circular(12)),
+                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                decoration:
+                    BoxDecoration(color: AppColors.secondaryColor, borderRadius: BorderRadius.circular(12)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Let\'s start...',
-                      style: GoogleFonts.roboto(
-                          textStyle: TextStyle(
-                              fontSize: 26, fontWeight: FontWeight.w500)),
+                      style:
+                          GoogleFonts.roboto(textStyle: TextStyle(fontSize: 26, fontWeight: FontWeight.w500)),
                     ),
                     Text(
                       'You can upload your own books or try or \nlibrary',
-                      style: GoogleFonts.roboto(
-                          textStyle: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500)),
+                      style:
+                          GoogleFonts.roboto(textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
                     ),
                     SizedBox(height: 10),
                     Row(
@@ -181,10 +169,8 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                           flex: 2,
                           child: OutlinedButton(
                               style: ButtonStyle(
-                                  shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8))))),
+                                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(8))))),
                               onPressed: () {
                                 nextScreen(context, UploadPage());
                               },
@@ -199,10 +185,8 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                             },
                             child: Text("Library"),
                             style: ButtonStyle(
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(8))))),
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(8))))),
                           ),
                         )
                       ],
@@ -239,17 +223,14 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                             CustomContainer(
                               url: 'assets/images/star.png',
                               title: 'XP',
-                              subTitle: overallStats
-                                  .calculateLastSectionStats(
-                                      'today')['xpInSection']
-                                  .toString(),
+                              subTitle:
+                                  overallStats.calculateLastSectionStats('today')['xpInSection'].toString(),
                             ),
                             CustomContainer(
                               url: 'assets/images/flame.png',
                               title: 'Streak',
                               subTitle: overallStats
-                                  .calculateLastSectionStats(
-                                      'today')['streakChangesInSection']
+                                  .calculateLastSectionStats('today')['streakChangesInSection']
                                   .toString(),
                             ),
                           ],
@@ -274,8 +255,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                               url: 'assets/images/learning.png',
                               title: 'Lesson',
                               subTitle: overallStats
-                                  .calculateLastSectionStats(
-                                      'today')['lessonChangesInSection']
+                                  .calculateLastSectionStats('today')['lessonChangesInSection']
                                   .toString(),
                             ),
                           ],
@@ -283,35 +263,26 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                       ],
                     ),
                     ReusableColumn(
-                      xpValue: overallStats
-                          .calculateLastSectionStats('this week')['xpInSection']
-                          .toString(),
+                      xpValue: overallStats.calculateLastSectionStats('this week')['xpInSection'].toString(),
                       streakValue: overallStats
-                          .calculateLastSectionStats(
-                              'this week')['streakChangesInSection']
+                          .calculateLastSectionStats('this week')['streakChangesInSection']
                           .toString(),
                       // timeValue:TimerUtils.getCurrentDateString(),
-                      timeValue:
-                          formatDuration(TimerUtils.getDurationOfCurrentWeek()),
+                      timeValue: formatDuration(TimerUtils.getDurationOfCurrentWeek()),
                       lessonValue: overallStats
-                          .calculateLastSectionStats(
-                              'this week')['lessonChangesInSection']
+                          .calculateLastSectionStats('this week')['lessonChangesInSection']
                           .toString(),
                     ),
                     //For all time
 
                     ReusableColumn(
-                      xpValue: overallStats
-                          .calculateLastSectionStats('all time')['xpInSection']
-                          .toString(),
+                      xpValue: overallStats.calculateLastSectionStats('all time')['xpInSection'].toString(),
                       streakValue: overallStats
-                          .calculateLastSectionStats(
-                              'all time')['streakChangesInSection']
+                          .calculateLastSectionStats('all time')['streakChangesInSection']
                           .toString(),
                       timeValue: formatDuration(TimerUtils.getTotalDuration()),
                       lessonValue: overallStats
-                          .calculateLastSectionStats(
-                              'all time')['lessonChangesInSection']
+                          .calculateLastSectionStats('all time')['lessonChangesInSection']
                           .toString(),
                     ),
                   ],

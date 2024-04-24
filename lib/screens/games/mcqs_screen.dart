@@ -48,22 +48,19 @@ class _McqsScreenState extends State<McqsScreen> {
           }
         }
         setState(() {
-          wordPairs =
-              castedData.where((pair) => pair['islearned'] != 'true').toList();
+          wordPairs = castedData.where((pair) => pair['islearned'] != 'true').toList();
           if (wordPairs.length < 3) {
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text('Oops!'),
-                  content: Text(
-                      'You don\'t have enough words in the Dictionary!\nAdd more words please.'),
+                  content: Text('You don\'t have enough words in the Dictionary!\nAdd more words please.'),
                   actions: [
                     TextButton(
                       onPressed: () {
                         Navigator.pop(context); // Close the dialog
-                        Navigator.pop(
-                            context); // Navigate back to the previous screen
+                        Navigator.pop(context); // Navigate back to the previous screen
                       },
                       child: Text('Go Back'),
                     ),
@@ -107,8 +104,7 @@ class _McqsScreenState extends State<McqsScreen> {
 
     // Generate two more random options
     while (options.length < 3 && wordPairs.length > 3) {
-      final randomOption =
-          wordPairs[Random().nextInt(wordPairs.length)]['word']!;
+      final randomOption = wordPairs[Random().nextInt(wordPairs.length)]['word']!;
       if (!options.contains(randomOption)) {
         options.add(randomOption);
       }
@@ -157,11 +153,20 @@ class _McqsScreenState extends State<McqsScreen> {
               TextButton(
                 onPressed: () {
                   Navigator.pop(context); // Close the dialog
-                  Navigator.pop(
-                      context); // Navigate back to the previous screen
+                  Navigator.pop(context); // Navigate back to the previous screen
                   try {
                     overallStats.updateScore(10);
                     overallStats.completeLesson();
+                    OverallStats.loadStatsData().then((value) {
+                      print("Sucees: ${value}");
+
+                      setState(() {
+                        print("Sucees: ${overallStats}");
+                        overallStats = value;
+                      });
+                    });
+
+                    setState(() {});
                   } catch (e) {
                     print("error1:");
                     print(e);

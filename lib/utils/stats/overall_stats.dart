@@ -152,6 +152,7 @@ class OverallStats {
     await updateStreak();
 
     await saveToLocalStorage();
+    
   }
 
   Future<void> updateStreak() async {
