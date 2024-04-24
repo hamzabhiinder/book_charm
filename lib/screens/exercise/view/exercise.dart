@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:book_charm/screens/games/flip_cards_screen.dart';
 import 'package:book_charm/screens/games/mcqs_screen.dart';
 import 'package:book_charm/screens/games/word_matching_screen.dart';
+import 'package:book_charm/utils/stats/time_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:localstorage/localstorage.dart';
 
 import '../../../utils/fl_charts/bar_graph.dart';
 import '../../../utils/show_snackBar.dart';
@@ -16,6 +20,64 @@ class ExerciseScreen extends StatefulWidget {
 }
 
 class _ExerciseScreenState extends State<ExerciseScreen> {
+  List<Map<String, String>> wordPairs = [];
+  int wordsLearnedToday = 0;
+  int dailyGoals = 10;
+  final LocalStorage storage = LocalStorage('dictionary.json');
+  Future<void> loadDictionary() async {
+    await storage.ready;
+    print('Storage is ready');
+
+    var storedData = storage.getItem('wordPairs');
+    print('Stored data: $storedData');
+
+    if (storedData != null) {
+      if (storedData is List<dynamic>) {
+        List<Map<String, String>> castedData = [];
+
+        for (var item in storedData) {
+          if (item is Map<String, dynamic>) {
+            Map<String, String> stringMap = {};
+
+            // Convert keys and values to strings
+            item.forEach((key, value) {
+              stringMap[key] = value.toString();
+            });
+
+            castedData.add(stringMap);
+          } else {
+            print('Error: Unexpected data format in dictionary.json');
+          }
+        }
+        setState(() {
+          wordPairs =
+              castedData.where((pair) => pair['islearned'] == 'true').toList();
+        });
+      } else {
+        print('Error: Unexpected data format in dictionary.json');
+      }
+    }
+    print('Updated wordPairs: $wordPairs');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadDictionary().then((value) {
+      setState(() {
+        DateTime currentDate = DateTime.now().toUtc();
+        wordsLearnedToday = wordPairs.where((pair) {
+          DateTime learnedTime = DateTime.parse(pair['learnedTime'] ??
+              DateTime.parse('2024-01-01').toIso8601String());
+          return learnedTime.year == currentDate.year &&
+              learnedTime.month == currentDate.month &&
+              learnedTime.day == currentDate.day;
+        }).length;
+        log('todayWords $wordsLearnedToday $wordPairs');
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,25 +86,25 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: kToolbarHeight - 18),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: getResponsiveWidth(context, 18)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Image.asset(
-                    'assets/images/profile.png',
-                    width: getResponsiveWidth(context, 40),
-                    height: getResponsiveHeight(context, 40),
-                  ),
-                  Image.asset(
-                    'assets/images/search.png',
-                    width: getResponsiveWidth(context, 40),
-                    height: getResponsiveHeight(context, 40),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(
+            //       horizontal: getResponsiveWidth(context, 18)),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Image.asset(
+            //         'assets/images/profile.png',
+            //         width: getResponsiveWidth(context, 40),
+            //         height: getResponsiveHeight(context, 40),
+            //       ),
+            //       Image.asset(
+            //         'assets/images/search.png',
+            //         width: getResponsiveWidth(context, 40),
+            //         height: getResponsiveHeight(context, 40),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             SizedBox(height: getResponsiveHeight(context, 15)),
             Padding(
               padding: EdgeInsets.symmetric(
@@ -89,7 +151,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                             ),
                             SizedBox(height: getResponsiveWidth(context, 10)),
                             Text(
-                              'Average Time in \nSeconds',
+                              'Average Time in \nHours',
                               style: TextStyle(
                                 fontSize: getResponsiveFontSize(context, 15),
                                 color: Colors.grey.shade600,
@@ -101,16 +163,18 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                               padding: EdgeInsets.only(
                                   left: getResponsiveWidth(context, 10)),
                               height: getResponsiveHeight(context, 130),
-                              child: const MyBarGraph(
-                                monthlySummary: <double>[
-                                  5,
-                                  4,
-                                  4,
-                                  4,
-                                  4,
-                                  4,
-                                  4,
-                                ],
+                              child: MyBarGraph(
+                                monthlySummary: TimerUtils
+                                    .calculateDurationOfPastSevenDays(),
+                                // monthlySummary: >[
+                                //   5,
+                                //   4,
+                                //   4,
+                                //   4,
+                                //   4,
+                                //   4,
+                                //   4,
+                                // ],
                               ),
                             ),
                           ],
@@ -151,7 +215,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      '10 \nWord',
+                                      '$dailyGoals \nWord',
                                       style: TextStyle(
                                         fontSize:
                                             getResponsiveFontSize(context, 22),
@@ -179,7 +243,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                               ),
                               SizedBox(height: getResponsiveWidth(context, 5)),
                               Text(
-                                '0',
+                                wordsLearnedToday.toString(),
                                 style: TextStyle(
                                   fontSize: getResponsiveFontSize(context, 24),
                                   color: Colors.grey.shade700,
@@ -195,18 +259,21 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               ),
             ),
             SizedBox(height: getResponsiveWidth(context, 20)),
-            Text(
-              'Free Trainings',
-              style: TextStyle(
-                fontSize: getResponsiveFontSize(context, 22),
-                color: const Color(0xff686868),
-                fontWeight: FontWeight.w500,
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(
+                'Free Trainings',
+                style: TextStyle(
+                  fontSize: getResponsiveFontSize(context, 22),
+                  color: const Color(0xff686868),
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
             SizedBox(height: getResponsiveWidth(context, 15)),
             ReusableContainer(
-              title: 'Fill in the blanks',
+              title: 'MCQs Quiz',
               imagePath: 'assets/images/ic_fill.png',
               onTap: () {
                 nextScreen(context, const McqsScreen());

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:book_charm/providers/signin_provider.dart';
 import 'package:book_charm/screens/profile/services/profile_service.dart';
 import 'package:book_charm/screens/profile/view/widget/change_password.dart';
@@ -159,12 +161,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     sp.provider == "SIMPLE"
                         ? CustomListTile(
                             onTap: () {
-                              showBottomSheet(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return ChangePasswordWidget();
-                                },
-                              );
+                              ProfileService.showPasswordWidget(context);
+                              // showModalBottomSheet(
+                              //   isScrollControlled: true,
+                              //   context: context,
+                              //   builder: (BuildContext context) {
+                              //     return ChangePasswordWidget();
+                              //   },
+                              // );
                             },
                             title: 'Change Password',
                             imagePath: 'assets/images/pass.png',
@@ -240,18 +244,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       trailingIcon: Icons.arrow_forward_ios,
                       trailingIconColor: AppColors.primaryColor,
                     ),
-                    const CustomListTile(
-                      title: 'Help',
-                      imagePath: 'assets/images/help.png',
-                      trailingIcon: Icons.arrow_forward_ios,
-                      trailingIconColor: AppColors.primaryColor,
-                    ),
+                    // const CustomListTile(
+                    //   title: 'Help',
+                    //   imagePath: 'assets/images/help.png',
+                    //   trailingIcon: Icons.arrow_forward_ios,
+                    //   trailingIconColor: AppColors.primaryColor,
+                    // ),
                     CustomListTile(
-                      onTap: () {
-                        FirebaseAuth.instance.signOut();
-                        sp.userSignOut();
-                        nextScreenReplace(
-                            context, const AuthenticationScreen());
+                      onTap: () async {
+                        // FirebaseAuth.instance.signOut();
+                        sp.userSignOut(context);
                       },
                       title: 'Logout',
                       imagePath: 'assets/images/logout.png',

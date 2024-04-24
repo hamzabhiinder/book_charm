@@ -9,7 +9,7 @@
         tools:ignore="ProtectedPermissions" />
 
    <application
-        android:label="book_charm"
+        android:label="BookCharm"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

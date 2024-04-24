@@ -39,7 +39,30 @@ class _FlipCardsScreenState extends State<FlipCardsScreen> {
           }
         }
         setState(() {
-          wordPairs = castedData;
+          wordPairs =
+              castedData.where((pair) => pair['islearned'] != 'true').toList();
+          if (wordPairs.length < 3) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Oops!'),
+                  content: Text(
+                      'You don\'t have enough words in the Dictionary!\nAdd more words please.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context); // Close the dialog
+                        Navigator.pop(
+                            context); // Navigate back to the previous screen
+                      },
+                      child: Text('Go Back'),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
         });
       } else {
         print('Error: Unexpected data format in dictionary.json');

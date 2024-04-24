@@ -3,15 +3,18 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:book_charm/screens/games/book_reading_screen.dart';
+import 'package:book_charm/screens/profile/view/widget/language_selector.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import '../../../utils/download/download_file.dart';
 
 class BookDetailPage extends StatefulWidget {
@@ -19,13 +22,18 @@ class BookDetailPage extends StatefulWidget {
   final String bookName;
   final String authorName;
   final String? downloadUrl;
+  final String description;
   bool isNetworkImage;
+
+  String category;
   BookDetailPage({
     required this.url,
     required this.bookName,
     required this.authorName,
     this.isNetworkImage = false,
     this.downloadUrl,
+    required this.description,
+    this.category = '',
   });
 
   @override
@@ -45,7 +53,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     bool isBookAlreadyAdded = downloadedBooks.any((book) =>
         book['bookName'] == widget.bookName &&
         book['authorName'] == widget.authorName);
-
+    final lang = Provider.of<LanguageProvider>(context, listen: false);
     if (!isBookAlreadyAdded) {
       downloadedBooks.add({
         'bookName': widget.bookName,
@@ -53,23 +61,27 @@ class _BookDetailPageState extends State<BookDetailPage> {
         'filePath': '${widget.bookName}_${widget.authorName}.pdf',
         'url': widget.url,
         'downloadUrl': widget.downloadUrl,
+        'language': lang.selectedLanguageCode,
+        'description': widget.description,
+        'category': widget.category,
       });
 
       storage.setItem('books', downloadedBooks);
 
       log('${downloadedBooks.length} updated the books list');
-      addBooksDataToFirestore(downloadedBooks);
+      addBooksDataToFirestore(downloadedBooks, lang);
     }
   }
 
-  void addBooksDataToFirestore(List<dynamic> downloadedBooks) {
+  void addBooksDataToFirestore(List<dynamic> downloadedBooks, lang) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
     // Add sample data to Firestore
+
     firestore
         .collection('MyBooks')
         .doc(user?.uid)
-        .set({"myBooks": downloadedBooks}).then((value) {
+        .set({"${lang.selectedLanguageCode}": downloadedBooks}).then((value) {
       log('Sample data added to Firestore');
     }).catchError((error) {
       log('Failed to add sample data: $error');
@@ -102,75 +114,11 @@ class _BookDetailPageState extends State<BookDetailPage> {
     log('isBookAvailable $isBookAvailable');
   }
 
-  Future<void> downloadPdfFile({
-    required String url,
-    required String bookName,
-    required String authorName,
-  }) async {
-    setState(() {
-      _downloadMessage = 'Downloading...';
-    });
-
-    final extDir = await getExternalStorageDirectory();
-    final String dirPath = '${extDir?.path}/Download';
-    await Directory(dirPath).create(recursive: true);
-    final String filePath = '$dirPath/${bookName}_$authorName.pdf';
-
-    final http.Client client = http.Client();
-    final http.Request request = http.Request('GET', Uri.parse(url));
-
-    final http.StreamedResponse response = await client.send(request);
-    final File file = File(filePath);
-    int totalBytes = response.contentLength ?? 0;
-    int downloadedBytes = 0;
-
-    response.stream.listen(
-      (List<int> chunk) {
-        file.writeAsBytesSync(chunk, mode: FileMode.append);
-        downloadedBytes += chunk.length;
-        setState(() {
-          _downloadMessage =
-              'Downloading... ${(downloadedBytes / totalBytes * 100).toStringAsFixed(2)}%';
-          log('Downloading... ${(downloadedBytes / totalBytes * 100).toStringAsFixed(2)}%');
-        });
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text("Downloading"),
-              content: Row(
-                children: [
-                  Expanded(
-                      child: LinearProgressIndicator(
-                    value: (downloadedBytes / totalBytes),
-                  )),
-                  Text(
-                      "${(downloadedBytes / totalBytes * 100).toStringAsFixed(2)}%")
-                ],
-              ),
-            );
-          },
-        );
-      },
-      onDone: () {
-        setState(() {
-          _downloadMessage = 'Download complete. File saved to: $filePath';
-        });
-        log('Downloaded Successfully');
-      },
-      onError: (error) {
-        setState(() {
-          _downloadMessage = 'Error occurred while downloading file';
-        });
-        log('Error occurred while downloading file: $error');
-      },
-    );
-  }
-
-  // Future<void> downloadPdfFile(
-  //     {required String url,
-  //     required String bookName,
-  //     required String authorName}) async {
+  // Future<void> downloadPdfFile({
+  //   required String url,
+  //   required String bookName,
+  //   required String authorName,
+  // }) async {
   //   setState(() {
   //     _downloadMessage = 'Downloading...';
   //   });
@@ -178,18 +126,82 @@ class _BookDetailPageState extends State<BookDetailPage> {
   //   final extDir = await getExternalStorageDirectory();
   //   final String dirPath = '${extDir?.path}/Download';
   //   await Directory(dirPath).create(recursive: true);
-  //   final String filePath =
-  //       '$dirPath/${bookName}_$authorName.pdf'; // Change the file name as needed
+  //   final String filePath = '$dirPath/${bookName}_$authorName.pdf';
 
-  //   final http.Response response = await http.get(Uri.parse(url));
+  //   final http.Client client = http.Client();
+  //   final http.Request request = http.Request('GET', Uri.parse(url));
+
+  //   final http.StreamedResponse response = await client.send(request);
   //   final File file = File(filePath);
-  //   await file.writeAsBytes(response.bodyBytes);
+  //   int totalBytes = response.contentLength ?? 0;
+  //   int downloadedBytes = 0;
 
-  //   setState(() {
-  //     _downloadMessage = 'Download complete. File saved to: $filePath';
-  //   });
-  //   log('Downloaded Successfully');
+  //   response.stream.listen(
+  //     (List<int> chunk) {
+  //       file.writeAsBytesSync(chunk, mode: FileMode.append);
+  //       downloadedBytes += chunk.length;
+  //       setState(() {
+  //         _downloadMessage =
+  //             'Downloading... ${(downloadedBytes / totalBytes * 100).toStringAsFixed(2)}%';
+  //         log('Downloading... ${(downloadedBytes / totalBytes * 100).toStringAsFixed(2)}%');
+  //       });
+  //       showDialog(
+  //         context: context,
+  //         builder: (context) {
+  //           return AlertDialog(
+  //             title: Text("Downloading"),
+  //             content: Row(
+  //               children: [
+  //                 Expanded(
+  //                     child: LinearProgressIndicator(
+  //                   value: (downloadedBytes / totalBytes),
+  //                 )),
+  //                 Text(
+  //                     "${(downloadedBytes / totalBytes * 100).toStringAsFixed(2)}%")
+  //               ],
+  //             ),
+  //           );
+  //         },
+  //       );
+  //     },
+  //     onDone: () {
+  //       setState(() {
+  //         _downloadMessage = 'Download complete. File saved to: $filePath';
+  //       });
+  //       log('Downloaded Successfully');
+  //     },
+  //     onError: (error) {
+  //       setState(() {
+  //         _downloadMessage = 'Error occurred while downloading file';
+  //       });
+  //       log('Error occurred while downloading file: $error');
+  //     },
+  //   );
   // }
+
+  Future<void> downloadPdfFile(
+      {required String url,
+      required String bookName,
+      required String authorName}) async {
+    setState(() {
+      _downloadMessage = 'Downloading...';
+    });
+
+    final extDir = await getExternalStorageDirectory();
+    final String dirPath = '${extDir?.path}/Download';
+    await Directory(dirPath).create(recursive: true);
+    final String filePath =
+        '$dirPath/${bookName}_$authorName.pdf'; // Change the file name as needed
+
+    final http.Response response = await http.get(Uri.parse(url));
+    final File file = File(filePath);
+    await file.writeAsBytes(response.bodyBytes);
+
+    setState(() {
+      _downloadMessage = 'Download complete. File saved to: $filePath';
+    });
+    log('Downloaded Successfully');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -250,20 +262,25 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 ),
                 const SizedBox(height: 16.0),
                 // Chips about the book
-                const Wrap(
+                Wrap(
                   spacing: 8.0,
                   children: [
-                    Chip(label: Text('Fiction')),
-                    Chip(label: Text('Romance')),
+                    if (widget.category.length > 2)
+                      Chip(label: Text(widget.category)),
+                    // Chip(label: Text('Romance')),
                     // Add more chips as needed
                   ],
                 ),
                 const SizedBox(height: 16.0),
                 // Book details, description, etc.
-                const Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-                  'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                  style: TextStyle(fontSize: 16.0),
+                SizedBox(
+                  height: 70.0,
+                  child: SingleChildScrollView(
+                    child: Text(
+                      widget.description,
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 16.0),
 

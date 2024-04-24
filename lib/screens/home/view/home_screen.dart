@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ElevatedButton(
                 onPressed: () {
                   log("USer Model ${sp.userModel?.toJson()}");
-                  sp.userSignOut().then((value) {
+                  sp.userSignOut(context).then((value) {
                     nextScreenReplace(context, AuthenticationScreen());
                   });
                 },

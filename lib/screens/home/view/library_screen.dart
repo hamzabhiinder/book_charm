@@ -6,6 +6,7 @@ import 'package:book_charm/screens/profile/view/widget/language_selector.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:provider/provider.dart';
@@ -27,12 +28,12 @@ class LibraryScreen extends StatelessWidget {
         backgroundColor: Colors.grey.shade50,
         title: Text('Library Screen'),
         actions: [
-          IconButton(
-              onPressed: () {
-                Provider.of<LibraryProvider>(context, listen: false)
-                    .fetchBooks();
-              },
-              icon: Icon(Icons.book))
+          // IconButton(
+          //     onPressed: () {
+          //       Provider.of<LibraryProvider>(context, listen: false)
+          //           .fetchBooks();
+          //     },
+          //     icon: Icon(Icons.book))
         ],
       ),
       body: FutureBuilder(
@@ -97,13 +98,20 @@ class LibraryScreen extends StatelessWidget {
                                 books[bookIndex]['Author'].toString() ?? '';
                             String downloadUrl =
                                 books[bookIndex]['Link'].toString() ?? '';
+                            String description =
+                                books[bookIndex]['Description'].toString() ??
+                                    '';
+                            String category =
+                                books[bookIndex]['Category'].toString() ?? '';
                             return GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(_buildPageRoute(
                                     imageUrl,
                                     bookName,
                                     authorName,
-                                    downloadUrl));
+                                    downloadUrl,
+                                    description,
+                                    category));
                               },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
@@ -210,14 +218,27 @@ class LibraryScreen extends StatelessWidget {
                     } else if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else {
-                      List<Map<String, dynamic>> books =
-                          snapshot.data as List<Map<String, dynamic>>;
-                      log("books ${books[0]['en']}");
+                      // List<Map<String, dynamic>> books =s
+                      //     snapshot.data as List<Map<String, dynamic>>;
+                      // log('booksss ${snapshot.data}');
+
+                      List<dynamic> books =
+                          ((snapshot.data?[lang.selectedLanguageCode ?? 'en'] ??
+                                  []) as List<dynamic>)
+                              // .where((book) => book['isPublished'] == false)
+                              .toList();
+
+                      // log('books ${books.toList()}');
+                      if (books.isEmpty) {
+                        return const Text('No new books uploaded');
+                      }
                       return SizedBox(
                         height: getResponsiveHeight(context, 170),
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: books[0]['fr'].length ?? 0,
+                          itemCount: (books.isNotEmpty && books != null)
+                              ? books.length ?? 0
+                              : 0,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             // return ListTile(
@@ -228,7 +249,16 @@ class LibraryScreen extends StatelessWidget {
                             //   // Add more fields as needed
                             // );
                             return GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(_buildPageRoute(
+                                  books[index]['CoverUrl'] ?? '',
+                                  books[index]['Name'] ?? '',
+                                  books[index]['Author'] ?? '',
+                                  books[index]['Link'] ?? '',
+                                  books[index]['Description'] ?? '',
+                                  books[index]['Category'] ?? '',
+                                ));
+                              },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal:
@@ -250,12 +280,10 @@ class LibraryScreen extends StatelessWidget {
                                           width:
                                               getResponsiveWidth(context, 90),
                                           fit: BoxFit.cover,
-                                          imageUrl: books[0]['fr'][index]
-                                                      ['CoverUrl'] ==
+                                          imageUrl: books[index]['CoverUrl'] ==
                                                   ""
                                               ? 'https://m.media-amazon.com/images/I/A1bwQxjFE3L._SY522_.jpg'
-                                              : books[0]['fr'][index]
-                                                  ['CoverUrl'],
+                                              : books[index]['CoverUrl'],
                                           errorWidget: (context, url, error) =>
                                               ClipRRect(
                                             borderRadius:
@@ -285,7 +313,7 @@ class LibraryScreen extends StatelessWidget {
                                       SizedBox(
                                         width: getResponsiveWidth(context, 100),
                                         child: Text(
-                                          books[0]['fr'][index]['Name'] ??
+                                          books[index]['Name'] ??
                                               'Unnamed Book',
                                           style: TextStyle(
                                             color: Colors.black,
@@ -300,7 +328,7 @@ class LibraryScreen extends StatelessWidget {
                                       SizedBox(
                                         width: getResponsiveWidth(context, 100),
                                         child: Text(
-                                          books[0]['fr'][index]['Author'] ??
+                                          books[index]['Author'] ??
                                               'Author Book',
                                           style: TextStyle(
                                             color: Colors.grey.shade600,
@@ -332,7 +360,7 @@ class LibraryScreen extends StatelessWidget {
   }
 
   PageRouteBuilder _buildPageRoute(
-      imageUrl, bookName, authorName, downloadUrl) {
+      imageUrl, bookName, authorName, downloadUrl, description, category) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) {
         return BookDetailPage(
@@ -341,6 +369,8 @@ class LibraryScreen extends StatelessWidget {
           authorName: authorName,
           isNetworkImage: true,
           downloadUrl: downloadUrl,
+          description: description,
+          category: category,
         );
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -383,7 +413,7 @@ class LibraryProvider with ChangeNotifier {
   }
 
   DocumentSnapshot<Map<String, dynamic>>? querySnapshot;
-  Future<List<Map<String, dynamic>>> fetchBooks() async {
+  Future<Map<String, dynamic>> fetchBooks() async {
     try {
       querySnapshot = await FirebaseFirestore.instance
           .collection('books')
@@ -391,11 +421,11 @@ class LibraryProvider with ChangeNotifier {
           .get();
 
       print("${querySnapshot?.data()?.entries ?? ''}");
-      return [querySnapshot?.data() ?? {}];
+      return querySnapshot?.data() ?? {};
     } catch (e) {
       // Handle errors
       print('Error fetching books: $e');
-      return [];
+      return {};
     }
   }
 }

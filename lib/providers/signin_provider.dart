@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/authentication/services/auth1/auth_exception1.dart';
+import '../screens/authentication/view/signup_screen.dart';
 import '../utils/show_snackBar.dart';
 
 class SignInProvider extends ChangeNotifier {
@@ -218,31 +219,43 @@ class SignInProvider extends ChangeNotifier {
     }
   }
 
-  Future signInWithEmailAndPassword(
+  Future<bool> signInWithEmailAndPassword(
       BuildContext context, String email, String password) async {
     try {
+      // Attempt to sign in with email and password
       final result = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
+
+      // Retrieve user data from Firestore (if necessary)
       await getUserDataFromFirestore(result.user?.uid);
-      // saving the values
+
+      // Return true to indicate successful login
+      return true;
     } on FirebaseAuthException catch (e) {
+      // Log the exception for debugging purposes
+      log("FirebaseAuthException: ${e.message}");
+
+      // Display appropriate error messages based on the exception code
       switch (e.code) {
         case "user-not-found":
-          showSnackBar(context, "User Not Found");
+          showSnackBar(context, "User not found");
           break;
-
         case "wrong-password":
-          showSnackBar(context, "Wrong credentials");
+          showSnackBar(context, "Incorrect password");
           break;
-
         case "invalid-email":
-          showSnackBar(context, "Invalid Email");
+          showSnackBar(context, "Invalid email address");
           break;
-
+        case "invalid-credential":
+          showSnackBar(context, "Invalid email and password");
+          break;
         default:
           showSnackBar(context, "Authentication error");
           break;
       }
+
+      // Return false to indicate failed login
+      return false;
     }
   }
 
@@ -308,10 +321,11 @@ class SignInProvider extends ChangeNotifier {
 
   Future saveDataToSharedPreferences() async {
     final SharedPreferences s = await SharedPreferences.getInstance();
-    await s.setString('name', _name!);
-    await s.setString('email', _email!);
-    await s.setString('uid', _uid!);
-    await s.setString('image_url', _imageUrl!);
+    log('$_name , $_email, $_uid $_imageUrl ');
+    await s.setString('name', _name.toString());
+    await s.setString('email', _email.toString());
+    await s.setString('uid', _uid.toString());
+    await s.setString('image_url', _imageUrl.toString());
     await s.setString('provider', _provider!);
     _userModel = UserModel(
       email: _email ?? '',
@@ -357,11 +371,19 @@ class SignInProvider extends ChangeNotifier {
   }
 
   // signout
-  Future userSignOut() async {
-    firebaseAuth.signOut;
-    googleSignIn.signOut();
-    facebookAuth.logOut();
+  Future userSignOut(context) async {
+    await firebaseAuth.signOut();
+    await googleSignIn.signOut();
+    await facebookAuth.logOut();
 
+    // nextScreenReplace(context, AuthenticationScreen());
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              AuthenticationScreen()), // Replace TargetScreen with your target screen
+      (route) => false,
+    );
     // clear all storage information
     clearStoredData();
     _isSignedIn = false;

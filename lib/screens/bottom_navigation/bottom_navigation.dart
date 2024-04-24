@@ -6,6 +6,7 @@ import 'package:book_charm/screens/home/view/downloaded_books_screen.dart';
 import 'package:book_charm/screens/home/view/library_screen.dart';
 import 'package:book_charm/screens/profile/view/profile.dart';
 import 'package:book_charm/screens/stats/leaderboard.dart';
+import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:flutter/material.dart';
 
 class BottomNaigationScreen extends StatefulWidget {
@@ -35,31 +36,49 @@ class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
+        selectedIconTheme: IconThemeData(color: AppColors.primaryColor),
+        unselectedIconTheme: IconThemeData(color: AppColors.secondaryColor),
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
           });
         },
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(
+              Icons.home,
+              size: 30,
+              color: const Color(0xffc599fb),
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.menu_rounded),
+            icon: Image.asset(
+              'assets/icons/dictionary.png',
+              height: 30,
+            ),
             label: 'Dictionary',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.video_camera_back),
+            icon: Image.asset(
+              'assets/icons/library.png',
+              height: 30,
+            ),
             label: 'Library',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.thumb_up_sharp),
+            icon: Image.asset(
+              'assets/icons/Exercises.png',
+              height: 30,
+            ),
             label: 'Exercises',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profile',
+            icon: Image.asset(
+              'assets/icons/leaderboard.png',
+              height: 30,
+            ),
+            label: 'Leader Board',
           ),
           // BottomNavigationBarItem(
           //   icon: Icon(Icons.account_circle),
@@ -67,9 +86,9 @@ class _BottomNaigationScreenState extends State<BottomNaigationScreen> {
           // ),
         ],
         selectedItemColor: const Color(0xffc599fb),
-        unselectedItemColor: Colors.grey[600],
+        unselectedItemColor: const Color(0xffc599fb),
         showSelectedLabels: true,
-        showUnselectedLabels: true,
+        showUnselectedLabels: false,
       ),
     );
   }

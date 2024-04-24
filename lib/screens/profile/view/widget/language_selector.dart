@@ -14,19 +14,21 @@ class LanguageList extends StatefulWidget {
 class _LanguageListState extends State<LanguageList> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Select Language',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 16),
-          _buildLanguageList(context),
-        ],
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Select Language',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            _buildLanguageList(context),
+          ],
+        ),
       ),
     );
   }
@@ -69,6 +71,9 @@ class LanguageProvider extends ChangeNotifier {
     'English': 'en',
     'French': 'fr',
     'German': 'gr',
+    'Spanish': 'es',
+    'Italian': 'it',
+    'Urdu': 'ur',
   };
 
   Map<String, String> get languages => _languages;
@@ -80,15 +85,18 @@ class LanguageProvider extends ChangeNotifier {
     await prefs.setString('selectedLanguageCode', code);
     _selectedLanguageName = name;
     _selectedLanguageCode = code;
-    Provider.of<LibraryProvider>(context, listen: false).loadJsonDataFunction(context);
-    Provider.of<DictionaryProvider>(context, listen: false).loadDictionary(context);
+    Provider.of<LibraryProvider>(context, listen: false)
+        .loadJsonDataFunction(context);
+    Provider.of<DictionaryProvider>(context, listen: false)
+        .loadDictionary(context);
 
     notifyListeners();
   }
 
   Future<void> loadSelectedLanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('selectedLanguageName') == null || prefs.getString('selectedLanguageName') == '') {
+    if (prefs.getString('selectedLanguageName') == null ||
+        prefs.getString('selectedLanguageName') == '') {
       await prefs.setString('selectedLanguageName', 'English');
       await prefs.setString('selectedLanguageCode', 'en');
       _selectedLanguageName = 'English';

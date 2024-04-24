@@ -10,6 +10,27 @@ class TimerUtils {
   static late Stopwatch _stopwatch;
   static bool _isPaused = false;
   static Map<String, Duration> updatedTimes = {};
+  static List<double> calculateDurationOfPastSevenDays() {
+    List<double> durations = [];
+    DateTime today = DateTime.now();
+    DateTime sevenDaysAgo = today.subtract(const Duration(days: 6));
+    log('drt: ${updatedTimes.toString()}');
+    for (int i = 0; i < 7; i++) {
+      String date =
+          "${sevenDaysAgo.year}-${sevenDaysAgo.month.toString().padLeft(2, '0')}-${sevenDaysAgo.day.toString().padLeft(2, '0')}";
+      log('drt: ${date.toString()}');
+      if (updatedTimes.containsKey(date)) {
+        durations.add(double.parse(
+            (updatedTimes[date]!.inMinutes.toDouble() / 60)
+                .toStringAsFixed(3)));
+      } else {
+        durations.add(0);
+      }
+      sevenDaysAgo = sevenDaysAgo.add(const Duration(days: 1));
+    }
+    log('drt: ${durations.toString()}');
+    return durations;
+  }
 
   static Future<void> startTimer() async {
     final user = FirebaseAuth.instance.currentUser;
@@ -76,18 +97,50 @@ class TimerUtils {
     saveScreenTimes(screenTimes);
 
     final user = FirebaseAuth.instance.currentUser;
+    // if (user != null) {
+    //   final userId = user.uid;
+    //   final userDocSnapshot = await userDoc.get();
+    //   try {
+    //     await FirebaseFirestore.instance
+    //         .collection('timers')
+    //         .doc(userId)
+    //         .update({
+    //       'screen_times.$currentDate': newDuration.inMilliseconds,
+    //     });
+    //     print('Screen time data updated in Firebase for user: $userId');
+    //   } catch (e) {
+    //     print('Error updating screen time data in Firebase: $e');
+    //   }
+    // }
+
     if (user != null) {
       final userId = user.uid;
-      try {
-        await FirebaseFirestore.instance
-            .collection('timers')
-            .doc(userId)
-            .update({
-          'screen_times.$currentDate': newDuration.inMilliseconds,
-        });
-        print('Screen time data updated in Firebase for user: $userId');
-      } catch (e) {
-        print('Error updating screen time data in Firebase: $e');
+
+      // Check if the user's document exists in the timers collection
+      final userDoc =
+          FirebaseFirestore.instance.collection('timers').doc(userId);
+      final userDocSnapshot = await userDoc.get();
+
+      if (userDocSnapshot.exists) {
+        // Update the existing document with the new screen time data
+        try {
+          await userDoc.update({
+            'screen_times.$currentDate': newDuration.inMilliseconds,
+          });
+          print('Screen time data updated in Firebase for user: $userId');
+        } catch (e) {
+          print('Error updating screen time data in Firebase: $e');
+        }
+      } else {
+        // Create a new document for the user with the initial screen time data
+        try {
+          await userDoc.set({
+            'screen_times': {currentDate: newDuration.inMilliseconds},
+          });
+          print('New document created in timers collection for user: $userId');
+        } catch (e) {
+          print('Error creating new document in timers collection: $e');
+        }
       }
     }
   }

@@ -16,7 +16,8 @@ import 'package:localstorage/localstorage.dart';
 class BookReadingScreen extends StatefulWidget {
   final String bookName;
   final String authorName;
-  const BookReadingScreen({super.key, required this.bookName, required this.authorName});
+  const BookReadingScreen(
+      {super.key, required this.bookName, required this.authorName});
 
   @override
   State<BookReadingScreen> createState() => _BookReadingScreenState();
@@ -39,7 +40,8 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
     print(wordPairs);
   }
 
-  void addDictionaryDataToFirestore(String language, List<Map<String, dynamic>> wordPairs) {
+  void addDictionaryDataToFirestore(
+      String language, List<Map<String, dynamic>> wordPairs) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     User? user = FirebaseAuth.instance.currentUser;
     // Add sample data to Firestore
@@ -53,10 +55,12 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
   }
 
   void addWordPair(String english, String spanish) {
-    if (!wordPairs
-        .any((pair) => pair['meaning'] == english.toLowerCase() && pair['word'] == spanish.toLowerCase())) {
+    if (!wordPairs.any((pair) =>
+        pair['meaning'] == english.toLowerCase() &&
+        pair['word'] == spanish.toLowerCase())) {
       setState(() {
-        wordPairs.add({'meaning': english.toLowerCase(), 'word': spanish.toLowerCase()});
+        wordPairs.add(
+            {'meaning': english.toLowerCase(), 'word': spanish.toLowerCase()});
         //Add to Firebase
 
         saveDictionary();
@@ -80,7 +84,8 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
   void translateAction(String selectedText) async {
     try {
       // Replace 'es' with the language code you want to translate to
-      var translatedText = await translator.translate(selectedText, from: 'fr', to: 'en');
+      var translatedText =
+          await translator.translate(selectedText, from: 'fr', to: 'en');
       log("Translated text: $translatedText");
       selectTextValue = selectedText;
       translateTextValue = translatedText.text;
@@ -140,7 +145,8 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
       if (externalDir == null) {
         throw Exception('External storage not available');
       }
-      final String pdfPath = '${externalDir.path}/Download/${widget.bookName}_${widget.authorName}.pdf';
+      final String pdfPath =
+          '${externalDir.path}/Download/${widget.bookName}_${widget.authorName}.pdf';
       final File pdfFile = File(pdfPath);
       if (!pdfFile.existsSync()) {
         throw Exception('PDF not found: $pdfPath');
@@ -181,8 +187,8 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
               Navigator.pop(context);
             },
             icon: Icon(Icons.arrow_back)),
-        title: const Text('Text Games'),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.save))],
+        title: Text(widget.bookName),
+       // actions: [IconButton(onPressed: () {}, icon: Icon(Icons.save))],
       ),
       body: GestureDetector(
           onTap: () {
@@ -192,11 +198,13 @@ class _BookReadingScreenState extends State<BookReadingScreen> {
               ? CircularProgressIndicator()
               : SfPdfViewer.file(
                   File('${pdfFilePath}'),
-                  onTextSelectionChanged: (PdfTextSelectionChangedDetails details) {
+                  onTextSelectionChanged:
+                      (PdfTextSelectionChangedDetails details) {
                     if (details.selectedText == null && _overlayEntry != null) {
                       _overlayEntry!.remove();
                       _overlayEntry = null;
-                    } else if (details.selectedText != null && _overlayEntry == null) {
+                    } else if (details.selectedText != null &&
+                        _overlayEntry == null) {
                       //_showContextMenu(context, details);
                     }
                   },

@@ -1,5 +1,8 @@
 import 'package:book_charm/main.dart';
 import 'package:book_charm/screens/dashboard/services/dashboard_services.dart';
+import 'package:book_charm/screens/home/view/downloaded_books_screen.dart';
+import 'package:book_charm/screens/home/view/library_screen.dart';
+import 'package:book_charm/screens/home/widgets/upload_book.dart';
 import 'package:book_charm/screens/profile/view/profile.dart';
 import 'package:book_charm/utils/download/download_file.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
@@ -8,6 +11,7 @@ import 'package:book_charm/utils/stats/time_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/signin_provider.dart';
@@ -147,6 +151,66 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                 ),
               ),
               const SizedBox(height: 15), // Adjust the spacing as needed
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                decoration: BoxDecoration(
+                    color: AppColors.secondaryColor,
+                    borderRadius: BorderRadius.circular(12)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Let\'s start...',
+                      style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                              fontSize: 26, fontWeight: FontWeight.w500)),
+                    ),
+                    Text(
+                      'You can upload your own books or try or \nlibrary',
+                      style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500)),
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: OutlinedButton(
+                              style: ButtonStyle(
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8))))),
+                              onPressed: () {
+                                nextScreen(context, UploadPage());
+                              },
+                              child: Text("Upload")),
+                        ),
+                        SizedBox(width: 20),
+                        Expanded(
+                          flex: 2,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              nextScreen(context, LibraryScreen());
+                            },
+                            child: Text("Library"),
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8))))),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+
               TabBar(
                 controller: _tabController,
                 tabs: const [
@@ -253,8 +317,9 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   ],
                 ),
               ),
+              DownloadedBooksScreen(),
 
-              const Padding(
+              /*   const Padding(
                 padding: EdgeInsets.only(left: 15),
                 child: Text(
                   "Recommendations",
@@ -280,6 +345,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   );
                 },
               ),
+           */
             ],
           ),
         ),
