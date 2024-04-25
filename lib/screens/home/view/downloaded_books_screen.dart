@@ -51,8 +51,6 @@ class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
         .then((snapshot) {
       if (snapshot.exists) {
         Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-
-        log('datas $data');
       }
     });
 
@@ -67,6 +65,7 @@ class _DownloadedBooksScreenState extends State<DownloadedBooksScreen> {
           authorName: filteredBooks[index]['authorName'],
           isNetworkImage: filteredBooks[index]['url'][0] == 'a' ? false : true,
           description: filteredBooks[index]['description'] ?? '',
+          downloadUrl: filteredBooks[index]['downloadUrl'],
         );
       },
     );

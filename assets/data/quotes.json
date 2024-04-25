@@ -1,0 +1,72 @@
+{
+    "quotes": [
+      {
+        "language": "English",
+        "quote": [
+          "The limits of my language mean the limits of my world. - Ludwig Wittgenstein",
+          "One language sets you in a corridor for life. Two languages open every door along the way. - Frank Smith",
+          "If you talk to a man in a language he understands, that goes to his head. If you talk to him in his language, that goes to his heart. - Nelson Mandela",
+          "To have another language is to possess a second soul. - Charlemagne",
+          "The man who does not read good books is no better than the man who can't read. - Mark Twain",
+          "I declare after all there is no enjoyment like reading! - Jane Austen",
+          "There is no frigate like a book to take us lands away. - Emily Dickinson",
+          "To learn to read is to light a fire; every syllable that is spelled out is a spark. - Victor Hugo"
+        ]
+      },
+      {
+        "language": "French",
+        "quote": [
+          "Une nouvelle langue est une nouvelle vie. - Proverbe français",
+          "Les limites de ma langue sont les limites de mon monde. - Ludwig Wittgenstein",
+          "Avoir une autre langue, c'est posséder une deuxième âme. - Charlemagne",
+          "Lire, c'est voyager à travers mille vies. - Jean d'Ormesson",
+          "Un bon livre est un ami qui ne vous déçoit jamais. - Proverbe français",
+          "Tout le monde rêve de voyager, mais peu de gens rêvent de lire. - Michel Tournier"
+        ]
+      },
+      {
+        "language": "Spanish",
+        "quote": [
+          "Aprender otro idioma es como ser otra persona. - Miguel de Cervantes",
+          "El que no sabe de otras lenguas, nada sabe de la propia. - Miguel de Cervantes",
+          "Saber hablar una lengua es poseer un arma, saber dos lenguas es ser un arsenal. - Romano Guardini",
+          "Lee y enriquece tu espíritu. - Proverbio español",
+          "Un buen libro es el mejor amigo. - Proverbio español",
+          "En los libros se encuentra el alma de la humanidad. - Thomas Carlyle"
+        ]
+      },
+      {
+        "language": "Italian",
+        "quote": [
+          "Una nuova lingua è una nuova vita. - Proverbio italiano",
+          "I limiti della mia lingua sono i limiti del mio mondo. - Ludwig Wittgenstein",
+          "Un uomo che conosce due lingue vale quanto due uomini. - Proverbio italiano",
+          "Chi legge non è mai solo. - Proverbio italiano",
+          "Un buon libro è un giardino fiorito in ogni stagione. - Proverbio italiano",
+          "La lettura è un viaggio per terre lontane senza muoversi da casa. - Sant'Agostino"
+        ]
+      },
+      {
+        "language": "German",
+        "quote": [
+          "Eine neue Sprache ist ein neues Leben. - Sprichwort",
+          "Die Grenzen meiner Sprache sind die Grenzen meiner Welt. - Ludwig Wittgenstein",
+          "Eine andere Sprache zu lernen öffnet nicht nur den Mund, sondern auch den Verstand. - Johann Wolfgang von Goethe",
+          "Lesen bildet Geist und Seele. - Sprichwort",
+          "Ein Buch ist ein Garten, den man in der Tasche tragen kann. - Deutsches Sprichwort",
+          "So viele Bücher du gelesen hast, so viele Leben hast du gelebt. - Reinhard Heydarpour"
+        ]
+      },
+      {
+        "language": "Urdu",
+        "quote": [
+          "ہر نئی زبان ایک نئی زندگی ہے۔",
+          "جس زبان سے ہم واقف نہیں، ہم اپنی زبان کو بھی نہیں جانتے۔ - اقبال",
+          "ایک زبان سیکھنا ایک ہتھیار رکھنا ہے، دو زبانیں سیکھنا ایک اسلحہ خانہ بننا ہے۔",
+          "کتاب پڑھو اور اپنی روح کو بلند کرو۔",
+          "ایک اچھی کتاب ایک دوست ہے جو آپ کو کبھی مایوس نہیں کرتی۔"
+        ]
+      }
+    ]
+  }
+  

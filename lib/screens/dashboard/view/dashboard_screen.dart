@@ -47,29 +47,6 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     });
   }
 
-  List recommendationData = [
-    {
-      "imageUrl": "assets/images/a_december_to_remember.jpg",
-      "bookName": "A December To Remember",
-      "authorName": "Janny Bayliss"
-    },
-    {
-      "imageUrl": "assets/images/all_the_little_bird_hearts.jpg",
-      "bookName": "All The Little Bird-Hearts",
-      "authorName": "Viktoria Lloyd-Barlow"
-    },
-    {
-      "imageUrl": "assets/images/bright_lights_big_christmas.jpg",
-      "bookName": "Bright Lights, Big Christmas",
-      "authorName": "Mary Kay Andrews"
-    },
-    {
-      "imageUrl": "assets/images/bright_lights_big_christmas.jpg",
-      "bookName": "Bright Lights, Big Christmas",
-      "authorName": "Mary Kay Andrews"
-    }
-  ];
-
   @override
   Widget build(BuildContext context) {
     final sp = context.watch<SignInProvider>();
@@ -87,7 +64,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                   toolbarHeight: kToolbarHeight - 10,
                   leading: GestureDetector(
                     onTap: () {
-                      nextScreen(context, ProfileScreen());
+                      nextScreen(context, const ProfileScreen());
                     },
                     child: Image.asset(
                       'assets/images/profile.png',
@@ -159,16 +136,16 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                     Text(
                       'Let\'s start...',
                       style: GoogleFonts.roboto(
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                               fontSize: 26, fontWeight: FontWeight.w500)),
                     ),
                     Text(
                       'You can upload your own books or try or \nlibrary',
                       style: GoogleFonts.roboto(
-                          textStyle: TextStyle(
+                          textStyle: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w500)),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Expanded(
@@ -176,27 +153,27 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                           child: OutlinedButton(
                               style: ButtonStyle(
                                   shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
+                                      const RoundedRectangleBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(8))))),
                               onPressed: () {
                                 nextScreen(context, UploadPage());
                               },
-                              child: Text("Upload")),
+                              child: const Text("Upload")),
                         ),
-                        SizedBox(width: 20),
+                        const SizedBox(width: 20),
                         Expanded(
                           flex: 2,
                           child: ElevatedButton(
                             onPressed: () {
                               nextScreen(context, LibraryScreen());
                             },
-                            child: Text("Library"),
                             style: ButtonStyle(
                                 shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
+                                    const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(8))))),
+                            child: const Text("Library"),
                           ),
                         )
                       ],
@@ -225,7 +202,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Row(
@@ -249,7 +226,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Row(
@@ -368,7 +345,7 @@ class ReusableColumn extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -384,7 +361,7 @@ class ReusableColumn extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

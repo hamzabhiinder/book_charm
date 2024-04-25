@@ -204,7 +204,7 @@ class LibraryScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'UpComing Books',
+                  'My Books',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -225,7 +225,7 @@ class LibraryScreen extends StatelessWidget {
                       List<dynamic> books =
                           ((snapshot.data?[lang.selectedLanguageCode ?? 'en'] ??
                                   []) as List<dynamic>)
-                              // .where((book) => book['isPublished'] == false)
+                              .where((book) => book['isPublished'] == true)
                               .toList();
 
                       // log('books ${books.toList()}');

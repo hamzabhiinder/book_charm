@@ -273,6 +273,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                     ),
                   ),
                   ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: dictionary_words.length,
                     itemBuilder: (context, index) {
@@ -329,6 +330,7 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
                     ),
                   ),
                   ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: learned_words.length,
                     itemBuilder: (context, index) {

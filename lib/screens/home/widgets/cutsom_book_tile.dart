@@ -7,7 +7,7 @@ class CustomBookTile extends StatelessWidget {
   final String imageUrl;
   final String bookName;
   final String authorName;
-
+  final String downloadUrl;
   var isNetworkImage;
   String description;
   CustomBookTile(
@@ -15,7 +15,8 @@ class CustomBookTile extends StatelessWidget {
       required this.bookName,
       required this.authorName,
       this.isNetworkImage = false,
-      this.description = 'safasdf'});
+      this.description = 'safasdf',
+      required this.downloadUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +111,7 @@ class CustomBookTile extends StatelessWidget {
           authorName: authorName,
           isNetworkImage: isNetworkImage,
           description: description,
+          downloadUrl: downloadUrl,
         );
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
