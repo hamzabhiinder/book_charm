@@ -378,7 +378,7 @@ class UploadPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Upload PDF'),
+        title: Text('Upload Upcoming PDF'),
       ),
       body: SingleChildScrollView(
         child: Padding(

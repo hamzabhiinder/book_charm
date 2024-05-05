@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:book_charm/main.dart';
 import 'package:book_charm/screens/dashboard/services/dashboard_services.dart';
+import 'package:book_charm/screens/games/load_from_device.dart';
 import 'package:book_charm/screens/home/view/downloaded_books_screen.dart';
 import 'package:book_charm/screens/home/view/library_screen.dart';
 import 'package:book_charm/screens/home/widgets/upload_book.dart';
@@ -8,8 +11,11 @@ import 'package:book_charm/utils/download/download_file.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
 import 'package:book_charm/utils/stats/overall_stats.dart';
 import 'package:book_charm/utils/stats/time_utils.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +37,28 @@ class _DashBoardScreenState extends State<DashBoardScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _selectedIndex = 0;
+  String? path;
+  bool isLoading = false;
+  Future<void> pickPDF() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf'],
+      );
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        setState(() {
+          isLoading = true;
+          path = file.path;
+          nextScreen(context, PDFViewer(path: file.path));
+        });
+      }
+    } on PlatformException catch (e) {
+      if (kDebugMode) {
+        print("Unsupported operation" + e.toString());
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -157,9 +185,10 @@ class _DashBoardScreenState extends State<DashBoardScreen>
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(8))))),
                               onPressed: () {
-                                nextScreen(context, UploadPage());
+                                // nextScreen(context, UploadPage());
+                                pickPDF();
                               },
-                              child: const Text("Upload")),
+                              child: const Text("Load Pdf")),
                         ),
                         const SizedBox(width: 20),
                         Expanded(
