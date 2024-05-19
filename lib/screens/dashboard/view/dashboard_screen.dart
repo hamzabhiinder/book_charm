@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:book_charm/main.dart';
@@ -18,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/signin_provider.dart';
@@ -39,6 +42,7 @@ class _DashBoardScreenState extends State<DashBoardScreen>
   int _selectedIndex = 0;
   String? path;
   bool isLoading = false;
+  List<Map<String, String>> pickedFiles = [];
   Future<void> pickPDF() async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -46,17 +50,52 @@ class _DashBoardScreenState extends State<DashBoardScreen>
         allowedExtensions: ['pdf'],
       );
       if (result != null) {
+        String fileName = result.files.single.name;
         File file = File(result.files.single.path!);
-        setState(() {
-          isLoading = true;
-          path = file.path;
-          nextScreen(context, PDFViewer(path: file.path));
+        loadFiles();
+
+        bool fileExists = pickedFiles.any((files) {
+          log("files['path'] == file.path ${files['name'] == fileName}");
+          return files['name'] == fileName;
         });
+        log('fileExists $pickedFiles');
+        if (!fileExists) {
+          setState(() {
+            isLoading = true;
+            path = file.path;
+            pickedFiles.add({
+              'name': fileName,
+              'path': file.path,
+            });
+            nextScreen(context, PDFViewer(path: file.path));
+          });
+          await saveFiles();
+        } else {
+          nextScreen(context, PDFViewer(path: file.path));
+        }
       }
     } on PlatformException catch (e) {
       if (kDebugMode) {
         print("Unsupported operation" + e.toString());
       }
+    }
+  }
+
+  Future<void> saveFiles() async {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/readingFiles.json');
+    await file.writeAsString(jsonEncode(pickedFiles));
+  }
+
+  Future<void> loadFiles() async {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/readingFiles.json');
+    if (file.existsSync()) {
+      List<dynamic> jsonData = jsonDecode(await file.readAsString());
+      setState(() {
+        pickedFiles =
+            jsonData.map((item) => Map<String, String>.from(item)).toList();
+      });
     }
   }
 

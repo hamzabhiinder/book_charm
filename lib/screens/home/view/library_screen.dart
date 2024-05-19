@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:book_charm/screens/home/view/book_detail_page.dart';
+import 'package:book_charm/screens/home/view/my_load_book.dart';
 import 'package:book_charm/screens/home/widgets/upload_book.dart';
 import 'package:book_charm/screens/profile/view/widget/language_selector.dart';
 import 'package:book_charm/utils/show_snackBar.dart';
@@ -28,12 +29,11 @@ class LibraryScreen extends StatelessWidget {
         backgroundColor: Colors.grey.shade50,
         title: Text('Library Screen'),
         actions: [
-          // IconButton(
-          //     onPressed: () {
-          //       Provider.of<LibraryProvider>(context, listen: false)
-          //           .fetchBooks();
-          //     },
-          //     icon: Icon(Icons.book))
+          IconButton(
+              onPressed: () {
+                nextScreen(context, PickedFilesPage());
+              },
+              icon: Icon(Icons.folder_open))
         ],
       ),
       body: FutureBuilder(

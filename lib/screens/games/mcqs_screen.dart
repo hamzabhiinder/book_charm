@@ -53,6 +53,7 @@ class _McqsScreenState extends State<McqsScreen> {
           if (wordPairs.length < 3) {
             showDialog(
               context: context,
+              barrierDismissible: false,
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text('Oops!'),
